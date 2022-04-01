@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-
-import 'my_home_page.dart';
+import 'src/pages/Login.dart';
+import 'router.dart' as router;
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: MyHomePage("Mis Proyectos"),
+      initialRoute: 'login',
+      onGenerateRoute: router.generateRoute,
     );
   }
 }
