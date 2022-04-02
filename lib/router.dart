@@ -1,5 +1,5 @@
 import 'package:afterdrawing/src/pages/Login.dart';
-import 'package:afterdrawing/src/pages/Project.dart';
+import 'src/pages/Project.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
