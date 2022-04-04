@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   bool userValid = true;
   bool passValid = true;
 
-  Future<String> getUser() async {
+  /*  Future<String> getUser() async {
     var response = await http.get(Uri.parse(url + "users"), headers: headers());
 
     setState(() {
@@ -27,12 +27,12 @@ class _LoginPageState extends State<LoginPage> {
     });
     print(dataUsers);
     return response.body.toString();
-  }
+  } */
 
   @override
   void initState() {
     super.initState();
-    getUser();
+    // getUser();
   }
 
   @override
@@ -130,6 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                     text: '¿No tienes una cuenta? ¡Regístrate!',
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
+                        // llevar a la pagina de registro
                         Navigator.pushNamed(context, 'register');
                       },
                   ),
