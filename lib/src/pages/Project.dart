@@ -64,8 +64,72 @@ class ProjectDetail extends StatelessWidget {
       appBar: AppBar(
         title: Text(project.title),
       ),
-      body: Center(
-        child: Text(project.description),
+      // the project description and image will be displayed in a card and two buttons will be displayed in a row at the bottom of the page
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            Text(project.description),
+            SizedBox(height: 16.0),
+            Image.asset(
+              // the image will be displayed in the center of the page with a width of 300 and a height of 300 pixels
+
+              'lib/src/images/interfaceprueba.png',
+              //set size of image
+              width: 500,
+              height: 500,
+            ),
+            SizedBox(height: 15.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                // the first button will be used to go to generate interface
+                RaisedButton(
+                  child: Text('Generate Interface'),
+                  onPressed: () {
+                    /* Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InterfaceGenerator(),
+                      ),
+                    ); */
+                  },
+                  // set the color of the button and the text
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  animationDuration: Duration(milliseconds: 500),
+                  //size of the button
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  //position of the button in the left side of the page
+                  padding: EdgeInsets.all(15.0),
+                ),
+                // the second button will be used to see all the interfaces generated
+                RaisedButton(
+                  child: Text('See All Interfaces'),
+                  onPressed: () {
+                    /* Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InterfaceList(),
+                      ),
+                    ); */
+                  },
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  animationDuration: Duration(milliseconds: 500),
+                  //size of the button
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  //position of the button in the right side of the page
+                  padding: EdgeInsets.all(15.0),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:afterdrawing/src/pages/Login.dart';
 import 'package:afterdrawing/src/pages/Project.dart';
+import 'package:afterdrawing/src/pages/Register.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -11,6 +12,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case 'project':
       // dirigir a la pagina de proyectos
       return MaterialPageRoute(builder: (context) => ProjectList());
+    case 'register':
+      // dirigir a la pagina de proyectos
+      return MaterialPageRoute(builder: (context) => RegisterPage());
 
     default:
       return MaterialPageRoute(
