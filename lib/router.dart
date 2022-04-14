@@ -1,3 +1,4 @@
+import 'package:afterdrawing/src/pages/GuideElement.dart';
 import 'package:afterdrawing/src/pages/Home.dart';
 import 'package:afterdrawing/src/pages/Login.dart';
 import 'package:afterdrawing/src/pages/Project.dart';
@@ -18,6 +19,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case 'home':
       // dirigir a la pagina de proyectos
       return MaterialPageRoute(builder: (context) => Home());
+    case 'guide':
+      // dirigir a la pagina de proyectos
+      return MaterialPageRoute(builder: (context) => GuideElement());
     default:
       return MaterialPageRoute(
           builder: (context) => Scaffold(
