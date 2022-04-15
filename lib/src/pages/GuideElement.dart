@@ -83,7 +83,14 @@ class GuideElement extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text('SearchBar'),
+                  // espacio
+                  SizedBox(
+                    width: 40,
+                  ),
+                  Divider(),
+                  Container(
+                    child: Text('A search Bar'),
+                  ),
                 ],
               ),
             ),
