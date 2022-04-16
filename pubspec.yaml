@@ -29,7 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_search_bar: ^2.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -41,6 +41,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_staggered_grid_view:
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -66,7 +68,11 @@ flutter:
      - lib/src/images/wireframelogo.png
      - lib/src/images/fondologin.jpg
      - lib/src/images/interfaceprueba.png
-
+     - lib/src/images/fondohome.jpg
+     - lib/src/images/fondohome2osi.png
+     - lib/src/images/cuadro_de_texto.png
+     - lib/src/images/image_element_guide.jpg
+     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

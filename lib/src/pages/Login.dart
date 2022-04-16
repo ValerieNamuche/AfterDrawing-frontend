@@ -43,14 +43,15 @@ class _LoginPageState extends State<LoginPage> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Image(
+          const Image(
             image: AssetImage('lib/src/images/fondologin.jpg'),
             fit: BoxFit.cover,
             color: Colors.black54,
             colorBlendMode: BlendMode.darken,
           ),
           ListView(
-            padding: EdgeInsets.only(top: 210, left: 40, right: 40, bottom: 40),
+            padding: const EdgeInsets.only(
+                top: 210, left: 40, right: 40, bottom: 40),
             children: <Widget>[
               Image.asset(
                 'lib/src/images/wireframelogo.png',
@@ -62,11 +63,11 @@ class _LoginPageState extends State<LoginPage> {
                 data: ThemeData(
                     brightness: Brightness.dark,
                     primarySwatch: Colors.teal,
-                    inputDecorationTheme: InputDecorationTheme(
+                    inputDecorationTheme: const InputDecorationTheme(
                         labelStyle:
                             TextStyle(color: Colors.white, fontSize: 20))),
                 child: Container(
-                  padding: EdgeInsets.only(bottom: 40.0, top: 20.0),
+                  padding: const EdgeInsets.only(bottom: 40.0, top: 20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
@@ -113,17 +114,18 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   },
                   style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(Size(400, 50)),
+                    minimumSize: MaterialStateProperty.all(const Size(400, 50)),
                     padding: MaterialStateProperty.all(
-                        EdgeInsets.symmetric(vertical: 10, horizontal: 10)),
-                    shape: MaterialStateProperty.all(new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(10.0),
+                        const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     )),
                   ),
                   child: const Text('Iniciar sesión'),
                 ),
               ),
-              Divider(),
+              const Divider(),
               Center(
                 child: RichText(
                   text: TextSpan(
@@ -131,6 +133,18 @@ class _LoginPageState extends State<LoginPage> {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigator.pushNamed(context, 'register');
+                      },
+                  ),
+                ),
+              ),
+              const Divider(),
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    text: '¿Olvidaste tu contraseña?',
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.pushNamed(context, 'forgot_password');
                       },
                   ),
                 ),
