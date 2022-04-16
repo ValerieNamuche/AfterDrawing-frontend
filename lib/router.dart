@@ -1,6 +1,9 @@
+import 'package:afterdrawing/src/pages/ForgotPassword.dart';
+import 'package:afterdrawing/src/pages/GenerateInterfaces.dart';
 import 'package:afterdrawing/src/pages/GuideElement.dart';
 import 'package:afterdrawing/src/pages/Home.dart';
 import 'package:afterdrawing/src/pages/Login.dart';
+import 'package:afterdrawing/src/pages/NewPassword.dart';
 import 'package:afterdrawing/src/pages/Project.dart';
 import 'package:afterdrawing/src/pages/Register.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +25,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case 'guide':
       // dirigir a la pagina de proyectos
       return MaterialPageRoute(builder: (context) => GuideElement());
+    case 'forgot_password':
+      return MaterialPageRoute(builder: (context) => ForgotPassword());
+    case 'new_password':
+      return MaterialPageRoute(builder: (context) => NewPassword());
+    case 'generate_interfaces':
+      return MaterialPageRoute(builder: (context) => GenerateInterfaces());
     default:
       return MaterialPageRoute(
           builder: (context) => Scaffold(

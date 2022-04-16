@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
 //home page of afterdrawing who the user redirects to login page
@@ -10,12 +12,12 @@ class Home extends StatelessWidget {
         // el fondo
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('lib/src/images/fondohome.jpg'),
+            image: const AssetImage('lib/src/images/fondohome.jpg'),
 
             fit: BoxFit.cover,
             // opacidad
             colorFilter: ColorFilter.mode(
-                Color.fromARGB(255, 202, 166, 166).withOpacity(0.8),
+                const Color.fromARGB(255, 202, 166, 166).withOpacity(0.8),
                 BlendMode.dstATop),
           ),
         ),
@@ -25,7 +27,7 @@ class Home extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children: <Widget>[
-            Container(
+            SizedBox(
               // imagen
               width: MediaQuery.of(context).size.width * 0.5,
               height: MediaQuery.of(context).size.height * 0.8,
@@ -34,14 +36,14 @@ class Home extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            Container(
+            SizedBox(
               // texto
               width: MediaQuery.of(context).size.width * 0.3,
               height: MediaQuery.of(context).size.height,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Convierta sus Wireframe en Interfaces de sus Ususarios Móviles',
                     style: TextStyle(
                       fontSize: 40,
@@ -49,10 +51,10 @@ class Home extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     'Reduzca el tiempo de desarrollo y la complejidad de su proyecto',
                     style: TextStyle(
                       fontSize: 20,
@@ -60,21 +62,21 @@ class Home extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.5,
                     height: MediaQuery.of(context).size.height * 0.1,
                     child: RaisedButton(
                       onPressed: () {
                         Navigator.pushNamed(context, 'login');
                       },
-                      color: Color.fromARGB(255, 97, 95, 221),
+                      color: const Color.fromARGB(255, 97, 95, 221),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Comienza Ahora',
                         style: TextStyle(
                           fontSize: 20,
@@ -87,17 +89,15 @@ class Home extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0, left: 100.0),
-                  child: Image.asset(
-                    'lib/src/images/wireframelogo.png',
-                    width: 100,
-                    height: 250,
-                    alignment: Alignment.bottomRight,
-                  ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 20.0, left: 100.0),
+                child: Image.asset(
+                  'lib/src/images/wireframelogo.png',
+                  width: 100,
+                  height: 250,
+                  alignment: Alignment.bottomRight,
                 ),
               ),
             ),

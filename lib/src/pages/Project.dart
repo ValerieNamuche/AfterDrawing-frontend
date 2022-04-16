@@ -1,6 +1,6 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 //Class Project with title and description
 class Project {
@@ -30,7 +30,7 @@ class ProjectList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Projects'),
+        title: const Text('Projects'),
       ),
       body: ListView.builder(
         itemCount: projects.length,
@@ -66,11 +66,11 @@ class ProjectDetail extends StatelessWidget {
       ),
       // the project description and image will be displayed in a card and two buttons will be displayed in a row at the bottom of the page
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
             Text(project.description),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             Image.asset(
               // the image will be displayed in the center of the page with a width of 300 and a height of 300 pixels
 
@@ -79,13 +79,13 @@ class ProjectDetail extends StatelessWidget {
               width: 500,
               height: 500,
             ),
-            SizedBox(height: 15.0),
+            const SizedBox(height: 15.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 // the first button will be used to go to generate interface
                 RaisedButton(
-                  child: Text('Generate Interface'),
+                  child: const Text('Generate Interface'),
                   onPressed: () {
                     /* Navigator.push(
                       context,
@@ -97,17 +97,17 @@ class ProjectDetail extends StatelessWidget {
                   // set the color of the button and the text
                   color: Colors.blue,
                   textColor: Colors.white,
-                  animationDuration: Duration(milliseconds: 500),
+                  animationDuration: const Duration(milliseconds: 500),
                   //size of the button
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   //position of the button in the left side of the page
-                  padding: EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(15.0),
                 ),
                 // the second button will be used to see all the interfaces generated
                 RaisedButton(
-                  child: Text('See All Interfaces'),
+                  child: const Text('See All Interfaces'),
                   onPressed: () {
                     /* Navigator.push(
                       context,
@@ -118,13 +118,13 @@ class ProjectDetail extends StatelessWidget {
                   },
                   color: Colors.blue,
                   textColor: Colors.white,
-                  animationDuration: Duration(milliseconds: 500),
+                  animationDuration: const Duration(milliseconds: 500),
                   //size of the button
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   //position of the button in the right side of the page
-                  padding: EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(15.0),
                 ),
               ],
             ),

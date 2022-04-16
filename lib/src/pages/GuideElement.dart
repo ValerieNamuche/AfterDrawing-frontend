@@ -1,12 +1,15 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
 //Create a GridView of 6 elements
 class GuideElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    int val = -1;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Guía de elementos Reconocidos'),
+        title: const Text('Guía de elementos Reconocidos'),
       ),
       body: GridView.count(
         crossAxisCount: 2,
@@ -29,150 +32,120 @@ class GuideElement extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      // a table 2x2 with checkbox and radio button inside
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  child: Checkbox(
-                                    value: true,
-                                    onChanged: (value) {},
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    'Option',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              child: Checkbox(
+                                value: true,
+                                onChanged: (value) {},
+                              ),
                             ),
-                          ),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  child: Radio(
-                                    value: true,
-                                    onChanged: (value) {},
-                                    groupValue: 1,
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    'Option',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            const Text(
+                              'Option',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 40,
-                    ),
-                    Container(
-                      // a table 2x2 with checkbox and radio button inside
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  child: Checkbox(
-                                    value: false,
-                                    onChanged: (value) {},
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    'Option',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Radio(
+                              value: 1,
+                              onChanged: (value) {},
+                              groupValue: val,
                             ),
-                          ),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  child: Radio(
-                                    //RadioButton is marked with true
-                                    value: false,
-                                    onChanged: (value) {},
-                                    groupValue: 2,
-                                    toggleable: true,
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    'Option',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            const Text(
+                              'Option',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      width: 40,
+                    const SizedBox(
+                      width: 20,
                     ),
-                    Container(
-                      //set text and button
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Checked View'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          RaisedButton(
-                            onPressed: () => {},
-                            // diseño del boton
-                            child: Text('Ver Ejemplos'),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Checkbox(
+                              value: false,
+                              onChanged: (value) {},
+                            ),
+                            Container(
+                              child: const Text(
+                                'Option',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Radio(
+                              //RadioButton is marked with true
+                              value: val,
+                              onChanged: (value) {},
+                              groupValue: 2,
+                            ),
+                            const Text(
+                              'Option',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        const Text('Checked View'),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        RaisedButton(
+                          onPressed: () => {},
+                          // diseño del boton
+                          child: const Text('Ver Ejemplos'),
 
-                            // color del boton
-                            color: Color.fromARGB(255, 43, 134, 209),
-                            // circular shape
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                          // color del boton
+                          color: const Color.fromARGB(255, 43, 134, 209),
+                          // circular shape
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -198,37 +171,35 @@ class GuideElement extends StatelessWidget {
                     Container(
                       child: RaisedButton(
                         onPressed: () => {},
-                        child: Text("Button"),
+                        child: const Text("Button"),
                       ),
                     ),
                     // espacio entre los elementos
-                    SizedBox(
+                    const SizedBox(
                       width: 40,
                     ),
-                    Container(
-                      // set text and button in a Column
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Button Text'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          RaisedButton(
-                            onPressed: () => {},
-                            // diseño del boton
-                            child: Text('Ver Ejemplos'),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        const Text('Button Text',
+                            style: TextStyle(fontSize: 15)),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        RaisedButton(
+                          onPressed: () => {},
+                          // diseño del boton
+                          child: const Text('Ver Ejemplos'),
 
-                            // color del boton
-                            color: Color.fromARGB(255, 43, 134, 209),
-                            // circular shape
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                          // color del boton
+                          color: const Color.fromARGB(255, 43, 134, 209),
+                          // circular shape
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -248,9 +219,9 @@ class GuideElement extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 100,
-                      child: Container(
+                      child: SizedBox(
                         width: 100,
                         //two text fields
                         child: Column(
@@ -269,7 +240,7 @@ class GuideElement extends StatelessWidget {
                               ),
                             ),
 
-                            Divider(
+                            const Divider(
                               height: 25,
                               color: Colors.transparent,
                             ),
@@ -291,34 +262,31 @@ class GuideElement extends StatelessWidget {
                     ),
 
                     // espacio
-                    SizedBox(
+                    const SizedBox(
                       width: 40,
                     ),
-                    Divider(),
-                    Container(
-                      // set text and button in a Column
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Input Text'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          RaisedButton(
-                            onPressed: () => {},
-                            // diseño del boton
-                            child: Text('Ver Ejemplos'),
+                    const Divider(),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        const Text('Input Text'),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        RaisedButton(
+                          onPressed: () => {},
+                          // diseño del boton
+                          child: const Text('Ver Ejemplos'),
 
-                            // color del boton
-                            color: Color.fromARGB(255, 43, 134, 209),
-                            // circular shape
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                          // color del boton
+                          color: const Color.fromARGB(255, 43, 134, 209),
+                          // circular shape
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -338,50 +306,175 @@ class GuideElement extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 100,
-                      child: Container(
+                      child: SizedBox(
                         width: 100,
                         //two text fields
                         child: IconButton(
-                          icon: Icon(Icons.home),
+                          icon: const Icon(Icons.home),
                           onPressed: () => {},
                           // color del boton y tamano del icono
-                          color: Color.fromARGB(255, 43, 134, 209),
+                          color: const Color.fromARGB(255, 43, 134, 209),
                           iconSize: 40,
                         ),
                       ),
                     ),
 
                     // espacio
-                    SizedBox(
+                    const SizedBox(
                       width: 40,
                     ),
-                    Divider(),
-                    Container(
-                      // set text and button in a Column
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Input Text'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          RaisedButton(
-                            onPressed: () => {},
-                            // diseño del boton
-                            child: Text('Ver Ejemplos'),
+                    const Divider(),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        const Text('Icon'),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        RaisedButton(
+                          onPressed: () => {},
+                          // diseño del boton
+                          child: const Text('Ver Ejemplos'),
 
-                            // color del boton
-                            color: Color.fromARGB(255, 43, 134, 209),
-                            // circular shape
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                          // color del boton
+                          color: const Color.fromARGB(255, 43, 134, 209),
+                          // circular shape
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Container with a image cuadro_de_texto.png
+          Container(
+            width: 100,
+            padding: const EdgeInsets.all(10.0),
+            child: Expanded(
+              child: Card(
+                // Color que combina el fondo con el texto
+                color: Colors.blueGrey[100],
+
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      width: 40,
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        //image with size
+                        child: Image.asset(
+                          'lib/src/images/cuadro_de_texto.png',
+                          width: 100,
+                          fit: BoxFit.fill,
+
+                          // color del boton y tamano del icono
+                        ),
                       ),
+                    ),
+
+                    // espacio
+                    const SizedBox(
+                      width: 40,
+                    ),
+                    const Divider(),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        const Text('Text'),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        RaisedButton(
+                          onPressed: () => {},
+                          // diseño del boton
+                          child: const Text('Ver Ejemplos'),
+
+                          // color del boton
+                          color: const Color.fromARGB(255, 43, 134, 209),
+                          // circular shape
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Container with a image cuadro_de_texto.png
+          Container(
+            width: 100,
+            padding: const EdgeInsets.all(10.0),
+            child: Expanded(
+              child: Card(
+                // Color que combina el fondo con el texto
+                color: Colors.blueGrey[100],
+
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      width: 40,
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        //image with size
+                        child: Image.asset(
+                          'lib/src/images/image_element_guide.jpg',
+                          width: 100,
+                          fit: BoxFit.fill,
+
+                          // color del boton y tamano del icono
+                        ),
+                      ),
+                    ),
+
+                    // espacio
+                    const SizedBox(
+                      width: 40,
+                    ),
+                    const Divider(),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        const Text('Image'),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        RaisedButton(
+                          onPressed: () => {},
+                          // diseño del boton
+                          child: const Text('Ver Ejemplos'),
+
+                          // color del boton
+                          color: const Color.fromARGB(255, 43, 134, 209),
+                          // circular shape
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 20,
                     ),
                   ],
                 ),
@@ -395,4 +488,3 @@ class GuideElement extends StatelessWidget {
 }
 
 // Create a Enum from widgets like buttons, searchbars, scrollbar,etc
-

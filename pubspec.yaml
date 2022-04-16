@@ -70,6 +70,8 @@ flutter:
      - lib/src/images/interfaceprueba.png
      - lib/src/images/fondohome.jpg
      - lib/src/images/fondohome2osi.png
+     - lib/src/images/cuadro_de_texto.png
+     - lib/src/images/image_element_guide.jpg
      
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

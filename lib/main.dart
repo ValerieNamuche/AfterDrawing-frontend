@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      initialRoute: 'guide',
+      initialRoute: 'generate_interfaces',
       onGenerateRoute: router.generateRoute,
     );
   }

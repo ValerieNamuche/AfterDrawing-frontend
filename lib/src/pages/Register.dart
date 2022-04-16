@@ -1,11 +1,10 @@
+// ignore_for_file: unnecessary_new
+
 import 'dart:convert';
 import 'package:afterdrawing/src/endpoints/endpoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-// import router.dart
-import 'package:afterdrawing/router.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -38,7 +37,7 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Image(
+          const Image(
             image: AssetImage('lib/src/images/fondologin.jpg'),
             fit: BoxFit.cover,
             color: Colors.black54,
@@ -57,11 +56,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 data: ThemeData(
                     brightness: Brightness.dark,
                     primarySwatch: Colors.blue,
-                    inputDecorationTheme: InputDecorationTheme(
+                    inputDecorationTheme: const InputDecorationTheme(
                         labelStyle:
                             TextStyle(color: Colors.white, fontSize: 20))),
                 child: Container(
-                  padding: EdgeInsets.only(bottom: 40.0),
+                  padding: const EdgeInsets.only(bottom: 40.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
@@ -88,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 keyboardType: TextInputType.emailAddress,
                               ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Flexible(
                               child: TextFormField(
                                 controller: lastNameText,
@@ -141,18 +140,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          /* Checkbox(
+                          Checkbox(
                             activeColor: Colors.blue,
                             value: conditionsAccepted,
-                            onChanged: (bool value) {
-                              setState(() {
-                                conditionsAccepted = value;
-                              });
-                            },
-                          ), */
-                          Text(
+                            onChanged: (bool? value) {},
+                          ),
+                          const Text(
                             'Acepto los términos y condiciones',
-                            style: const TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.white),
                           )
                         ],
                       ),
@@ -214,7 +209,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: ButtonStyle(
                     minimumSize: MaterialStateProperty.all(Size(500, 50)),
                     padding: MaterialStateProperty.all(
-                        EdgeInsets.symmetric(vertical: 10, horizontal: 10)),
+                        const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10)),
                     shape: MaterialStateProperty.all(new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(10.0),
                     )),
