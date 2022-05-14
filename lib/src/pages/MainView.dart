@@ -1,4 +1,5 @@
 import 'package:afterdrawing/src/pages/GenerateInterfaces1.dart';
+import 'package:afterdrawing/src/pages/GenerateInterfaces2.dart';
 import 'package:afterdrawing/src/pages/GuideElement.dart';
 import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:afterdrawing/src/widgets/custom_nav_bar.dart';
@@ -33,6 +34,9 @@ Route _onGenerateRoute(RouteSettings settings) {
       break;
     case "guide":
       view = GuideElement();
+      break;
+    case "generate_interfaces2":
+      view = GenerateInterfaces2();
       break;
     default:
       print("Nombre de subruta: " + settings.name!);

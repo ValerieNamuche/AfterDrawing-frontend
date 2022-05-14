@@ -1,5 +1,6 @@
 import 'package:afterdrawing/src/pages/ForgotPassword.dart';
 import 'package:afterdrawing/src/pages/GenerateInterfaces.dart';
+import 'package:afterdrawing/src/pages/GenerateInterfaces2.dart';
 import 'package:afterdrawing/src/pages/GuideElement.dart';
 import 'package:afterdrawing/src/pages/Home.dart';
 import 'package:afterdrawing/src/pages/Login.dart';
@@ -35,6 +36,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => GenerateInterfaces());
     case 'generate_interfaces1':
       return MaterialPageRoute(builder: (context) => MainView());
+    /*case "generate_interfaces2":
+      return MaterialPageRoute(builder: (context) => GenerateInterfaces2());*/
     default:
       return MaterialPageRoute(
           builder: (context) => Scaffold(

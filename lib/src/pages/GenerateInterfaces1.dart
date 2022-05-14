@@ -1,5 +1,8 @@
+import 'package:afterdrawing/src/core/provider/wireframeProvider.dart';
 import 'package:afterdrawing/src/pages/GuideElement.dart';
+import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:afterdrawing/src/widgets/custom_nav_bar.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:html';
 
@@ -18,6 +21,8 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
   late double topPadding;
   late double bottomPadding;
   late double sidePadding;
+
+  WireframeProvider wireframeProvider = WireframeProvider();
 
   @override
   void initState() {
@@ -81,7 +86,10 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
                     alignment: WrapAlignment.spaceBetween,
                     children: <Widget>[
                       RaisedButton(
-                        onPressed: () => {uploadImage()},
+                        onPressed: () {
+                          uploadImageWithFilePicker();
+                          //var resultImage = FilePicker.platform.pickFiles();
+                        },
                         // diseño del boton
                         child: const Text(
                           'Subir Wireframe',
@@ -133,6 +141,19 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
       )),
     );
   }
+
+  void uploadImageWithFilePicker() async {
+    wireframeProvider.uploadImagetoBack().then((value) {
+      if (value == false) {
+        // No hace nada
+      } else if (value == Future.error("Internal Server Error")) {
+        print("Un error ha ocurrido");
+      } else {
+        Utils.homeNavigator.currentState!
+            .pushNamed("generate_interfaces2", arguments: value);
+      }
+    });
+  }
 }
 
 void uploadImage() {
@@ -145,6 +166,7 @@ void uploadImage() {
     final reader = FileReader();
     reader.readAsDataUrl(file);
     reader.onLoadEnd.listen((event) {
+      print(file.name);
       print('Done');
     });
   });
