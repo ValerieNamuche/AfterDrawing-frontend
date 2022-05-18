@@ -114,146 +114,154 @@ import 'package:flutter/material.dart';
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Column(
-                  //Columna del archivo descargado con un titulo
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Divider(
-                      height: 30,
-                    ),
-                    Text(
-                      "Código generado",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    Divider(
-                      height: 30,
-                    ),
-                    FutureBuilder(
-                        future: wireframeProvider
-                            .getWireframeInfo(nameFileArgument),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                                  ConnectionState.done &&
-                              snapshot.hasData) {
-                            var textCode = convertListToString(
-                                snapshot.data as List<String>);
+                Flexible(
+                  child: Column(
+                    //Columna del archivo descargado con un titulo
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        "Código generado",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      FutureBuilder(
+                          future: wireframeProvider
+                              .getWireframeInfo(nameFileArgument),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                    ConnectionState.done &&
+                                snapshot.hasData) {
+                              var textCode = convertListToString(
+                                  snapshot.data as List<String>);
 
-                            return Container(
-                              width: 400,
-                              height: 550,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Scrollbar(
-                                  controller: _scrollController,
-                                  child: SingleChildScrollView(
+                              return Container(
+                                margin: EdgeInsets.only(left: 20, right: 20),
+                                width: 400,
+                                height: 550,
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Scrollbar(
                                     controller: _scrollController,
-                                    scrollDirection: Axis.horizontal,
-                                    child: SelectableText(
-                                      textCode,
-                                      scrollPhysics: ClampingScrollPhysics(),
-                                      toolbarOptions:
-                                          ToolbarOptions(copy: true),
-                                      onTap: () {
-                                        Clipboard.setData(
-                                            ClipboardData(text: textoPrueba));
-                                        setState(() {
-                                          isCopied = true;
-                                          print(isCopied.toString());
-                                        });
-                                      },
+                                    child: SingleChildScrollView(
+                                      controller: _scrollController,
+                                      scrollDirection: Axis.horizontal,
+                                      child: SelectableText(
+                                        textCode,
+                                        scrollPhysics: ClampingScrollPhysics(),
+                                        toolbarOptions:
+                                            ToolbarOptions(copy: true),
+                                        onTap: () {
+                                          Clipboard.setData(
+                                              ClipboardData(text: textoPrueba));
+                                          setState(() {
+                                            isCopied = true;
+                                            print(isCopied.toString());
+                                          });
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          } else if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Container(
-                              width: 400,
-                              height: 550,
-                              child: Center(
-                                child: CircularProgressIndicator.adaptive(),
-                              ),
-                            );
-                          } else {
-                            return Container(
-                              width: 400,
-                              height: 550,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Scrollbar(
-                                  controller: _scrollController,
-                                  child: SingleChildScrollView(
+                              );
+                            } else if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Container(
+                                width: 400,
+                                height: 550,
+                                child: Center(
+                                  child: CircularProgressIndicator.adaptive(),
+                                ),
+                              );
+                            } else {
+                              return Container(
+                                margin: EdgeInsets.only(left: 20, right: 20),
+                                width: 400,
+                                height: 550,
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Scrollbar(
                                     controller: _scrollController,
-                                    scrollDirection: Axis.horizontal,
-                                    child: SelectableText(
-                                      textoPrueba,
-                                      scrollPhysics: ClampingScrollPhysics(),
-                                      toolbarOptions:
-                                          ToolbarOptions(copy: true),
-                                      onTap: () {
-                                        Clipboard.setData(
-                                            ClipboardData(text: textoPrueba));
-                                        setState(() {
-                                          isCopied = true;
-                                          print(isCopied.toString());
-                                        });
-                                      },
+                                    child: SingleChildScrollView(
+                                      controller: _scrollController,
+                                      scrollDirection: Axis.horizontal,
+                                      child: SelectableText(
+                                        textoPrueba,
+                                        scrollPhysics: ClampingScrollPhysics(),
+                                        toolbarOptions:
+                                            ToolbarOptions(copy: true),
+                                        onTap: () {
+                                          Clipboard.setData(
+                                              ClipboardData(text: textoPrueba));
+                                          setState(() {
+                                            isCopied = true;
+                                            print(isCopied.toString());
+                                          });
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                            /*return Container(
+                              );
+                              /*return Container(
+                                width: 400,
+                                height: 550,
+                                child: Center(
+                                  child: Text("Error con el servidor"),
+                                ),
+                              );*/
+                            }
+                          }),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      isCopied
+                          ? Container(
+                              margin: EdgeInsets.only(left: 20, right: 20),
                               width: 400,
-                              height: 550,
+                              height: 25,
+                              color: Colors.green[200],
                               child: Center(
-                                child: Text("Error con el servidor"),
-                              ),
-                            );*/
-                          }
-                        }),
-                    Divider(
-                      height: 30,
-                    ),
-                    isCopied
-                        ? Container(
-                            width: 400,
-                            height: 25,
-                            color: Colors.green[200],
-                            child: Center(
-                                child: Text("Copiado al portapapeles!",
-                                    style: TextStyle(
-                                        color: Colors.green[800],
-                                        fontWeight: FontWeight.bold))))
-                        : Divider(
-                            height: 0,
-                          ),
-                    Divider(
-                      height: 30,
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          wireframeProvider.downloadCode();
-                        },
-                        child: Text("Descargar código"))
-                  ],
+                                  child: Text("Copiado al portapapeles!",
+                                      style: TextStyle(
+                                          color: Colors.green[800],
+                                          fontWeight: FontWeight.bold))))
+                          : SizedBox(
+                              height: 0,
+                            ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            wireframeProvider.downloadCode();
+                          },
+                          child: Text("Descargar código"))
+                    ],
+                  ),
                 ),
-                FadeInImage(
-                    width: 200,
-                    placeholder: AssetImage("lib/src/images/wireframelogo.png"),
-                    image: NetworkImage(
-                        'http://localhost:8081/api/get/wireframe/${nameFileArgument}'),
-                    imageErrorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        "lib/src/images/wireframelogo.png",
-                        width: 400,
-                      );
-                    }),
+                Flexible(
+                  child: FadeInImage(
+                      width: 200,
+                      placeholder:
+                          AssetImage("lib/src/images/wireframelogo.png"),
+                      image: NetworkImage(
+                          'http://localhost:8081/api/get/wireframe/${nameFileArgument}'),
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          "lib/src/images/wireframelogo.png",
+                          width: 400,
+                        );
+                      }),
+                ),
               ],
             ),
           ),
