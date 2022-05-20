@@ -96,8 +96,14 @@ import 'package:flutter/material.dart';
 
   @override
   Widget build(BuildContext context) {
-    String nameFileArgument =
-        ModalRoute.of(context)!.settings.arguments as String;
+    var argument = ModalRoute.of(context)!.settings.arguments;
+
+    String nameFileArgument;
+    if (argument == null) {
+      nameFileArgument = textoPrueba;
+    } else {
+      nameFileArgument = ModalRoute.of(context)!.settings.arguments as String;
+    }
 
     return Scaffold(
       body: Container(
