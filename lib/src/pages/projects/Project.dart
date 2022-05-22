@@ -1,27 +1,31 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:flutter/material.dart';
+
+import 'ProjectDetails.dart';
 
 //Class Project with title and description
 class Project {
   final String title;
   final String description;
+  final int ninterfaces;
 
-  Project(this.title, this.description);
+  Project(this.title, this.description, this.ninterfaces);
 }
 
 //Use the Project class to create a list of projects
 List<Project> projects = [
-  Project('Project 1', 'Description 1'),
-  Project('Project 2', 'Description 2'),
-  Project('Project 3', 'Description 3'),
-  Project('Project 4', 'Description 4'),
-  Project('Project 5', 'Description 5'),
-  Project('Project 6', 'Description 6'),
-  Project('Project 7', 'Description 7'),
-  Project('Project 8', 'Description 8'),
-  Project('Project 9', 'Description 9'),
-  Project('Project 10', 'Description 10'),
+  Project('Project 1', 'Description 1', 5),
+  Project('Project 2', 'Description 2', 5),
+  Project('Project 3', 'Description 3', 5),
+  Project('Project 4', 'Description 4', 5),
+  Project('Project 5', 'Description 5', 5),
+  Project('Project 6', 'Description 6', 5),
+  Project('Project 7', 'Description 7', 5),
+  Project('Project 8', 'Description 8', 5),
+  Project('Project 9', 'Description 9', 5),
+  Project('Project 10', 'Description 10', 5),
 ];
 
 // Create a class that will be used to create a list of projects
@@ -29,24 +33,49 @@ class ProjectList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: const Text('Projects'),
-      ),
-      body: ListView.builder(
-        itemCount: projects.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(projects[index].title),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProjectDetail(projects[index]),
-                ),
-              );
-            },
-          );
-        },
+      ),*/
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
+            child: Text(
+              'Mis Projectos',
+              style: TextStyle(fontSize: 25),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: projects.length,
+              itemBuilder: (context, index) {
+                //elevation: 6,
+                return Card(
+                  margin:
+                      EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.all(10),
+                    leading: CircleAvatar(
+                        backgroundImage:
+                            AssetImage('lib/src/images/wireframelogo.png')),
+                    title: Text(projects[index].title),
+                    trailing: IconButton(
+                      color: Colors.red,
+                      icon: Icon(Icons.delete),
+                      onPressed: () {},
+                    ),
+                    onTap: () {
+                      Utils.homeNavigator.currentState!.pushNamed(
+                          'project_details',
+                          arguments: projects[index]);
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

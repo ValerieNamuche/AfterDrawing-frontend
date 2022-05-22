@@ -28,6 +28,11 @@ class CustomNavBar extends StatelessWidget {
                 "Generador",
                 style: TextStyle(fontSize: 17),
               )),
+          ElevatedButton(
+              onPressed: () {
+                Utils.homeNavigator.currentState!.pushNamed("project");
+              },
+              child: Text("Projectos", style: TextStyle(fontSize: 17))),
           Padding(
             padding: EdgeInsets.only(right: 30),
             child: ElevatedButton(

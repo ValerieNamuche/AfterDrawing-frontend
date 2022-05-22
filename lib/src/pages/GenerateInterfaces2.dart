@@ -1,3 +1,4 @@
+import 'package:afterdrawing/src/constants/textoPrueba.dart';
 import 'package:afterdrawing/src/core/provider/wireframeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,71 +29,6 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
   }
 
   var isCopied = false;
-
-  String textoPrueba = '''        (Problemas con servidor - Texto de Prueba)
-
-import 'package:flutter/material.dart';
-    void main() => runApp(const MyApp());
-    class MyApp extends StatelessWidget
-    {
-        const MyApp({Key? key}) : super(key: key);
-        @override
-        Widget build(BuildContext context)
-        {
-            return MaterialApp
-                (
-                home: Scaffold
-                    (
-                    appBar: AppBar(),
-                    body: Stack
-                        (
-                        children: <Widget>
-                            [
-                            Container
-                                (
-                                alignment: Alignment.bottomCenter,
-                                padding: const EdgeInsets.all(10),
-                                child: TextField
-                                    (
-                                    decoration: const InputDecoration            
-                                        (
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Input Text',
-                                        )
-                                    )
-                                ),
-                            Container
-                                (
-                                alignment: Alignment.bottomCenter,
-                                padding: const EdgeInsets.all(10),
-                                child: TextField
-                                    (
-                                    decoration: const InputDecoration
-                                        (
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Input Text',
-                                        )
-                                    )
-                                ),
-                            Container
-                                (
-                                child: Align
-                                    (
-                                    alignment: Alignment.centerRight,
-                                    child: Text
-                                        (
-                                        'Some text here',
-                                        style: TextStyle(),
-                                        )
-                                    )
-                                ),
-                            ]
-                        )
-                    )
-                );
-        }
-    }
-  ''';
 
   @override
   Widget build(BuildContext context) {
@@ -145,37 +81,7 @@ import 'package:flutter/material.dart';
                               var textCode = convertListToString(
                                   snapshot.data as List<String>);
 
-                              return Container(
-                                margin: EdgeInsets.only(left: 20, right: 20),
-                                width: 400,
-                                height: 550,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Scrollbar(
-                                    controller: _scrollController,
-                                    child: SingleChildScrollView(
-                                      controller: _scrollController,
-                                      scrollDirection: Axis.horizontal,
-                                      child: SelectableText(
-                                        textCode,
-                                        scrollPhysics: ClampingScrollPhysics(),
-                                        toolbarOptions:
-                                            ToolbarOptions(copy: true),
-                                        onTap: () {
-                                          Clipboard.setData(
-                                              ClipboardData(text: textoPrueba));
-                                          setState(() {
-                                            isCopied = true;
-                                            print(isCopied.toString());
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
+                              return CodeView(textCode);
                             } else if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               return Container(
@@ -186,37 +92,7 @@ import 'package:flutter/material.dart';
                                 ),
                               );
                             } else {
-                              return Container(
-                                margin: EdgeInsets.only(left: 20, right: 20),
-                                width: 400,
-                                height: 550,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Scrollbar(
-                                    controller: _scrollController,
-                                    child: SingleChildScrollView(
-                                      controller: _scrollController,
-                                      scrollDirection: Axis.horizontal,
-                                      child: SelectableText(
-                                        textoPrueba,
-                                        scrollPhysics: ClampingScrollPhysics(),
-                                        toolbarOptions:
-                                            ToolbarOptions(copy: true),
-                                        onTap: () {
-                                          Clipboard.setData(
-                                              ClipboardData(text: textoPrueba));
-                                          setState(() {
-                                            isCopied = true;
-                                            print(isCopied.toString());
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
+                              return CodeView(textoPrueba);
                               /*return Container(
                                 width: 400,
                                 height: 550,
@@ -272,6 +148,39 @@ import 'package:flutter/material.dart';
             ),
           ),
         ]),
+      ),
+    );
+  }
+
+  Widget CodeView(String contentCode) {
+    return Container(
+      margin: EdgeInsets.only(left: 20, right: 20),
+      width: 400,
+      height: 550,
+      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Scrollbar(
+          controller: _scrollController,
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            scrollDirection: Axis.horizontal,
+            child: SelectableText(
+              contentCode,
+              scrollPhysics: ClampingScrollPhysics(),
+              toolbarOptions: ToolbarOptions(copy: true),
+              onTap: () {
+                Clipboard.setData(ClipboardData(text: contentCode));
+                setState(() {
+                  if (!isCopied) {
+                    isCopied = true;
+                  }
+                  print(isCopied.toString());
+                });
+              },
+            ),
+          ),
+        ),
       ),
     );
   }

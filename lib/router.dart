@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:afterdrawing/src/pages/ForgotPassword.dart';
 import 'package:afterdrawing/src/pages/GenerateInterfaces.dart';
 import 'package:afterdrawing/src/pages/GenerateInterfaces2.dart';
@@ -6,8 +8,10 @@ import 'package:afterdrawing/src/pages/Home.dart';
 import 'package:afterdrawing/src/pages/Login.dart';
 import 'package:afterdrawing/src/pages/MainView.dart';
 import 'package:afterdrawing/src/pages/NewPassword.dart';
-import 'package:afterdrawing/src/pages/Project.dart';
+import 'package:afterdrawing/src/pages/projects/Project.dart';
 import 'package:afterdrawing/src/pages/Register.dart';
+import 'package:afterdrawing/src/pages/projects/ProjectDetails.dart';
+import 'package:afterdrawing/src/pages/projects/WireframeView.dart';
 //import 'package:afterdrawing/src/pages/GenerateInterfaces1.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +42,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => MainView());
     /*case "generate_interfaces2":
       return MaterialPageRoute(builder: (context) => GenerateInterfaces2());*/
+    /*case 'project_details':
+      return MaterialPageRoute(builder: (context) => ProjectDetails());*/
+    /*case 'wireframeview':
+      return MaterialPageRoute(builder: (context) => WireframeView());*/
     default:
       return MaterialPageRoute(
           builder: (context) => Scaffold(

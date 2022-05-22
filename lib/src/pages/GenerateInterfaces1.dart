@@ -23,6 +23,7 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
   late double sidePadding;
 
   WireframeProvider wireframeProvider = WireframeProvider();
+  String nameImage = "";
 
   @override
   void initState() {
@@ -144,11 +145,16 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
 
   void uploadImageWithFilePicker() async {
     wireframeProvider.uploadImagetoBack().then((value) {
-      if (value == false) {
-        // No hace nada
+      if (value == null) {
+        // No hace nada(ignorar)
+
       } else if (value == Future.error("Internal Server Error")) {
         print("Un error ha ocurrido");
+        Utils.homeNavigator.currentState!
+            .pushNamed("generate_interfaces2", arguments: nameImage);
       } else {
+        // si todo va bien
+        nameImage = value;
         Utils.homeNavigator.currentState!
             .pushNamed("generate_interfaces2", arguments: value);
       }
