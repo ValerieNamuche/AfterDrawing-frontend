@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:afterdrawing/src/pages/guide/elementsdialog/button_dialog.dart';
+import 'package:afterdrawing/src/pages/guide/elementsdialog/icon_dialog.dart';
 import 'package:flutter/material.dart';
 
 //Create a GridView of 6 elements
@@ -31,13 +33,13 @@ class GuideElement extends StatelessWidget {
               // insert the elements here we have a widget for each element like buttons, text, images etc. like an interface
 
               //Checkbox and  RadioButton elements in Flutter
-              CheckBoxAndRadioButton(val),
+              CheckBoxAndRadioButtonResponsive(val, context),
               //Button in container
-              ButtonContainer(screenHeight),
+              ButtonContainer(screenHeight, context),
               // search bar using the search bar widget (ganador)
               SearchBarContainer(),
 
-              IconContainer(),
+              IconContainer(context),
               // Container with a image cuadro_de_texto.png
               TextContainerWithImage(),
               // Container with a image cuadro_de_texto.png
@@ -177,7 +179,7 @@ class GuideElement extends StatelessWidget {
     );
   }
 
-  Container IconContainer() {
+  Container IconContainer(context) {
     return Container(
       width: 100,
       padding: const EdgeInsets.all(10.0),
@@ -211,7 +213,13 @@ class GuideElement extends StatelessWidget {
                   height: 10,
                 ),
                 RaisedButton(
-                  onPressed: () => {},
+                  onPressed: () => {
+                    showDialog(
+                        context: context,
+                        builder: (_) {
+                          return IconDialog();
+                        })
+                  },
                   // diseño del boton
                   child: const Text('Ver Ejemplos'),
 
@@ -307,14 +315,14 @@ class GuideElement extends StatelessWidget {
     );
   }
 
-  Container ButtonContainer(double screenWeight) {
-    var textSize = screenWeight;
-    if (screenWeight < 600) {
-      textSize = 15;
-    } else if (screenWeight > 1100) {
-      textSize = 50;
+  Widget ButtonContainer(double screenWeight, context) {
+    var containerWidth = screenWeight * 0.1;
+    if (screenWeight < 680) {
+      containerWidth = 68;
+    } else if (screenWeight > 1800) {
+      containerWidth = 250;
     } else {
-      textSize = screenWeight / 40;
+      containerWidth = screenWeight * 0.1;
     }
     return Container(
       //width: 10,
@@ -342,12 +350,23 @@ class GuideElement extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Text('Button Text', style: TextStyle(fontSize: 15)),
+                Container(
+                  width: containerWidth,
+                  child: FittedBox(
+                      child: Text(
+                          'Button Text' /*, style: TextStyle(fontSize: 15)*/)),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
                 RaisedButton(
-                  onPressed: () => {},
+                  onPressed: () => {
+                    showDialog(
+                        context: context,
+                        builder: (builder) {
+                          return ButtonDialog();
+                        })
+                  },
                   // diseño del boton
                   child: const Text('Ver Ejemplos'),
 
@@ -366,7 +385,17 @@ class GuideElement extends StatelessWidget {
     );
   }
 
-  Container CheckBoxAndRadioButton(int val) {
+  LayoutBuilder CheckBoxAndRadioButtonResponsive(int val, context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      if (constraints.maxWidth > 600) {
+        return CheckBoxAndRadioButtonHorizontal(val);
+      } else {
+        return CheckBoxAndRadioButtonVertical(val);
+      }
+    });
+  }
+
+  Container CheckBoxAndRadioButtonHorizontal(int val) {
     return Container(
       width: 100,
       padding: const EdgeInsets.all(10.0),
@@ -499,6 +528,149 @@ class GuideElement extends StatelessWidget {
       ),
     );
   }
+
+  Container CheckBoxAndRadioButtonVertical(int val) {
+    return Container(
+      width: 100,
+      padding: const EdgeInsets.all(10.0),
+      //elements in the center of the container
+      // the container ajusts the size of the elements
+      alignment: Alignment.center,
+      child: Card(
+        color: Colors.blueGrey[100],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              width: 20,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                const Text('Checked View'),
+                const SizedBox(
+                  height: 10,
+                ),
+                RaisedButton(
+                  onPressed: () => {},
+                  // diseño del boton
+                  child: const Text('Ver Ejemplos'),
+
+                  // color del boton
+                  color: const Color.fromARGB(255, 43, 134, 209),
+                  // circular shape
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Checkbox(
+                            value: true,
+                            onChanged: (value) {},
+                          ),
+                        ),
+                        const Text(
+                          'Option',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Radio(
+                          value: -1,
+                          onChanged: (value) {},
+                          groupValue: val,
+                        ),
+                        const Text(
+                          'Option',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Checkbox(
+                          value: false,
+                          onChanged: (value) {},
+                        ),
+                        Container(
+                          child: const Text(
+                            'Option',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Radio(
+                          //RadioButton is marked with true
+                          value: val,
+                          onChanged: (value) {},
+                          groupValue: 2,
+                        ),
+                        const Text(
+                          'Option',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
+
+  
+
 
 // Create a Enum from widgets like buttons, searchbars, scrollbar,etc

@@ -1,6 +1,6 @@
 import 'package:afterdrawing/src/pages/GenerateInterfaces1.dart';
 import 'package:afterdrawing/src/pages/GenerateInterfaces2.dart';
-import 'package:afterdrawing/src/pages/GuideElement.dart';
+import 'package:afterdrawing/src/pages/guide/GuideElement.dart';
 import 'package:afterdrawing/src/pages/projects/Project.dart';
 import 'package:afterdrawing/src/pages/projects/ProjectDetails.dart';
 import 'package:afterdrawing/src/pages/projects/WireframeView.dart';
