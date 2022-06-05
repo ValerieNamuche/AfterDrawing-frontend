@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   bool userExists = false;
   bool userValid = true;
   bool passValid = true;
-  var isPasswordHidden = false;
+  var isPasswordHidden = true;
 
   var userProvider = UserProvider();
 
@@ -125,12 +125,14 @@ class _LoginPageState extends State<LoginPage> {
                           .login(userText.text, passText.text)
                           .then((value) async {
                         if (value == true) {
-                          widget.changeStateUserLog!(true);
-                          await Future.delayed(Duration(milliseconds: 300));
+                          await Future.delayed(Duration(
+                              milliseconds:
+                                  300)); // tiempo que se demora en mostrarse el Snackbar
                           SnackBarNotification().showSnackbar(
                               Utils.homeNavigator.currentContext!,
                               "Logeado exitoso",
                               "success");
+                          widget.changeStateUserLog!(true);
                           Utils.homeNavigator
                               .currentState! // posible cambio posterior
                               .pushNamed("generate_interfaces1");

@@ -1,7 +1,11 @@
 // ignore_for_file: unnecessary_new
 
 import 'dart:convert';
+import 'package:afterdrawing/src/core/provider/userProvider.dart';
 import 'package:afterdrawing/src/endpoints/endpoints.dart';
+import 'package:afterdrawing/src/model/RegisterDto.dart';
+import 'package:afterdrawing/src/utils/SnackBarNotification.dart';
+import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +24,8 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController emailText = new TextEditingController();
   //TextEditingController phoneText = new TextEditingController();
   TextEditingController repeatPassText = new TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   Map userBody = new Map();
   bool userValid = true;
   bool passValid = true;
@@ -29,6 +35,31 @@ class _RegisterPageState extends State<RegisterPage> {
   //bool phoneValid = true;
   bool repeatPassValid = true;
   bool conditionsAccepted = false;
+
+  saveFormRegister() {
+    var registerProvider = UserProvider();
+    var registerDto = RegisterDto();
+    registerDto.email = emailText.text;
+    registerDto.firstName = firstNameText.text;
+    registerDto.lastName = lastNameText.text;
+    registerDto.userName = userText.text;
+    registerDto.password = passText.text;
+
+    registerProvider.register(registerDto).then((value) async {
+      if (value == true) {
+        await Future.delayed(Duration(
+            milliseconds:
+                300)); // tiempo que se demora en mostrarse el Snackbar
+        SnackBarNotification().showSnackbar(
+            Utils.homeNavigator.currentContext!, "Registro exitoso", "success");
+        Utils.homeNavigator.currentState!.pushNamed("login");
+      } else {
+        SnackBarNotification().showSnackbar(Utils.homeNavigator.currentContext!,
+            "Error en el servidor, intentarlo más tarde", "error");
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     //var userId;
@@ -52,56 +83,87 @@ class _RegisterPageState extends State<RegisterPage> {
                 width: 100,
               ),
               Form(
+                  key: _formKey,
                   child: Theme(
-                data: ThemeData(
-                    brightness: Brightness.dark,
-                    primarySwatch: Colors.blue,
-                    inputDecorationTheme: const InputDecorationTheme(
-                        labelStyle:
-                            TextStyle(color: Colors.white, fontSize: 20))),
-                child: Container(
-                  padding: const EdgeInsets.only(bottom: 40.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      TextFormField(
-                        controller: emailText,
-                        decoration: InputDecoration(
-                          labelText: "Correo",
-                          errorText: emailValid ? null : 'Ingrese su correo',
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Flexible(
-                              child: TextFormField(
-                                controller: firstNameText,
-                                decoration: InputDecoration(
-                                  labelText: "Nombre",
-                                  errorText: firstNameValid
-                                      ? null
-                                      : 'Ingrese su nombre',
-                                ),
-                                keyboardType: TextInputType.emailAddress,
-                              ),
+                    data: ThemeData(
+                        brightness: Brightness.dark,
+                        primarySwatch: Colors.blue,
+                        inputDecorationTheme: const InputDecorationTheme(
+                            labelStyle:
+                                TextStyle(color: Colors.white, fontSize: 20))),
+                    child: Container(
+                      padding: const EdgeInsets.only(bottom: 40.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          TextFormField(
+                            controller: emailText,
+                            decoration: InputDecoration(
+                              labelText: "Correo",
+                              /* errorText:
+                                  emailValid ? null : 'Ingrese su correo',*/
                             ),
-                            const Spacer(),
-                            Flexible(
-                              child: TextFormField(
-                                controller: lastNameText,
-                                decoration: InputDecoration(
-                                  labelText: "Apellido",
-                                  errorText: lastNameValid
-                                      ? null
-                                      : 'Ingrese su apellido',
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (String? email) {
+                              bool validEmail = RegExp(
+                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(email!);
+                              if (email.isEmpty) {
+                                return "Ingrese su correo";
+                              } else if (validEmail == false) {
+                                return "Correo inválido";
+                              } else {
+                                return null;
+                              }
+                            },
+                            textInputAction: TextInputAction.next,
+                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Flexible(
+                                  child: TextFormField(
+                                    controller: firstNameText,
+                                    decoration: InputDecoration(
+                                      labelText: "Nombre",
+                                      /* errorText: firstNameValid
+                                          ? null
+                                          : 'Ingrese su nombre',*/
+                                    ),
+                                    validator: (String? firstName) {
+                                      if (firstName!.isEmpty) {
+                                        return "Ingrese su Nombre";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    keyboardType: TextInputType.emailAddress,
+                                    textInputAction: TextInputAction.next,
+                                  ),
                                 ),
-                                keyboardType: TextInputType.emailAddress,
-                              ),
-                            ),
-                          ]),
-                      /*TextFormField(
+                                const Spacer(),
+                                Flexible(
+                                  child: TextFormField(
+                                    controller: lastNameText,
+                                    decoration: InputDecoration(
+                                      labelText: "Apellido",
+                                      errorText: lastNameValid
+                                          ? null
+                                          : 'Ingrese su apellido',
+                                    ),
+                                    validator: (lastName) {
+                                      if (lastName!.isEmpty) {
+                                        return 'Ingrese su apellido';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    keyboardType: TextInputType.emailAddress,
+                                    textInputAction: TextInputAction.next,
+                                  ),
+                                ),
+                              ]),
+                          /*TextFormField(
                         controller: phoneText,
                         decoration: InputDecoration(
                           labelText: "Teléfono",
@@ -109,56 +171,87 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         keyboardType: TextInputType.text,
                       ),*/
-                      TextFormField(
-                        controller: userText,
-                        decoration: InputDecoration(
-                          labelText: "Usuario",
-                          errorText: userValid ? null : 'Ingrese su usuario',
-                        ),
-                        keyboardType: TextInputType.text,
-                      ),
-                      TextFormField(
-                        controller: passText,
-                        decoration: InputDecoration(
-                          labelText: "Contraseña",
-                          errorText: passValid ? null : 'Ingrese su contraseña',
-                        ),
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                      ),
-                      TextFormField(
-                        controller: repeatPassText,
-                        decoration: InputDecoration(
-                          labelText: "Repita contraseña",
-                          errorText: repeatPassValid
-                              ? null
-                              : 'Las contraseñas no coinciden',
-                        ),
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Checkbox(
-                            activeColor: Colors.blue,
-                            value: conditionsAccepted,
-                            onChanged: (bool? value) {},
+                          TextFormField(
+                            controller: userText,
+                            decoration: InputDecoration(
+                              labelText: "Usuario",
+                              /* errorText:
+                                  userValid ? null : 'Ingrese su usuario',*/
+                            ),
+                            keyboardType: TextInputType.text,
+                            validator: (userName) {
+                              if (userName!.isEmpty) {
+                                return 'Ingrese su usuario';
+                              } else {
+                                return null;
+                              }
+                            },
+                            textInputAction: TextInputAction.next,
                           ),
-                          const Text(
-                            'Acepto los términos y condiciones',
-                            style: TextStyle(color: Colors.white),
-                          )
+                          TextFormField(
+                            controller: passText,
+                            decoration: InputDecoration(
+                                /*labelText: "Contraseña",
+                              errorText:
+                                  passValid ? null : 'Ingrese su contraseña',*/
+                                ),
+                            keyboardType: TextInputType.text,
+                            obscureText: true,
+                            validator: (password) {
+                              if (password!.isEmpty) {
+                                return 'Ingrese su contraseña';
+                              } else {
+                                return null;
+                              }
+                            },
+                            textInputAction: TextInputAction.next,
+                          ),
+                          TextFormField(
+                            controller: repeatPassText,
+                            decoration: InputDecoration(
+                              labelText: "Repita contraseña",
+                              /*errorText: repeatPassValid
+                                  ? null
+                                  : 'Las contraseñas no coinciden',*/
+                            ),
+                            keyboardType: TextInputType.text,
+                            obscureText: true,
+                            validator: (passwordRepeated) {
+                              if (passwordRepeated! != passText.text) {
+                                return 'Las contraseñas no coinciden';
+                              } else {
+                                return null;
+                              }
+                            },
+                            textInputAction: TextInputAction.next,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Checkbox(
+                                activeColor: Colors.blue,
+                                value: conditionsAccepted,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    conditionsAccepted = (value!);
+                                  });
+                                  //print('Condicion aceptada: ${conditionsAccepted}');
+                                },
+                              ),
+                              const Text(
+                                'Acepto los términos y condiciones',
+                                style: TextStyle(color: Colors.white),
+                              )
+                            ],
+                          ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-              )),
+                    ),
+                  )),
               Center(
                 child: ElevatedButton(
-                  onPressed: () async {
-                    setState(() {
+                  onPressed: () {
+                    /*setState(() {
                       userText.text.isNotEmpty
                           ? userValid = true
                           : userValid = false;
@@ -204,6 +297,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           body: body);
                       print(response);
                       Navigator.pushNamed(context, 'login');
+                    }*/
+
+                    /////////////////////
+                    if (_formKey.currentState!.validate() &&
+                        conditionsAccepted == true) {
+                      //si el form es valido
+                      saveFormRegister();
+                      print("Hola, form completo");
                     }
                   },
                   style: ButtonStyle(

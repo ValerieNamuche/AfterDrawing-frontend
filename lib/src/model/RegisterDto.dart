@@ -7,9 +7,9 @@ class RegisterDto {
 
   Map<String, dynamic> toJson() => {
         "email": email,
-        "username": userName,
+        "userName": userName,
         "password": password,
-        "firstname": firstName,
+        "firstName": firstName,
         "lastName": lastName
       };
 }
