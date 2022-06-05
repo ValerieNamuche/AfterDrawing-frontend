@@ -18,7 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController firstNameText = new TextEditingController();
   TextEditingController lastNameText = new TextEditingController();
   TextEditingController emailText = new TextEditingController();
-  TextEditingController phoneText = new TextEditingController();
+  //TextEditingController phoneText = new TextEditingController();
   TextEditingController repeatPassText = new TextEditingController();
   Map userBody = new Map();
   bool userValid = true;
@@ -26,7 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool firstNameValid = true;
   bool lastNameValid = true;
   bool emailValid = true;
-  bool phoneValid = true;
+  //bool phoneValid = true;
   bool repeatPassValid = true;
   bool conditionsAccepted = false;
   @override
@@ -101,14 +101,14 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                           ]),
-                      TextFormField(
+                      /*TextFormField(
                         controller: phoneText,
                         decoration: InputDecoration(
                           labelText: "Teléfono",
                           errorText: phoneValid ? null : 'Ingrese su telefono',
                         ),
                         keyboardType: TextInputType.text,
-                      ),
+                      ),*/
                       TextFormField(
                         controller: userText,
                         decoration: InputDecoration(
@@ -174,9 +174,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       emailText.text.isNotEmpty
                           ? emailValid = true
                           : emailValid = false;
-                      phoneText.text.isNotEmpty
+                      /*phoneText.text.isNotEmpty
                           ? phoneValid = true
-                          : phoneValid = false;
+                          : phoneValid = false;*/
                       repeatPassText.text == passText.text
                           ? repeatPassValid = true
                           : repeatPassValid = false;
@@ -187,7 +187,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         firstNameValid &&
                         lastNameValid &&
                         emailValid &&
-                        phoneValid &&
+                        //phoneValid &&
                         repeatPassValid) {
                       userBody = {
                         'username': userText.text.toString(),
@@ -195,7 +195,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         'firstName': firstNameText.text.toString(),
                         'lastName': lastNameText.text.toString(),
                         'email': emailText.text.toString(),
-                        'telephone': phoneText.text.toString(),
+                        //'telephone': phoneText.text.toString(),
                       };
                       var body = json.encode(userBody);
                       http.Response response = await http.post(
@@ -220,14 +220,14 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               Divider(),
               Center(
-                child: RichText(
-                  text: TextSpan(
-                    text: '¿Ya tienes una cuenta? ¡Inicia sesión!',
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.pushNamed(context, 'login');
-                      },
-                  ),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                      primary: Colors.black87,
+                      textStyle: TextStyle(fontWeight: FontWeight.bold)),
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'login');
+                  },
+                  child: Text("¿Ya tienes una cuenta? !Inicia sesión!"),
                 ),
               )
             ],
