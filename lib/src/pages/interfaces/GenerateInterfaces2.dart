@@ -1,5 +1,7 @@
 import 'package:afterdrawing/src/constants/textoPrueba.dart';
 import 'package:afterdrawing/src/core/provider/wireframeProvider.dart';
+import 'package:afterdrawing/src/pages/interfaces/SaveInterface.dart';
+import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -125,6 +127,10 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
                         SizedBox(
                           height: 30,
                         ),
+                        ActionsElements(nameFileArgument),
+                        SizedBox(
+                          height: 30,
+                        ),
                         ElevatedButton(
                             onPressed: () {
                               wireframeProvider.downloadCode();
@@ -161,6 +167,26 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
           ]),
         ),
       ),
+    );
+  }
+
+  Widget ActionsElements(nameFileArgument) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        ElevatedButton(
+            onPressed: () {
+              //wireframeProvider.downloadCode();
+            },
+            child: Text("Generar nuevamente")),
+        ElevatedButton(
+            onPressed: () {
+              Utils.homeNavigator.currentState!
+                  .pushNamed("save_interface", arguments: nameFileArgument);
+              //wireframeProvider.downloadCode();
+            },
+            child: Text("Guardar interface")),
+      ],
     );
   }
 

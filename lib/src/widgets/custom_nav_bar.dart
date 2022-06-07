@@ -32,7 +32,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
   @override
   void initState() {
     userBloc.getUserData().then((userData) {
-      if (userData.length > 1) {
+      if (userData.isNotEmpty) {
         setState(() {
           widget.isUsserLogged = true;
           email = userData[1];

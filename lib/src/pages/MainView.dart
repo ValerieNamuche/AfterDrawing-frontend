@@ -1,9 +1,12 @@
 import 'package:afterdrawing/src/pages/ForgotPassword.dart';
-import 'package:afterdrawing/src/pages/GenerateInterfaces1.dart';
-import 'package:afterdrawing/src/pages/GenerateInterfaces2.dart';
+//import 'package:afterdrawing/src/pages/GenerateInterfaces1.dart';
+//import 'package:afterdrawing/src/pages/GenerateInterfaces2.dart';
 import 'package:afterdrawing/src/pages/Login.dart';
 import 'package:afterdrawing/src/pages/Register.dart';
 import 'package:afterdrawing/src/pages/guide/GuideElement.dart';
+import 'package:afterdrawing/src/pages/interfaces/GenerateInterfaces1.dart';
+import 'package:afterdrawing/src/pages/interfaces/GenerateInterfaces2.dart';
+import 'package:afterdrawing/src/pages/interfaces/SaveInterface.dart';
 import 'package:afterdrawing/src/pages/projects/Project.dart';
 import 'package:afterdrawing/src/pages/projects/ProjectDetails.dart';
 import 'package:afterdrawing/src/pages/projects/WireframeView.dart';
@@ -72,6 +75,9 @@ class _MainViewState extends State<MainView> {
         break;
       case 'wireframeview':
         view = WireframeView();
+        break;
+      case 'save_interface':
+        view = SaveInterface();
         break;
       default:
         print("Nombre de subruta: " + settings.name!);

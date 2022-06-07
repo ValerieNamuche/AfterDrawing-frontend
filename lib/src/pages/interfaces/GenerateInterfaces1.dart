@@ -6,7 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:html';
 
-import 'Home.dart';
+//import 'Home.dart';
 
 // pagina donde agrego las interfaces
 class GenerateInterfaces1 extends StatefulWidget {

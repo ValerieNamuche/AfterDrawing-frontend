@@ -1,3 +1,6 @@
+import 'package:afterdrawing/src/core/bloc/interfaceBloc.dart';
+import 'package:afterdrawing/src/core/bloc/projectBloc.dart';
+import 'package:afterdrawing/src/model/ProjectDto.dart';
 import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +18,25 @@ class _ProjectDetailsState extends State<ProjectDetails> {
   var nameFile = "";
   ScrollController _scrollController = ScrollController();
 
+  var interfaceBloc = InterfaceBloc();
+
+  @override
+  void initState() {
+    //interfaceBloc.getInterfaces(projectId);
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var argumentProject = ModalRoute.of(context)!.settings.arguments as Project;
+    var argument = ModalRoute.of(context)!.settings.arguments;
 
+    ProjectDto argumentProject;
+
+    argumentProject = ModalRoute.of(context)!.settings.arguments as ProjectDto;
+
+    interfaceBloc.getInterfaces(argumentProject.id);
+    ////////
     return Scaffold(
       appBar: AppBar(title: Text(argumentProject.title)),
       body: Padding(
@@ -28,39 +46,70 @@ class _ProjectDetailsState extends State<ProjectDetails> {
           SizedBox(
             height: 30,
           ),
-          Scrollbar(
-            controller: _scrollController,
-            child: Container(
-              height: 400,
-              child: ListView.builder(
-                  controller: _scrollController,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: argumentProject.ninterfaces,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        print("Tap");
-                        Utils.homeNavigator.currentState!.pushNamed(
-                            'wireframeview',
-                            arguments: argumentProject);
-                      },
-                      child: FadeInImage(
-                          width: 300,
-                          //height: 100,
-                          placeholder:
-                              AssetImage("lib/src/images/wireframelogo.png"),
-                          image: NetworkImage(
-                              'http://localhost:8081/api/get/wireframe/${nameFile}'),
-                          imageErrorBuilder: (context, error, stackTrace) {
-                            return Image.asset(
-                              "lib/src/images/wireframelogo.png",
+          StreamBuilder(
+              stream: interfaceBloc.interfacesStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var interfacesData = snapshot.data as List;
+                  return Scrollbar(
+                    controller: _scrollController,
+                    child: Container(
+                      height: 400,
+                      child: interfacesData.length > 0
+                          ? ListView.builder(
+                              controller: _scrollController,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: interfacesData.length,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    print("Tap");
+                                    Utils.homeNavigator.currentState!
+                                        .pushNamed('wireframeview', arguments: [
+                                      argumentProject.title,
+                                      interfacesData[index]
+                                    ]);
+                                  },
+                                  child: FadeInImage(
+                                      width: 300,
+                                      //height: 100,
+                                      placeholder: AssetImage(
+                                          "lib/src/images/wireframelogo.png"),
+                                      image: NetworkImage(
+                                          'http://localhost:8081/api/get/wireframe/${interfacesData[index].wireframe.id}'),
+                                      imageErrorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Image.asset(
+                                          "lib/src/images/wireframelogo.png",
+                                          width: 300,
+                                        );
+                                      }),
+                                );
+                              })
+                          : FadeInImage(
                               width: 300,
-                            );
-                          }),
-                    );
-                  }),
-            ),
-          ),
+                              //height: 100,
+                              placeholder: AssetImage(
+                                  "lib/src/images/wireframelogo.png"),
+                              image: NetworkImage(
+                                  'http://localhost:8081/api/get/wireframe/${nameFile}'),
+                              imageErrorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  "lib/src/images/wireframelogo.png",
+                                  width: 300,
+                                );
+                              }),
+                    ),
+                  );
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return Container(
+                    child: Center(child: CircularProgressIndicator.adaptive()),
+                  );
+                } else {
+                  return Text("Error en el servidor");
+                }
+              }),
           SizedBox(
             height: 30,
           ),

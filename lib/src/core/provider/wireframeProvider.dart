@@ -76,7 +76,30 @@ class WireframeProvider {
     }
   }
 
-  Future<List<String>> getWireframeInfo(String nameFileArgument) async {
+  Future<List<String>> getWireframeInfo(String wireframeId) async {
+    /*if (nameFileArgument.contains(" ")) {
+      nameFileArgument.replaceAll(" ", "%20");
+    }*/
+
+    String url = 'http://localhost:8081/api/get/wireframe/info/${wireframeId}';
+
+    Uri uri = Uri.parse(url);
+    var response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      dynamic jsonresponse = json.decode(response.body);
+
+      var wireResponse = WireframeDto.fromJson(jsonresponse);
+
+      List<String> wireframeCode = wireResponse.code;
+      //print(wireframeCode);
+      return wireframeCode;
+    } else {
+      return Future.error("Internal Server Error");
+    }
+  }
+
+  Future<WireframeDto> getWireframe(String nameFileArgument) async {
     /*if (nameFileArgument.contains(" ")) {
       nameFileArgument.replaceAll(" ", "%20");
     }*/
@@ -94,7 +117,7 @@ class WireframeProvider {
 
       List<String> wireframeCode = wireResponse.code;
       //print(wireframeCode);
-      return wireframeCode;
+      return wireResponse;
     } else {
       return Future.error("Internal Server Error");
     }

@@ -2,7 +2,6 @@ import 'dart:js';
 
 import 'package:afterdrawing/src/pages/ForgotPassword.dart';
 import 'package:afterdrawing/src/pages/GenerateInterfaces.dart';
-import 'package:afterdrawing/src/pages/GenerateInterfaces2.dart';
 import 'package:afterdrawing/src/pages/guide/GuideElement.dart';
 import 'package:afterdrawing/src/pages/Home.dart';
 import 'package:afterdrawing/src/pages/Login.dart';

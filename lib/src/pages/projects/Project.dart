@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:afterdrawing/src/core/bloc/projectBloc.dart';
 import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,21 @@ List<Project> projects = [
 ];
 
 // Create a class that will be used to create a list of projects
-class ProjectList extends StatelessWidget {
+class ProjectList extends StatefulWidget {
+  @override
+  State<ProjectList> createState() => _ProjectListState();
+}
+
+class _ProjectListState extends State<ProjectList> {
+  ProjectBloc projectBloc = ProjectBloc();
+
+  @override
+  void initState() {
+    projectBloc.getProjects();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,35 +61,58 @@ class ProjectList extends StatelessWidget {
               style: TextStyle(fontSize: 25),
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: projects.length,
-              itemBuilder: (context, index) {
-                //elevation: 6,
-                return Card(
-                  margin:
-                      EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(10),
-                    leading: CircleAvatar(
-                        backgroundImage:
-                            AssetImage('lib/src/images/wireframelogo.png')),
-                    title: Text(projects[index].title),
-                    trailing: IconButton(
-                      color: Colors.red,
-                      icon: Icon(Icons.delete),
-                      onPressed: () {},
+          StreamBuilder(
+              stream: projectBloc.projectsStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var projectsData = snapshot.data as List;
+                  /////
+                  return Expanded(
+                    child: projectsData.length > 0
+                        ? ListView.builder(
+                            itemCount: projectsData.length,
+                            itemBuilder: (context, index) {
+                              //elevation: 6,
+                              return Card(
+                                margin: EdgeInsets.only(
+                                    left: 15, right: 15, top: 5, bottom: 5),
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.all(10),
+                                  leading: CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                          'lib/src/images/wireframelogo.png')),
+                                  title: Text(projectsData[index].title),
+                                  trailing: IconButton(
+                                    color: Colors.red,
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () {},
+                                  ),
+                                  onTap: () {
+                                    Utils.homeNavigator.currentState!.pushNamed(
+                                        'project_details',
+                                        arguments: projectsData[index]);
+                                  },
+                                ),
+                              );
+                            },
+                          )
+                        : Center(child: Text("No posee ningun proyecto")),
+                  );
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return Container(
+                    width: 400,
+                    height: 550,
+                    child: Center(
+                      child: CircularProgressIndicator.adaptive(),
                     ),
-                    onTap: () {
-                      Utils.homeNavigator.currentState!.pushNamed(
-                          'project_details',
-                          arguments: projects[index]);
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
+                  );
+                } else {
+                  return Center(
+                    child: Text("Error con el servidor"),
+                  );
+                }
+              }),
         ],
       ),
     );
