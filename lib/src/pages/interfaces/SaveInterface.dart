@@ -80,7 +80,10 @@ class _SaveInterfaceState extends State<SaveInterface> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("Guardar interface"),
+              SizedBox(
+                height: 30,
+              ),
+              Text("Guardar interface",style: TextStyle(fontSize: 20),),
               SizedBox(
                 height: 30,
               ),

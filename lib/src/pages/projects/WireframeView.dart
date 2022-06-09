@@ -60,7 +60,7 @@ class _WireframeViewState extends State<WireframeView> {
               height: 30,
             ),
             Text(
-              "Código generado",
+              "Wireframe guardado",
               style: TextStyle(fontSize: 20),
             ),
             SizedBox(
