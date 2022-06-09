@@ -1,28 +1,39 @@
 import 'package:afterdrawing/src/core/bloc/projectBloc.dart';
 import 'package:afterdrawing/src/model/CreateProjectDto.dart';
+import 'package:afterdrawing/src/utils/SnackBarNotification.dart';
+import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class DialogForm extends StatefulWidget {
-  DialogForm({Key? key}) : super(key: key);
+class DialogCreateProject extends StatefulWidget {
+  final ProjectBloc? projectBloc;
+  DialogCreateProject({Key? key, this.projectBloc}) : super(key: key);
 
   @override
-  State<DialogForm> createState() => _DialogFormState();
+  State<DialogCreateProject> createState() => DialogCreateProjectState();
 }
 
-class _DialogFormState extends State<DialogForm> {
-  var projectBloc = ProjectBloc();
+class DialogCreateProjectState extends State<DialogCreateProject> {
+  //var projectBloc = ProjectBloc();
   var nameTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   saveFormProject() {
     var createProjectDto = CreateProjectDto();
-    createProjectDto.title = projectBloc.projectName;
-    createProjectDto.description = projectBloc.projectDescription;
-
-    projectBloc.createProject(createProjectDto).then((value) {
+    createProjectDto.title = widget.projectBloc!.projectName;
+    createProjectDto.description = widget.projectBloc!.projectDescription;
+    Navigator.of(context, rootNavigator: true).pop();
+    widget.projectBloc!.createProject(createProjectDto).then((value) {
       if (value) {
-        Navigator.of(context).pop();
+        //Navigator.pop(context);
+
+        SnackBarNotification().showSnackbar(Utils.homeNavigator.currentContext!,
+            "Se creó el nuevo proyecto", "success");
+        //print("Proyecto eliminado");
+        //Utils.homeNavigator.currentState!.popAndPushNamed("project");
+      } else {
+        SnackBarNotification().showSnackbar(Utils.homeNavigator.currentContext!,
+            "Error en el server al crear el proyecto", "error");
       }
     });
   }
@@ -42,12 +53,12 @@ class _DialogFormState extends State<DialogForm> {
             mainAxisSize: MainAxisSize.min,
             children: [
               StreamBuilder(
-                  stream: projectBloc.projectNameStream,
+                  stream: widget.projectBloc!.projectNameStream,
                   builder: (context, snapshot) {
                     return TextFormField(
                       //controller: nameTextController,
                       onChanged: (value) {
-                        projectBloc.changeProjectName(value);
+                        widget.projectBloc!.changeProjectName(value);
                       },
                       decoration: InputDecoration(
                           labelText:
@@ -67,12 +78,12 @@ class _DialogFormState extends State<DialogForm> {
                 height: 20,
               ),
               StreamBuilder(
-                  stream: projectBloc.projectDescriptionStream,
+                  stream: widget.projectBloc!.projectDescriptionStream,
                   builder: (context, snapshot) {
                     return TextFormField(
                         //controller: nameTextController,
                         onChanged: (value) {
-                          projectBloc.changeProjectDescription(value);
+                          widget.projectBloc!.changeProjectDescription(value);
                         },
                         decoration: InputDecoration(
                             labelText:
@@ -96,8 +107,8 @@ class _DialogFormState extends State<DialogForm> {
                       //si el form es valido
 
                       print("Hola, form completo");
-                      //saveFormProject();
-                      Navigator.of(context).pop();
+                      saveFormProject();
+                      //Navigator.of(context).pop();
                     }
                   },
                   child: Text('Crear'),

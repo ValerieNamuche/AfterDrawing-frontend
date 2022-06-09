@@ -36,7 +36,22 @@ class ProjectBloc with Validators {
 
   Future<bool> createProject(CreateProjectDto createProjectDto) async {
     var response = await projectProvider.createProject(createProjectDto);
-    return response;
+    if (response == true) {
+      getProjects();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> deleteProject(projectId) async {
+    var response = await projectProvider.deleteProject(projectId);
+    if (response == true) {
+      getProjects();
+      return true;
+    } else {
+      return false;
+    }
   }
 
   dispose() {

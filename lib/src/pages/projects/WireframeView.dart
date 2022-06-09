@@ -67,30 +67,59 @@ class _WireframeViewState extends State<WireframeView> {
               height: 30,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Flexible(
-                  child: StreamBuilder(
-                      stream: interfaceBloc.singleInterfaceStream,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          var interfaceData = snapshot.data as InterfaceDto;
-                          var textCode =
-                              convertListToString(interfaceData.wireframe.code);
+                  child: Column(
+                    children: [
+                      StreamBuilder(
+                          stream: interfaceBloc.singleInterfaceStream,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              var interfaceData = snapshot.data as InterfaceDto;
+                              var textCode = convertListToString(
+                                  interfaceData.wireframe.code);
 
-                          return CodeView(textCode);
-                        } else if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Container(
-                            width: 400,
-                            height: 550,
-                            child: Center(
-                              child: CircularProgressIndicator.adaptive(),
+                              return CodeView(textCode);
+                            } else if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Container(
+                                width: 400,
+                                height: 550,
+                                child: Center(
+                                  child: CircularProgressIndicator.adaptive(),
+                                ),
+                              );
+                            } else {
+                              return CodeView(textoPrueba);
+                            }
+                          }),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      isCopied
+                          ? Container(
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              width: 400,
+                              height: 25,
+                              color: Colors.green[200],
+                              child: Center(
+                                  child: Text("Copiado al portapapeles!",
+                                      style: TextStyle(
+                                          color: Colors.green[800],
+                                          fontWeight: FontWeight.bold))))
+                          : SizedBox(
+                              height: 0,
+                              width: 400,
                             ),
-                          );
-                        } else {
-                          return CodeView(textoPrueba);
-                        }
-                      }),
+                      ElevatedButton(
+                          onPressed: () {},
+                          child: Text("Actualizar interfaz"),
+                          style: ButtonStyle(
+                              padding: MaterialStateProperty.all(
+                                  EdgeInsets.all(18))))
+                    ],
+                  ),
                 ),
                 Flexible(
                   child: Column(
@@ -113,7 +142,7 @@ class _WireframeViewState extends State<WireframeView> {
                   ),
                 ),
               ],
-            )
+            ),
           ]),
         ));
   }

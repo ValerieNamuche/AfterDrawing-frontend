@@ -52,4 +52,29 @@ class ProjectProvider {
       return false;
     }
   }
+
+  Future<bool> deleteProject(projectId) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    var userId = prefs.getInt("userId") ?? 0;
+
+    var url = 'http://localhost:8081/api/users/${userId}/projects/$projectId';
+
+    Uri uri = Uri.parse(url);
+
+    //var body = createProjectDto.toJson();
+
+    var response = await http.delete(
+      uri, /*headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    }*/
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

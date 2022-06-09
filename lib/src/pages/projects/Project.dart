@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:afterdrawing/src/core/bloc/projectBloc.dart';
+import 'package:afterdrawing/src/utils/SnackBarNotification.dart';
 import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:afterdrawing/src/widgets/dialog_form.dart';
 import 'package:flutter/cupertino.dart';
@@ -70,7 +71,9 @@ class _ProjectListState extends State<ProjectList> {
                 showDialog(
                     context: context,
                     builder: (_) {
-                      return DialogForm();
+                      return DialogCreateProject(
+                        projectBloc: projectBloc,
+                      );
                     });
               },
               style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),
@@ -101,7 +104,9 @@ class _ProjectListState extends State<ProjectList> {
                                   trailing: IconButton(
                                     color: Colors.red,
                                     icon: Icon(Icons.delete),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      DeleteDialog(projectsData[index].id);
+                                    },
                                   ),
                                   onTap: () {
                                     Utils.homeNavigator.currentState!.pushNamed(
@@ -136,7 +141,7 @@ class _ProjectListState extends State<ProjectList> {
                   showDialog(
                       context: context,
                       builder: (_) {
-                        return DialogForm();
+                        return DialogCreateProject();
                       });
                 },
                 style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),
@@ -145,6 +150,48 @@ class _ProjectListState extends State<ProjectList> {
         ],
       ),
     );
+  }
+
+  DeleteDialog(projectId) {
+    return showDialog(
+        context: context,
+        builder: (builder) {
+          return AlertDialog(
+            title: Text("Eliminar Proyecto"),
+            content: Text("¿Seguro que quieres eliminar este proyecto?"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                    projectBloc.deleteProject(projectId).then((value) {
+                      if (value == true) {
+                        SnackBarNotification().showSnackbar(
+                            Utils.homeNavigator.currentContext!,
+                            "Se eliminó el proyecto seleccionado",
+                            "success");
+                        print("Proyecto eliminado");
+                      } else {
+                        SnackBarNotification().showSnackbar(
+                            Utils.homeNavigator.currentContext!,
+                            "Ocurrió un error en el server",
+                            "error");
+                        print("Error en server");
+                      }
+                    });
+                  },
+                  child: Text(
+                    "Si",
+                    style: TextStyle(color: Colors.red),
+                  )),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop();
+                },
+                child: Text("No"),
+              )
+            ],
+          );
+        });
   }
 }
 

@@ -185,14 +185,15 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
 
       } else if (value == "Internal Server Error (customed)") {
         print(value);
+        print(nameImage);
         Utils.homeNavigator.currentState!
             .pushNamed("generate_interfaces2", arguments: nameImage);
       } else {
         // si todo va bien
         nameImage = value;
-        print(value);
+        print(nameImage);
         Utils.homeNavigator.currentState!
-            .pushNamed("generate_interfaces2", arguments: value);
+            .pushNamed("generate_interfaces2", arguments: nameImage);
       }
     });
   }

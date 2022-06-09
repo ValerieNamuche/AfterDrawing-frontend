@@ -104,7 +104,11 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                 } else if (snapshot.connectionState ==
                     ConnectionState.waiting) {
                   return Container(
-                    child: Center(child: CircularProgressIndicator.adaptive()),
+                    height: 400,
+                    child: Center(
+                        //height: 100,
+                        //width: 100,
+                        child: CircularProgressIndicator()),
                   );
                 } else {
                   return Text("Error en el servidor");

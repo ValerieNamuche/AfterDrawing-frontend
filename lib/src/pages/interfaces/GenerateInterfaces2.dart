@@ -14,6 +14,7 @@ class GenerateInterfaces2 extends StatefulWidget {
 
 class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
   final nameImage = "Prueba%201.PNG";
+  var idImage = 0;
 
   WireframeProvider wireframeProvider = WireframeProvider();
 
@@ -125,17 +126,12 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
                                 width: 400,
                               ),
                         SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         ActionsElements(nameFileArgument),
                         SizedBox(
                           height: 30,
                         ),
-                        ElevatedButton(
-                            onPressed: () {
-                              wireframeProvider.downloadCode();
-                            },
-                            child: Text("Descargar código")),
                       ],
                     ),
                   ),
@@ -170,15 +166,38 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
     );
   }
 
+  void uploadImageWithFilePickerAgain() {
+    wireframeProvider.uploadImagetoBack().then((value) async {
+      if (value == false) {
+        // Cuando cancela la seleccion de imagen(ignorar)
+
+      } else if (value == "Internal Server Error (customed)") {
+        print(value);
+        Utils.homeNavigator.currentState!
+            .popAndPushNamed("generate_interfaces2", arguments: idImage);
+      } else {
+        // si todo va bien
+        idImage = value;
+        print(idImage);
+        Utils.homeNavigator.currentState!
+            .popAndPushNamed("generate_interfaces2", arguments: idImage);
+      }
+    });
+  }
+
   Widget ActionsElements(nameFileArgument) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ElevatedButton(
             onPressed: () {
               //wireframeProvider.downloadCode();
+              uploadImageWithFilePickerAgain();
             },
-            child: Text("Generar nuevamente")),
+            child: Text("Volver a procesar")),
+        SizedBox(
+          height: 8,
+        ),
         ElevatedButton(
             onPressed: () {
               Utils.homeNavigator.currentState!
@@ -186,6 +205,14 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
               //wireframeProvider.downloadCode();
             },
             child: Text("Guardar interface")),
+        SizedBox(
+          height: 8,
+        ),
+        ElevatedButton(
+            onPressed: () {
+              wireframeProvider.downloadCode();
+            },
+            child: Text("Descargar código")),
       ],
     );
   }
