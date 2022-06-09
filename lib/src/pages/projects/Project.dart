@@ -2,6 +2,8 @@
 
 import 'package:afterdrawing/src/core/bloc/projectBloc.dart';
 import 'package:afterdrawing/src/utils/Utils.dart';
+import 'package:afterdrawing/src/widgets/dialog_form.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'ProjectDetails.dart';
@@ -61,6 +63,20 @@ class _ProjectListState extends State<ProjectList> {
               style: TextStyle(fontSize: 25),
             ),
           ),
+          Padding(
+            padding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
+            child: ElevatedButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return DialogForm();
+                    });
+              },
+              style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),
+              child: Text('Crear proyecto +'),
+            ),
+          ),
           StreamBuilder(
               stream: projectBloc.projectsStream,
               builder: (context, snapshot) {
@@ -113,6 +129,19 @@ class _ProjectListState extends State<ProjectList> {
                   );
                 }
               }),
+          Padding(
+              padding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
+              child: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (_) {
+                        return DialogForm();
+                      });
+                },
+                style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),
+                child: Text('Crear proyecto +'),
+              )),
         ],
       ),
     );
