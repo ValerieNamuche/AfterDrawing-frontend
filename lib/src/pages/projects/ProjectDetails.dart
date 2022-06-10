@@ -29,7 +29,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
 
   @override
   Widget build(BuildContext context) {
-    var argument = ModalRoute.of(context)!.settings.arguments;
+    //var argument = ModalRoute.of(context)!.settings.arguments;
 
     ProjectDto argumentProject;
 
@@ -38,7 +38,19 @@ class _ProjectDetailsState extends State<ProjectDetails> {
     interfaceBloc.getInterfaces(argumentProject.id);
     ////////
     return Scaffold(
-      appBar: AppBar(title: Text(argumentProject.title)),
+      appBar: AppBar(title: Text(argumentProject.title), actions: [
+        Padding(
+          padding: EdgeInsets.only(right: 20),
+          child: IconButton(
+            onPressed: () {
+              Utils.homeNavigator.currentState!
+                  .pushNamed('project_edit', arguments: argumentProject);
+            },
+            icon: Icon(Icons.edit),
+            //padding: EdgeInsets.only(right: 50),
+          ),
+        )
+      ]),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

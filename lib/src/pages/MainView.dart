@@ -9,6 +9,7 @@ import 'package:afterdrawing/src/pages/interfaces/GenerateInterfaces2.dart';
 import 'package:afterdrawing/src/pages/interfaces/SaveInterface.dart';
 import 'package:afterdrawing/src/pages/projects/Project.dart';
 import 'package:afterdrawing/src/pages/projects/ProjectDetails.dart';
+import 'package:afterdrawing/src/pages/projects/ProjectEdit.dart';
 import 'package:afterdrawing/src/pages/projects/WireframeView.dart';
 import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:afterdrawing/src/widgets/custom_nav_bar.dart';
@@ -78,6 +79,9 @@ class _MainViewState extends State<MainView> {
         break;
       case 'save_interface':
         view = SaveInterface();
+        break;
+      case 'project_edit':
+        view = ProjectEdit();
         break;
       default:
         print("Nombre de subruta: " + settings.name!);

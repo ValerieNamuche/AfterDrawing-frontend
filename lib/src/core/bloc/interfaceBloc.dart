@@ -51,6 +51,11 @@ class InterfaceBloc with Validators {
     return response;
   }
 
+  Future<bool> deleteInterface(wireframeId) async {
+    var response = await interfaceProvider.deleteInterface(wireframeId);
+    return response;
+  }
+
   dispose() {
     _interfaceNameController.close();
   }

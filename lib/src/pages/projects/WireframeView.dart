@@ -95,7 +95,7 @@ class _WireframeViewState extends State<WireframeView> {
                             }
                           }),
                       SizedBox(
-                        height: 30,
+                        height: 10,
                       ),
                       isCopied
                           ? Container(
@@ -112,6 +112,9 @@ class _WireframeViewState extends State<WireframeView> {
                               height: 0,
                               width: 400,
                             ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       ElevatedButton(
                           onPressed: () {},
                           child: Text("Actualizar interfaz"),

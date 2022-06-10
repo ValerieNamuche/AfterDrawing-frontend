@@ -68,4 +68,47 @@ class InterfaceProvider {
       return false;
     }
   }
+
+/////PENDIENTE POR ENDPOINT
+  Future<dynamic> updateInterface(
+      String projectId, String wireframeId, String interfaceName) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    var userId = prefs.getInt("userId") ?? 0;
+    var url =
+        'http://localhost:8081/api/users/${userId}/projects/${projectId}/wireframes/${wireframeId}/interfaces';
+
+    Uri uri = Uri.parse(url);
+
+    var body = {'interfaceName': interfaceName};
+
+    var response = await http.post(uri,
+        body: json.encode(body),
+        headers: {"Accept": "*/*", "Content-Type": "application/json"});
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+///////////////////
+
+  Future<bool> deleteInterface(String wireframeId) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    var userId = prefs.getInt("userId") ?? 0;
+    var url = 'http://localhost:8081/api/interfaces/${wireframeId}';
+
+    Uri uri = Uri.parse(url);
+
+    var response = await http.delete(uri);
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
