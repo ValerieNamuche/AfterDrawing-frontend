@@ -94,25 +94,43 @@ class _CustomNavBarState extends State<CustomNavBar> {
       Padding(
         //log out
         padding: EdgeInsets.only(right: 30),
-        child: ElevatedButton(
-            onPressed: () async {
-              setState(() {
-                userProvider.logout().then((value) async {
-                  widget.isUsserLogged = false;
-                  await Future.delayed(Duration(milliseconds: 300));
-                  SnackBarNotification().showSnackbar(
-                      Utils.homeNavigator.currentContext!,
-                      "Sesión cerrada exitosamente",
-                      "success");
-
-                  Utils.homeNavigator.currentState!
-                      .pushNamed("generate_interfaces1");
-                });
-              });
-            },
-            child: Text(userName, style: TextStyle(fontSize: 17))),
+        child: PopupMenuButton<int>(
+          onSelected: (item) => onSelected(context, item),
+          itemBuilder: (context) => [
+            PopupMenuItem<int>(
+                value: 0,
+                child: Text('Cambiar contraseña', style: TextStyle(fontSize: 17),
+                )
+            ),
+            PopupMenuItem<int>(
+                value: 1,
+                child: Text('Cerrar sesión', style: TextStyle(fontSize: 17),
+                )
+            )
+          ],
+        ),
       )
     ];
+  }
+
+  void onSelected(BuildContext context, int item){
+    switch (item){
+      case 0:
+        break;
+      case 1:
+        userProvider.logout().then((value) async {
+          widget.isUsserLogged = false;
+          await Future.delayed(Duration(milliseconds: 300));
+          SnackBarNotification().showSnackbar(
+              Utils.homeNavigator.currentContext!,
+              "Sesión cerrada exitosamente",
+              "success");
+
+          Utils.homeNavigator.currentState!
+              .pushNamed("generate_interfaces1");
+        });
+        break;
+    }
   }
 
   WidgetsWithoutUser() {

@@ -83,7 +83,7 @@ class _IconDialogState extends State<IconDialog> {
     ////////////
     Icons.keyboard,
     Icons.key,
-    Icons.landslide,
+    //Icons.landslide,
     Icons.language,
     Icons.library_music,
     Icons.mail,
