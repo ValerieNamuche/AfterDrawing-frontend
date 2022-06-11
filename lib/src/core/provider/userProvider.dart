@@ -45,7 +45,7 @@ class UserProvider {
     prefs.remove("email");
   }
 
-  Future<bool> register(RegisterDto registerDto) async {
+  Future<dynamic> register(RegisterDto registerDto) async {
     var url = 'http://localhost:8081/api/v1/authentication/sign-up';
 
     Uri uri = Uri.parse(url);
@@ -60,7 +60,28 @@ class UserProvider {
     if (response.statusCode == 200) {
       return true;
     } else {
-      return false;
+      dynamic jsonResponse = json.decode(response.body);
+      return jsonResponse['message'];
+    }
+  }
+
+  Future<dynamic> forgotPassword(String email, String newPassword) async {
+    var url = 'http://localhost:8081/api/v1/authentication/forgot-password';
+
+    Uri uri = Uri.parse(url);
+
+    var body = {'email': email, 'newPassword': newPassword};
+
+    var response = await http.post(uri,
+        body: json.encode(body),
+        headers: {"Accept": "*/*", "Content-Type": "application/json"});
+
+    dynamic jsonResponse = json.decode(response.body);
+    if (response.statusCode == 200) {
+      //await saveLoginData(jsonResponse); // guarda datos de sesion del usuario
+      return true;
+    } else {
+      return jsonResponse['message'];
     }
   }
 }

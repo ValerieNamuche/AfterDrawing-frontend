@@ -54,8 +54,8 @@ class _RegisterPageState extends State<RegisterPage> {
             Utils.homeNavigator.currentContext!, "Registro exitoso", "success");
         Utils.homeNavigator.currentState!.pushNamed("login");
       } else {
-        SnackBarNotification().showSnackbar(Utils.homeNavigator.currentContext!,
-            "Error en el servidor, intentarlo más tarde", "error");
+        SnackBarNotification()
+            .showSnackbar(Utils.homeNavigator.currentContext!, value, "error");
       }
     });
   }
@@ -191,10 +191,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           TextFormField(
                             controller: passText,
                             decoration: InputDecoration(
-                                /*labelText: "Contraseña",
-                              errorText:
+                              labelText: "Contraseña",
+                              /* errorText:
                                   passValid ? null : 'Ingrese su contraseña',*/
-                                ),
+                            ),
                             keyboardType: TextInputType.text,
                             obscureText: true,
                             validator: (password) {
@@ -224,25 +224,6 @@ class _RegisterPageState extends State<RegisterPage> {
                               }
                             },
                             textInputAction: TextInputAction.next,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Checkbox(
-                                activeColor: Colors.blue,
-                                value: conditionsAccepted,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    conditionsAccepted = (value!);
-                                  });
-                                  //print('Condicion aceptada: ${conditionsAccepted}');
-                                },
-                              ),
-                              const Text(
-                                'Acepto los términos y condiciones',
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
                           ),
                         ],
                       ),

@@ -45,7 +45,10 @@ class _ProjectDetailsState extends State<ProjectDetails> {
           child: IconButton(
             onPressed: () {
               Utils.homeNavigator.currentState!
-                  .pushNamed('project_edit', arguments: argumentProject);
+                  .pushNamed('project_edit', arguments: argumentProject)
+                  .then((value) {
+                setState(() {});
+              });
             },
             icon: Icon(Icons.edit),
             //padding: EdgeInsets.only(right: 50),

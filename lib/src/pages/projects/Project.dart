@@ -60,7 +60,7 @@ class _ProjectListState extends State<ProjectList> {
           const Padding(
             padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
             child: Text(
-              'Mis Projectos',
+              'Mis Proyectos',
               style: TextStyle(fontSize: 25),
             ),
           ),

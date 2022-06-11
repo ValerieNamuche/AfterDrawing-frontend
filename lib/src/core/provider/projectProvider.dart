@@ -53,6 +53,30 @@ class ProjectProvider {
     }
   }
 
+  Future<bool> updateProject(
+      CreateProjectDto createProjectDto, projectId) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    var userId = prefs.getInt("userId") ?? 0;
+
+    var url = 'http://localhost:8081/api/users/${userId}/projects/$projectId';
+
+    Uri uri = Uri.parse(url);
+
+    var body = createProjectDto.toJson();
+
+    var response = await http.put(uri, body: json.encode(body), headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    });
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<bool> deleteProject(projectId) async {
     final prefs = await SharedPreferences.getInstance();
 

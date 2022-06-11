@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         controller: userText,
                         decoration: InputDecoration(
-                          labelText: "Ingresa usuario",
+                          labelText: "Ingresa correo",
                           errorText: userValid ? null : 'Ingrese un usuario',
                         ),
                         keyboardType: TextInputType.emailAddress,

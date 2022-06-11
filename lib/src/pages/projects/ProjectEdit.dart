@@ -1,5 +1,8 @@
 import 'package:afterdrawing/src/core/bloc/interfaceBloc.dart';
+import 'package:afterdrawing/src/core/bloc/projectBloc.dart';
+import 'package:afterdrawing/src/model/CreateProjectDto.dart';
 import 'package:afterdrawing/src/model/ProjectDto.dart';
+import 'package:afterdrawing/src/utils/SnackBarNotification.dart';
 import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:flutter/material.dart';
 
@@ -13,13 +16,34 @@ class ProjectEdit extends StatefulWidget {
 class _ProjectEditState extends State<ProjectEdit> {
   var nameFile = "";
   ScrollController _scrollController = ScrollController();
-
+  ProjectDto argumentProject =
+      ProjectDto(id: 0, title: 'title', description: 'description');
   var interfaceBloc = InterfaceBloc();
+  var projectBloc = ProjectBloc();
+  var _formKey = GlobalKey<FormState>();
+
+  saveEditProjectForm() {
+    var createProjectDto = CreateProjectDto();
+    createProjectDto.title = projectBloc.projectName;
+    createProjectDto.description = projectBloc.projectDescription;
+
+    projectBloc
+        .updateProject(createProjectDto, argumentProject.id)
+        .then((value) {
+      if (value) {
+        SnackBarNotification().showSnackbar(Utils.homeNavigator.currentContext!,
+            "Se modificó el proyecto", "success");
+        Utils.homeNavigator.currentState!.pushNamedAndRemoveUntil(
+            "project", ModalRoute.withName("generate_interfaces1"));
+      } else {
+        SnackBarNotification().showSnackbar(Utils.homeNavigator.currentContext!,
+            "Se creó el nuevo proyecto", "error");
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    ProjectDto argumentProject;
-
     argumentProject = ModalRoute.of(context)!.settings.arguments as ProjectDto;
 
     interfaceBloc.getInterfaces(argumentProject.id);
@@ -31,137 +55,93 @@ class _ProjectEditState extends State<ProjectEdit> {
         child: Form(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(argumentProject.description),
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              'Interfaces',
-              style: TextStyle(fontSize: 25),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Text(
-                'Selecciona en el tacho de basura las interfaces que quiera eliminar'),
-            SizedBox(
-              height: 15,
-            ),
-            StreamBuilder(
-                stream: interfaceBloc.interfacesStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    var interfacesData = snapshot.data as List;
-                    return Scrollbar(
-                      controller: _scrollController,
-                      child: Container(
-                        height: 400,
-                        child: interfacesData.length > 0
-                            ? ListView.builder(
-                                controller: _scrollController,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: interfacesData.length,
-                                itemBuilder: (context, index) {
-                                  return Card(
-                                    /*onTap: () {
-                                      print("Tap");
-                                      Utils.homeNavigator.currentState!
-                                          .pushNamed('wireframeview',
-                                              arguments: [
-                                            argumentProject.title,
-                                            interfacesData[index]
-                                          ]);
-                                    },*/
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          child: FadeInImage(
-                                              width: 300,
-                                              //height: 100,
-                                              placeholder: AssetImage(
-                                                  "lib/src/images/wireframelogo.png"),
-                                              image: NetworkImage(
-                                                  'http://localhost:8081/api/get/wireframe/${interfacesData[index].wireframe.id}'),
-                                              imageErrorBuilder:
-                                                  (context, error, stackTrace) {
-                                                return Image.asset(
-                                                  "lib/src/images/wireframelogo.png",
-                                                  width: 300,
-                                                );
-                                              }),
-                                        ),
-                                        IconButton(
-                                            onPressed: () {},
-                                            icon: Icon(
-                                                Icons.delete_outline_outlined))
-                                      ],
-                                    ),
-                                  );
-                                })
-                            : FadeInImage(
-                                width: 300,
-                                //height: 100,
-                                placeholder: AssetImage(
-                                    "lib/src/images/wireframelogo.png"),
-                                image: NetworkImage(
-                                    'http://localhost:8081/api/get/wireframe/$nameFile'),
-                                imageErrorBuilder:
-                                    (context, error, stackTrace) {
-                                  return Image.asset(
-                                    "lib/src/images/wireframelogo.png",
-                                    width: 300,
-                                  );
-                                }),
-                      ),
-                    );
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return Container(
-                      height: 400,
-                      child: Center(
-                          //height: 100,
-                          //width: 100,
-                          child: CircularProgressIndicator()),
-                    );
-                  } else {
-                    return Text("Error en el servidor");
-                  }
-                }),
-            SizedBox(
-              height: 30,
-            ),
-            Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //mainAxisSize: MainAxisSize.min,
-              children: [
-                ElevatedButton(
-                    onPressed: () {},
-                    style:
-                        ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),
-                    child: Text(
-                      "Terminar de editar",
-                      style: TextStyle(fontSize: 16),
-                    )),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.grey[300]),
-                          padding:
-                              MaterialStateProperty.all(EdgeInsets.all(18))),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        "Cancelar",
-                        style: TextStyle(fontSize: 16, color: Colors.black),
-                      )),
+            Form(
+              key: _formKey,
+              child: Column(children: [
+                StreamBuilder(
+                    stream: projectBloc.projectNameStream,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                          initialValue: argumentProject.title,
+                          onChanged: (value) {
+                            projectBloc.changeProjectName(value);
+                          },
+                          decoration: InputDecoration(
+                              labelText:
+                                  "Ingrese un nuevo nombre para su proyecto",
+                              errorText: snapshot.hasError
+                                  ? snapshot.error.toString()
+                                  : null),
+                          textInputAction: TextInputAction.next,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Rellene este campo para continuar"; //validacion en caso no se ingrese nada desde el principio
+                            }
+                          });
+                    }),
+                SizedBox(
+                  height: 15,
+                ),
+                StreamBuilder(
+                    stream: projectBloc.projectDescriptionStream,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                          initialValue: argumentProject.title,
+                          onChanged: (value) {
+                            projectBloc.changeProjectDescription(value);
+                          },
+                          decoration: InputDecoration(
+                              labelText:
+                                  "Ingrese una nueva description para su proyecto",
+                              errorText: snapshot.hasError
+                                  ? snapshot.error.toString()
+                                  : null),
+                          textInputAction: TextInputAction.next,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Rellene este campo para continuar"; //validacion en caso no se ingrese nada desde el principio
+                            }
+                          });
+                    }),
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            saveEditProjectForm();
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(18)),
+                        child: Text(
+                          "Terminar de editar",
+                          style: TextStyle(fontSize: 16),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.grey[300]),
+                              padding: MaterialStateProperty.all(
+                                  EdgeInsets.all(18))),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "Cancelar",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          )),
+                    )
+                  ],
                 )
-              ],
-            )
+              ]),
+            ),
           ]),
         ),
       ),
