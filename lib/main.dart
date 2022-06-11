@@ -1,4 +1,5 @@
 import 'package:afterdrawing/src/utils/CustomScrollBehavior.dart';
+import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'router.dart' as router;
 
@@ -10,8 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       scrollBehavior: MyCustomScrollBehavior(),
       debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      initialRoute: 'generate_interfaces1',
+      title: 'After Drawing',
+      initialRoute: 'main_view',
+      key: Utils.mainNavigator,
       onGenerateRoute: router.generateRoute,
     );
   }

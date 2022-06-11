@@ -1,6 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:afterdrawing/src/core/bloc/projectBloc.dart';
+import 'package:afterdrawing/src/utils/SnackBarNotification.dart';
 import 'package:afterdrawing/src/utils/Utils.dart';
+import 'package:afterdrawing/src/widgets/dialog_form.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'ProjectDetails.dart';
@@ -29,55 +33,173 @@ List<Project> projects = [
 ];
 
 // Create a class that will be used to create a list of projects
-class ProjectList extends StatelessWidget {
+class ProjectList extends StatefulWidget {
+  @override
+  State<ProjectList> createState() => _ProjectListState();
+}
+
+class _ProjectListState extends State<ProjectList> {
+  ProjectBloc projectBloc = ProjectBloc();
+
+  @override
+  void initState() {
+    projectBloc.getProjects();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       /*appBar: AppBar(
         title: const Text('Projects'),
       ),*/
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
-            child: Text(
-              'Mis Projectos',
-              style: TextStyle(fontSize: 25),
+      body: ListView(/*shrinkWrap: true,*/ children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
+              child: Text(
+                'Mis Proyectos',
+                style: TextStyle(fontSize: 25),
+              ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: projects.length,
-              itemBuilder: (context, index) {
-                //elevation: 6,
-                return Card(
-                  margin:
-                      EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(10),
-                    leading: CircleAvatar(
-                        backgroundImage:
-                            AssetImage('lib/src/images/wireframelogo.png')),
-                    title: Text(projects[index].title),
-                    trailing: IconButton(
-                      color: Colors.red,
-                      icon: Icon(Icons.delete),
-                      onPressed: () {},
-                    ),
-                    onTap: () {
-                      Utils.homeNavigator.currentState!.pushNamed(
-                          'project_details',
-                          arguments: projects[index]);
-                    },
-                  ),
-                );
-              },
+            Padding(
+              padding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
+              child: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (_) {
+                        return DialogCreateProject(
+                          projectBloc: projectBloc,
+                        );
+                      });
+                },
+                style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),
+                child: Text('Crear proyecto +'),
+              ),
             ),
-          ),
-        ],
-      ),
+            StreamBuilder(
+                stream: projectBloc.projectsStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var projectsData = snapshot.data as List;
+                    /////
+                    return ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: 480),
+                      child: projectsData.isNotEmpty
+                          ? ListView.builder(
+                              shrinkWrap:
+                                  true, // en caso requiera solo llenar el espacio requerido cada elemento
+                              //physics: ScrollPhysics(),
+                              itemCount: projectsData.length,
+                              itemBuilder: (context, index) {
+                                //elevation: 6,
+                                return Card(
+                                  margin: EdgeInsets.only(
+                                      left: 15, right: 15, top: 5, bottom: 5),
+                                  child: ListTile(
+                                    contentPadding: EdgeInsets.all(10),
+                                    leading: CircleAvatar(
+                                        backgroundImage: AssetImage(
+                                            'lib/src/images/wireframelogo.png')),
+                                    title: Text(projectsData[index].title),
+                                    trailing: IconButton(
+                                      color: Colors.red,
+                                      icon: Icon(Icons.delete),
+                                      onPressed: () {
+                                        DeleteDialog(projectsData[index].id);
+                                      },
+                                    ),
+                                    onTap: () {
+                                      Utils.homeNavigator.currentState!
+                                          .pushNamed('project_details',
+                                              arguments: projectsData[index]);
+                                    },
+                                  ),
+                                );
+                              },
+                            )
+                          : Center(child: Text("No posee ningun proyecto")),
+                    );
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return Container(
+                      width: 400,
+                      height: 550,
+                      child: Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      ),
+                    );
+                  } else {
+                    return Center(
+                      child: Text("Error con el servidor"),
+                    );
+                  }
+                }),
+            Padding(
+                padding: EdgeInsets.only(left: 20, top: 15, bottom: 20),
+                child: ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) {
+                          return DialogCreateProject(
+                            projectBloc: projectBloc,
+                          );
+                        });
+                  },
+                  style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),
+                  child: Text('Crear proyecto +'),
+                )),
+          ],
+        ),
+      ]),
     );
+  }
+
+  DeleteDialog(projectId) {
+    return showDialog(
+        context: context,
+        builder: (builder) {
+          return AlertDialog(
+            title: Text("Eliminar Proyecto"),
+            content: Text("¿Seguro que quieres eliminar este proyecto?"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                    projectBloc.deleteProject(projectId).then((value) {
+                      if (value == true) {
+                        SnackBarNotification().showSnackbar(
+                            Utils.homeNavigator.currentContext!,
+                            "Se eliminó el proyecto seleccionado",
+                            "success");
+                        print("Proyecto eliminado");
+                      } else {
+                        SnackBarNotification().showSnackbar(
+                            Utils.homeNavigator.currentContext!,
+                            "Ocurrió un error en el server",
+                            "error");
+                        print("Error en server");
+                      }
+                    });
+                  },
+                  child: Text(
+                    "Si",
+                    style: TextStyle(color: Colors.red),
+                  )),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop();
+                },
+                child: Text("No"),
+              )
+            ],
+          );
+        });
   }
 }
 

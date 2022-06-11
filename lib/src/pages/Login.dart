@@ -1,10 +1,16 @@
+import 'package:afterdrawing/src/core/provider/userProvider.dart';
 import 'package:afterdrawing/src/endpoints/endpoints.dart';
+import 'package:afterdrawing/src/utils/SnackBarNotification.dart';
+import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/gestures.dart';
 
 class LoginPage extends StatefulWidget {
+  final ValueChanged<bool>? changeStateUserLog;
+  const LoginPage({Key? key, this.changeStateUserLog}) : super(key: key);
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -17,22 +23,13 @@ class _LoginPageState extends State<LoginPage> {
   bool userExists = false;
   bool userValid = true;
   bool passValid = true;
+  var isPasswordHidden = true;
 
-  Future<String> getUser() async {
-    var response = await http.get(Uri.parse(url + "users"), headers: headers());
-
-    setState(() {
-      var extractdata = json.decode(response.body);
-      dataUsers = extractdata['content'];
-    });
-    print(dataUsers);
-    return response.body.toString();
-  }
+  var userProvider = UserProvider();
 
   @override
   void initState() {
     super.initState();
-    getUser();
   }
 
   @override
@@ -74,10 +71,11 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         controller: userText,
                         decoration: InputDecoration(
-                          labelText: "Ingresa usuario",
-                          errorText: userValid ? null : 'El usuario no existe',
+                          labelText: "Ingresa correo",
+                          errorText: userValid ? null : 'Ingrese un usuario',
                         ),
                         keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
                       ),
                       TextFormField(
                         controller: passText,
@@ -85,9 +83,19 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: "Ingresa contraseña",
                           errorText:
                               passValid ? null : 'Ingrese una contraseña',
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  isPasswordHidden = !isPasswordHidden;
+                                });
+                              },
+                              icon: isPasswordHidden
+                                  ? Icon(Icons.visibility)
+                                  : Icon(Icons.visibility_off)),
                         ),
                         keyboardType: TextInputType.text,
-                        obscureText: true,
+                        textInputAction: TextInputAction.next,
+                        obscureText: isPasswordHidden,
                       ),
                     ],
                   ),
@@ -96,21 +104,47 @@ class _LoginPageState extends State<LoginPage> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    for (var cosa in dataUsers) {
+                    /*for (var cosa in dataUsers) {
                       if (cosa['username'] == userText.text) {
                         userExists = true;
                         userId = cosa['id'];
                       }
-                    }
+                    }*/
                     setState(() {
-                      userExists ? userValid = true : userValid = false;
+                      userText.text.isNotEmpty
+                          ? userValid = true
+                          : userValid = false;
                       passText.text.isNotEmpty
                           ? passValid = true
                           : passValid = false;
                     });
                     if (userValid && passValid) {
-                      Navigator.pushNamed(context, 'profile',
-                          arguments: userId);
+                      print(userText.text);
+                      print(passText.text);
+                      userProvider
+                          .login(userText.text, passText.text)
+                          .then((value) async {
+                        if (value == true) {
+                          await Future.delayed(Duration(
+                              milliseconds:
+                                  300)); // tiempo que se demora en mostrarse el Snackbar
+                          SnackBarNotification().showSnackbar(
+                              Utils.homeNavigator.currentContext!,
+                              "Logeado exitoso",
+                              "success");
+                          widget.changeStateUserLog!(true);
+                          Utils.homeNavigator
+                              .currentState! // posible cambio posterior
+                              .pushNamed("generate_interfaces1");
+                        } else {
+                          print(value);
+                          await Future.delayed(Duration(milliseconds: 300));
+                          SnackBarNotification().showSnackbar(
+                              Utils.homeNavigator.currentContext!,
+                              value,
+                              "error");
+                        }
+                      });
                     }
                   },
                   style: ButtonStyle(
@@ -127,27 +161,25 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const Divider(),
               Center(
-                child: RichText(
-                  text: TextSpan(
-                    text: '¿No tienes una cuenta? ¡Regístrate!',
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.pushNamed(context, 'register');
-                      },
-                  ),
-                ),
+                child: TextButton(
+                    style: TextButton.styleFrom(
+                        primary: Colors.black87,
+                        textStyle: TextStyle(fontWeight: FontWeight.bold)),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('register');
+                    },
+                    child: Text("¿No tienes una cuenta? !Registrate!")),
               ),
               const Divider(),
               Center(
-                child: RichText(
-                  text: TextSpan(
-                    text: '¿Olvidaste tu contraseña?',
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.pushNamed(context, 'forgot_password');
-                      },
-                  ),
-                ),
+                child: TextButton(
+                    style: TextButton.styleFrom(
+                        primary: Colors.black87,
+                        textStyle: TextStyle(fontWeight: FontWeight.bold)),
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'forgot_password');
+                    },
+                    child: Text("¿Olvidaste tu contraseña?")),
               )
             ],
           ),

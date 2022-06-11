@@ -1,5 +1,8 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:afterdrawing/src/core/provider/userProvider.dart';
+import 'package:afterdrawing/src/utils/SnackBarNotification.dart';
+import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:flutter/material.dart';
 
 // vista de la pagina de recuperar contraseña
@@ -9,6 +12,12 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  var userProvider = UserProvider();
+  var emailExistingController = TextEditingController();
+  var newPasswordController = TextEditingController();
+
+  var _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,9 +56,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               ),
 
               Form(
+                key: _formKey,
                 child: Column(
                   children: <Widget>[
                     TextFormField(
+                      controller: emailExistingController,
                       decoration: const InputDecoration(
                         labelText: 'Correo electrónico',
                         labelStyle: TextStyle(
@@ -68,7 +79,44 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         fontSize: 20,
                       ),
                       keyboardType: TextInputType.emailAddress,
-                      validator: (value) {},
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Este campo no puede estar vacio';
+                        } else {
+                          return null;
+                        }
+                      },
+                      textInputAction: TextInputAction.next,
+                    ),
+                    TextFormField(
+                      controller: newPasswordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        labelText: 'Nueva contraseña',
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      ),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Este campo no puede estar vacio';
+                        } else {
+                          return null;
+                        }
+                      },
+                      textInputAction: TextInputAction.next,
                     ),
                     const SizedBox(
                       height: 20,
@@ -85,7 +133,27 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           borderRadius: BorderRadius.circular(10.0),
                         )),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          userProvider
+                              .forgotPassword(emailExistingController.text,
+                                  newPasswordController.text)
+                              .then((value) {
+                            if (value == true) {
+                              SnackBarNotification().showSnackbar(
+                                  Utils.homeNavigator.currentContext!,
+                                  "Contraseña cambiada exitosamente",
+                                  "success");
+                              Utils.homeNavigator.currentState!.pop();
+                            } else {
+                              SnackBarNotification().showSnackbar(
+                                  Utils.homeNavigator.currentContext!,
+                                  value,
+                                  "error");
+                            }
+                          });
+                        }
+                      },
                       child: const Text(
                         'Enviar',
                         style: TextStyle(

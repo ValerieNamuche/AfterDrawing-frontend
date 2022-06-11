@@ -2,8 +2,7 @@ import 'dart:js';
 
 import 'package:afterdrawing/src/pages/ForgotPassword.dart';
 import 'package:afterdrawing/src/pages/GenerateInterfaces.dart';
-import 'package:afterdrawing/src/pages/GenerateInterfaces2.dart';
-import 'package:afterdrawing/src/pages/GuideElement.dart';
+import 'package:afterdrawing/src/pages/guide/GuideElement.dart';
 import 'package:afterdrawing/src/pages/Home.dart';
 import 'package:afterdrawing/src/pages/Login.dart';
 import 'package:afterdrawing/src/pages/MainView.dart';
@@ -18,8 +17,8 @@ import 'package:flutter/material.dart';
 Route<dynamic> generateRoute(RouteSettings settings) {
   // var userId = 1;
   switch (settings.name) {
-    case 'login':
-      return MaterialPageRoute(builder: (context) => LoginPage());
+    /*case 'login':
+      return MaterialPageRoute(builder: (context) => LoginPage());*/
     case 'project':
       // dirigir a la pagina de proyectos
       return MaterialPageRoute(builder: (context) => ProjectList());
@@ -38,7 +37,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => NewPassword());
     case 'generate_interfaces':
       return MaterialPageRoute(builder: (context) => GenerateInterfaces());
-    case 'generate_interfaces1':
+    case 'main_view':
       return MaterialPageRoute(builder: (context) => MainView());
     /*case "generate_interfaces2":
       return MaterialPageRoute(builder: (context) => GenerateInterfaces2());*/

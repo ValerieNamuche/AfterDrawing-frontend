@@ -1,12 +1,12 @@
 import 'package:afterdrawing/src/core/provider/wireframeProvider.dart';
-import 'package:afterdrawing/src/pages/GuideElement.dart';
+import 'package:afterdrawing/src/pages/guide/GuideElement.dart';
 import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:afterdrawing/src/widgets/custom_nav_bar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:html';
 
-import 'Home.dart';
+//import 'Home.dart';
 
 // pagina donde agrego las interfaces
 class GenerateInterfaces1 extends StatefulWidget {
@@ -23,7 +23,7 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
   late double sidePadding;
 
   WireframeProvider wireframeProvider = WireframeProvider();
-  String nameImage = "";
+  int nameImage = 0;
 
   @override
   void initState() {
@@ -113,10 +113,12 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
                         width: 100.0,
                       ),
                       RaisedButton(
-                        onPressed: () => {},
+                        onPressed: () => {
+                          Utils.homeNavigator.currentState!.pushNamed("guide")
+                        },
                         // diseño del boton
                         child: const Text(
-                          'Continuar',
+                          'Guía de elementos',
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.white,
@@ -144,19 +146,54 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
   }
 
   void uploadImageWithFilePicker() async {
-    wireframeProvider.uploadImagetoBack().then((value) {
-      if (value == null) {
-        // No hace nada(ignorar)
+    /*FilePickerResult? resultImage = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: [
+        'jpg',
+        'png',
+      ],
+    );
 
-      } else if (value == Future.error("Internal Server Error")) {
-        print("Un error ha ocurrido");
+    if (resultImage != null) {
+      //Si se escoge una imagen
+      PlatformFile file = resultImage.files.first;
+
+      var done = resultImage.files.first.name;
+      print(done);
+
+      wireframeProvider.uploadImagetoBack(file).then((value) async {
+        if (value == "Internal Server Error (customed)") {
+          print("Un error ha ocurrido");
+          Utils.homeNavigator.currentState!
+              .pushNamed("generate_interfaces2", arguments: nameImage);
+        } else {
+          nameImage = value;
+          print(value);
+          Utils.homeNavigator.currentState!
+              .pushNamed("generate_interfaces2", arguments: value);
+        }
+      });
+    } else {
+      //Si no se escoge imagen
+      print("No se escogio ninguna imagen");
+    }*/
+
+////////////////////////////
+    wireframeProvider.uploadImagetoBack().then((value) async {
+      if (value == false) {
+        // Cuando cancela la seleccion de imagen(ignorar)
+
+      } else if (value == "Internal Server Error (customed)") {
+        print(value);
+        print(nameImage);
         Utils.homeNavigator.currentState!
             .pushNamed("generate_interfaces2", arguments: nameImage);
       } else {
         // si todo va bien
         nameImage = value;
+        print(nameImage);
         Utils.homeNavigator.currentState!
-            .pushNamed("generate_interfaces2", arguments: value);
+            .pushNamed("generate_interfaces2", arguments: nameImage);
       }
     });
   }
