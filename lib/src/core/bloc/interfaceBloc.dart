@@ -1,3 +1,5 @@
+import 'dart:js_util';
+
 import 'package:afterdrawing/src/core/bloc/validators.dart';
 import 'package:afterdrawing/src/core/provider/interfaceProvider.dart';
 import 'package:afterdrawing/src/core/provider/wireframeProvider.dart';
@@ -51,8 +53,17 @@ class InterfaceBloc with Validators {
     return response;
   }
 
-  Future<bool> deleteInterface(wireframeId) async {
+  Future<dynamic> updateInterface(interfaceId) async {
+    var response = await interfaceProvider.updateInterface(interfaceId);
+    if (response is InterfaceDto) {
+      changeSingleInterface(response);
+    }
+    return response;
+  }
+
+  Future<bool> deleteInterface(projectId, wireframeId) async {
     var response = await interfaceProvider.deleteInterface(wireframeId);
+    getInterfaces(projectId);
     return response;
   }
 

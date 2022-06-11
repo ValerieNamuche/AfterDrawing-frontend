@@ -3,6 +3,8 @@ import 'package:afterdrawing/src/core/bloc/interfaceBloc.dart';
 import 'package:afterdrawing/src/model/InterfaceDto.dart';
 import 'package:afterdrawing/src/model/WireframeDto.dart';
 import 'package:afterdrawing/src/pages/projects/Project.dart';
+import 'package:afterdrawing/src/utils/SnackBarNotification.dart';
+import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,10 +22,10 @@ class _WireframeViewState extends State<WireframeView> {
       ScrollController(/*initialScrollOffset: 50.0*/);
   var isCopied = false;
   String nameProjectArgument = "";
-  var InterfaceArgument = InterfaceDto(
+  var interfaceArgument = InterfaceDto(
       id: 0,
       interfaceName: "",
-      wireframe: new WireframeDto(id: 0, name: "", classes: [], code: []));
+      wireframe: WireframeDto(id: 0, name: "", classes: [], code: []));
   String nameWireframeArgument = "My interface";
   String wireframeContent = textoPrueba;
 
@@ -45,14 +47,14 @@ class _WireframeViewState extends State<WireframeView> {
 
     if (argument != null) {
       nameProjectArgument = argument[0];
-      InterfaceArgument = argument[1] as InterfaceDto;
+      interfaceArgument = argument[1] as InterfaceDto;
     }
 
-    interfaceBloc.getSingleInterface(InterfaceArgument.id);
+    interfaceBloc.getSingleInterface(interfaceArgument.id);
     return Scaffold(
         appBar: AppBar(
           title: Text(
-              nameProjectArgument + ' - ' + InterfaceArgument.interfaceName),
+              nameProjectArgument + ' - ' + interfaceArgument.interfaceName),
         ),
         body: Container(
           child: Column(children: [
@@ -79,7 +81,7 @@ class _WireframeViewState extends State<WireframeView> {
                               var interfaceData = snapshot.data as InterfaceDto;
                               var textCode = convertListToString(
                                   interfaceData.wireframe.code);
-
+                              interfaceArgument.id = interfaceData.id;
                               return CodeView(textCode);
                             } else if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -116,11 +118,13 @@ class _WireframeViewState extends State<WireframeView> {
                         height: 20,
                       ),
                       ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            updateWireframe();
+                          },
                           child: Text("Actualizar interfaz"),
                           style: ButtonStyle(
                               padding: MaterialStateProperty.all(
-                                  EdgeInsets.all(18))))
+                                  EdgeInsets.all(18)))),
                     ],
                   ),
                 ),
@@ -128,17 +132,46 @@ class _WireframeViewState extends State<WireframeView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      FadeInImage(
-                          height: 500,
-                          placeholder:
-                              AssetImage("lib/src/images/wireframelogo.png"),
-                          image: NetworkImage(
-                              'http://localhost:8081/api/get/wireframe/${InterfaceArgument.wireframe.id}'),
-                          imageErrorBuilder: (context, error, stackTrace) {
-                            return Image.asset(
-                              "lib/src/images/wireframelogo.png",
-                              //width: 600,
-                            );
+                      StreamBuilder(
+                          stream: interfaceBloc.singleInterfaceStream,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              var interfaceData = snapshot.data as InterfaceDto;
+                              return Column(
+                                children: [
+                                  FadeInImage(
+                                      height: 500,
+                                      placeholder: AssetImage(
+                                          "lib/src/images/wireframelogo.png"),
+                                      image: NetworkImage(
+                                          'http://localhost:8081/api/get/wireframe/${interfaceData.wireframe.id}'),
+                                      imageErrorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Image.asset(
+                                          "lib/src/images/wireframelogo.png",
+                                          //width: 600,
+                                        );
+                                      }),
+                                  /*Text('Id de interface: ${interfaceData.id}'),
+                                  Text(
+                                      'Id de wireframe: ${interfaceData.wireframe.id}')*/
+                                ],
+                              );
+                            } else {
+                              return FadeInImage(
+                                  height: 500,
+                                  placeholder: AssetImage(
+                                      "lib/src/images/wireframelogo.png"),
+                                  image: NetworkImage(
+                                      'http://localhost:8081/api/get/wireframe/${interfaceArgument.id}'),
+                                  imageErrorBuilder:
+                                      (context, error, stackTrace) {
+                                    return Image.asset(
+                                      "lib/src/images/wireframelogo.png",
+                                      //width: 600,
+                                    );
+                                  });
+                            }
                           }),
                       //Leyenda(),
                     ],
@@ -148,6 +181,21 @@ class _WireframeViewState extends State<WireframeView> {
             ),
           ]),
         ));
+  }
+
+  updateWireframe() {
+    interfaceBloc.updateInterface(interfaceArgument.id).then((value) {
+      if (value is String) {
+        SnackBarNotification()
+            .showSnackbar(Utils.homeNavigator.currentContext!, value, "error");
+        //print("Proyecto eliminado");
+      } else if (value is InterfaceDto) {
+        SnackBarNotification().showSnackbar(Utils.homeNavigator.currentContext!,
+            "Se actualizó correctamente el wireframe", "success");
+      } else {
+        //Si el valor es false, no hace nada
+      }
+    });
   }
 
   Widget CodeView(String contentCode) {

@@ -1,6 +1,7 @@
 import 'dart:convert';
-
+import 'package:http_parser/http_parser.dart';
 import 'package:afterdrawing/src/model/InterfaceDto.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -70,24 +71,47 @@ class InterfaceProvider {
   }
 
 /////PENDIENTE POR ENDPOINT
-  Future<dynamic> updateInterface(
-      String projectId, String wireframeId, String interfaceName) async {
-    final prefs = await SharedPreferences.getInstance();
-
-    var userId = prefs.getInt("userId") ?? 0;
-    var url =
-        'http://localhost:8081/api/users/${userId}/projects/${projectId}/wireframes/${wireframeId}/interfaces';
+  Future<dynamic> updateInterface(interfaceId) async {
+    var url = 'http://localhost:8081/api/interfaces/$interfaceId';
 
     Uri uri = Uri.parse(url);
 
-    var body = {'interfaceName': interfaceName};
+    FilePickerResult? resultImage = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: [
+        'jpg',
+        'png',
+      ],
+    );
 
-    var response = await http.post(uri,
-        body: json.encode(body),
-        headers: {"Accept": "*/*", "Content-Type": "application/json"});
+    if (resultImage != null) {
+      PlatformFile file = resultImage.files.first;
 
-    if (response.statusCode == 200) {
-      return true;
+      //
+      var done = resultImage.files.first.name;
+      print(done);
+      //
+      var request = http.MultipartRequest('PUT', uri);
+
+      request.files.add(http.MultipartFile.fromBytes(
+          'file', await file.bytes!.cast<int>(),
+          filename: file.name, contentType: MediaType('image', 'jpeg')));
+
+      var response = await http.Response.fromStream(await request.send());
+
+      if (response.statusCode == 200) {
+        var jsonResponse = json.decode(response.body);
+        var newInterface = InterfaceDto.fromJson(jsonResponse);
+
+        return newInterface;
+      } else {
+        print(response.statusCode);
+        print(response.reasonPhrase);
+        return "Internal Server Error (customed)";
+
+        // Causaba error cuando se escogia una imagen, aun cuando se subia correctamente
+        //return Future.error("Internal Server Error");
+      }
     } else {
       return false;
     }
@@ -95,7 +119,7 @@ class InterfaceProvider {
 
 ///////////////////
 
-  Future<bool> deleteInterface(String wireframeId) async {
+  Future<bool> deleteInterface(int wireframeId) async {
     final prefs = await SharedPreferences.getInstance();
 
     var userId = prefs.getInt("userId") ?? 0;

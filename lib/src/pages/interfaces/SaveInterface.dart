@@ -83,7 +83,10 @@ class _SaveInterfaceState extends State<SaveInterface> {
               SizedBox(
                 height: 30,
               ),
-              Text("Guardar interface",style: TextStyle(fontSize: 20),),
+              Text(
+                "Guardar interface",
+                style: TextStyle(fontSize: 20),
+              ),
               SizedBox(
                 height: 30,
               ),
@@ -92,11 +95,11 @@ class _SaveInterfaceState extends State<SaveInterface> {
                 FutureBuilder(
                     future: projectProvider.getAllProjectsByUser(),
                     builder: (context, snapshot) {
-                      var projectsData = snapshot.data as List;
                       //_currentProject = projectBloc.projects[0].title;
                       if (snapshot.hasData &&
                           snapshot.connectionState == ConnectionState.done) {
-                        return projectsData.length > 0
+                        var projectsData = snapshot.data as List;
+                        return projectsData.isNotEmpty
                             ? Container(
                                 width: 190,
                                 child: DropdownButtonFormField(

@@ -1,6 +1,7 @@
 import 'package:afterdrawing/src/core/bloc/interfaceBloc.dart';
 import 'package:afterdrawing/src/core/bloc/projectBloc.dart';
 import 'package:afterdrawing/src/model/ProjectDto.dart';
+import 'package:afterdrawing/src/utils/SnackBarNotification.dart';
 import 'package:afterdrawing/src/utils/Utils.dart';
 import 'package:flutter/material.dart';
 
@@ -80,22 +81,58 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                         .pushNamed('wireframeview', arguments: [
                                       argumentProject.title,
                                       interfacesData[index]
-                                    ]);
+                                    ]).then((value) {
+                                      setState(
+                                          () {}); // para actualizar una pagina cuando popeo
+                                    });
                                   },
-                                  child: FadeInImage(
-                                      width: 300,
-                                      //height: 100,
-                                      placeholder: AssetImage(
-                                          "lib/src/images/wireframelogo.png"),
-                                      image: NetworkImage(
-                                          'http://localhost:8081/api/get/wireframe/${interfacesData[index].wireframe.id}'),
-                                      imageErrorBuilder:
-                                          (context, error, stackTrace) {
-                                        return Image.asset(
-                                          "lib/src/images/wireframelogo.png",
+                                  child: Card(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: FadeInImage(
+                                              width: 300,
+                                              //height: 100,
+                                              placeholder: AssetImage(
+                                                  "lib/src/images/wireframelogo.png"),
+                                              image: NetworkImage(
+                                                  'http://localhost:8081/api/get/wireframe/${interfacesData[index].wireframe.id}'),
+                                              imageErrorBuilder:
+                                                  (context, error, stackTrace) {
+                                                return Image.asset(
+                                                  "lib/src/images/wireframelogo.png",
+                                                  width: 300,
+                                                );
+                                              }),
+                                        ),
+                                        /*Text(
+                                            'id del wireframe: ${interfacesData[index].wireframe.id}'),*/
+
+                                        SizedBox(
                                           width: 300,
-                                        );
-                                      }),
+                                          height: 70,
+                                          child: Center(
+                                            child: ListTile(
+                                              title: Text(
+                                                '${interfacesData[index].interfaceName}',
+                                              ),
+                                              trailing: IconButton(
+                                                icon:
+                                                    Icon(Icons.delete_outline),
+                                                onPressed: () {
+                                                  DeleteDialog(
+                                                      argumentProject.id,
+                                                      interfacesData[index].id);
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                 );
                               })
                           : FadeInImage(
@@ -130,7 +167,10 @@ class _ProjectDetailsState extends State<ProjectDetails> {
             height: 30,
           ),
           ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Utils.homeNavigator.currentState!
+                    .pushNamed('generate_interfaces1');
+              },
               style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),
               child: Text(
                 "Generar interface",
@@ -139,5 +179,49 @@ class _ProjectDetailsState extends State<ProjectDetails> {
         ]),
       ),
     );
+  }
+
+  DeleteDialog(projectId, interfaceId) {
+    return showDialog(
+        context: context,
+        builder: (builder) {
+          return AlertDialog(
+            title: Text("Eliminar Interface"),
+            content: Text("¿Seguro que quieres eliminar esta interface?"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true).pop(true);
+                    interfaceBloc
+                        .deleteInterface(projectId, interfaceId)
+                        .then((value) {
+                      if (value == true) {
+                        SnackBarNotification().showSnackbar(
+                            Utils.homeNavigator.currentContext!,
+                            "Se eliminó la interface seleccionada",
+                            "success");
+                        print("Interface eliminada");
+                      } else {
+                        SnackBarNotification().showSnackbar(
+                            Utils.homeNavigator.currentContext!,
+                            "Ocurrió un error en el server",
+                            "error");
+                        print("Error en server");
+                      }
+                    });
+                  },
+                  child: Text(
+                    "Si",
+                    style: TextStyle(color: Colors.red),
+                  )),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop();
+                },
+                child: Text("No"),
+              )
+            ],
+          );
+        });
   }
 }
