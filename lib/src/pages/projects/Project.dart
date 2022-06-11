@@ -56,6 +56,7 @@ class _ProjectListState extends State<ProjectList> {
       ),*/
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Padding(
             padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
@@ -141,7 +142,9 @@ class _ProjectListState extends State<ProjectList> {
                   showDialog(
                       context: context,
                       builder: (_) {
-                        return DialogCreateProject();
+                        return DialogCreateProject(
+                          projectBloc: projectBloc,
+                        );
                       });
                 },
                 style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),

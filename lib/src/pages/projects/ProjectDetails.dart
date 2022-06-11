@@ -57,128 +57,140 @@ class _ProjectDetailsState extends State<ProjectDetails> {
       ]),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(argumentProject.description),
-          SizedBox(
-            height: 30,
-          ),
-          StreamBuilder(
-              stream: interfaceBloc.interfacesStream,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var interfacesData = snapshot.data as List;
-                  return Scrollbar(
-                    controller: _scrollController,
-                    child: Container(
-                      height: 400,
-                      child: interfacesData.length > 0
-                          ? ListView.builder(
-                              controller: _scrollController,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: interfacesData.length,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: () {
-                                    print("Tap");
-                                    Utils.homeNavigator.currentState!
-                                        .pushNamed('wireframeview', arguments: [
-                                      argumentProject.title,
-                                      interfacesData[index]
-                                    ]).then((value) {
-                                      setState(
-                                          () {}); // para actualizar una pagina cuando popeo
-                                    });
-                                  },
-                                  child: Card(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: FadeInImage(
-                                              width: 300,
-                                              //height: 100,
-                                              placeholder: AssetImage(
-                                                  "lib/src/images/wireframelogo.png"),
-                                              image: NetworkImage(
-                                                  'http://localhost:8081/api/get/wireframe/${interfacesData[index].wireframe.id}'),
-                                              imageErrorBuilder:
-                                                  (context, error, stackTrace) {
-                                                return Image.asset(
-                                                  "lib/src/images/wireframelogo.png",
-                                                  width: 300,
-                                                );
-                                              }),
-                                        ),
-                                        /*Text(
-                                            'id del wireframe: ${interfacesData[index].wireframe.id}'),*/
+        child: ListView(children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(
+              argumentProject.description,
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              'Interfaces',
+              style: TextStyle(fontSize: 25),
+            ),
+            StreamBuilder(
+                stream: interfaceBloc.interfacesStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var interfacesData = snapshot.data as List;
+                    return Scrollbar(
+                      controller: _scrollController,
+                      child: Container(
+                        height: 400,
+                        child: interfacesData.length > 0
+                            ? ListView.builder(
+                                controller: _scrollController,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: interfacesData.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      //print("Tap");
+                                      Utils.homeNavigator.currentState!
+                                          .pushNamed('wireframeview',
+                                              arguments: [
+                                            argumentProject.title,
+                                            interfacesData[index]
+                                          ]).then((value) {
+                                        setState(
+                                            () {}); // para actualizar una pagina cuando popeo
+                                      });
+                                    },
+                                    child: Card(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: FadeInImage(
+                                                width: 300,
+                                                //height: 100,
+                                                placeholder: AssetImage(
+                                                    "lib/src/images/wireframelogo.png"),
+                                                image: NetworkImage(
+                                                    'http://localhost:8081/api/get/wireframe/${interfacesData[index].wireframe.id}'),
+                                                imageErrorBuilder: (context,
+                                                    error, stackTrace) {
+                                                  return Image.asset(
+                                                    "lib/src/images/wireframelogo.png",
+                                                    width: 300,
+                                                  );
+                                                }),
+                                          ),
+                                          /*Text(
+                                              'id del wireframe: ${interfacesData[index].wireframe.id}'),*/
 
-                                        SizedBox(
-                                          width: 300,
-                                          height: 70,
-                                          child: Center(
-                                            child: ListTile(
-                                              title: Text(
-                                                '${interfacesData[index].interfaceName}',
-                                              ),
-                                              trailing: IconButton(
-                                                icon:
-                                                    Icon(Icons.delete_outline),
-                                                onPressed: () {
-                                                  DeleteDialog(
-                                                      argumentProject.id,
-                                                      interfacesData[index].id);
-                                                },
+                                          SizedBox(
+                                            width: 300,
+                                            height: 70,
+                                            child: Center(
+                                              child: ListTile(
+                                                title: Text(
+                                                  '${interfacesData[index].interfaceName}',
+                                                ),
+                                                trailing: IconButton(
+                                                  icon: Icon(
+                                                      Icons.delete_outline),
+                                                  onPressed: () {
+                                                    DeleteDialog(
+                                                        argumentProject.id,
+                                                        interfacesData[index]
+                                                            .id);
+                                                  },
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        )
-                                      ],
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
-                              })
-                          : FadeInImage(
-                              width: 300,
-                              //height: 100,
-                              placeholder: AssetImage(
-                                  "lib/src/images/wireframelogo.png"),
-                              image: NetworkImage(
-                                  'http://localhost:8081/api/get/wireframe/${nameFile}'),
-                              imageErrorBuilder: (context, error, stackTrace) {
-                                return Image.asset(
-                                  "lib/src/images/wireframelogo.png",
-                                  width: 300,
-                                );
-                              }),
-                    ),
-                  );
-                } else if (snapshot.connectionState ==
-                    ConnectionState.waiting) {
-                  return Container(
-                    height: 400,
-                    child: Center(
-                        //height: 100,
-                        //width: 100,
-                        child: CircularProgressIndicator()),
-                  );
-                } else {
-                  return Text("Error en el servidor");
-                }
-              }),
-          SizedBox(
-            height: 30,
-          ),
-          ElevatedButton(
-              onPressed: () {
-                Utils.homeNavigator.currentState!
-                    .pushNamed('generate_interfaces1');
-              },
-              style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),
-              child: Text(
-                "Generar interface",
-                style: TextStyle(fontSize: 16),
-              ))
+                                  );
+                                })
+                            : FadeInImage(
+                                width: 300,
+                                //height: 100,
+                                placeholder: AssetImage(
+                                    "lib/src/images/wireframelogo.png"),
+                                image: NetworkImage(
+                                    'http://localhost:8081/api/get/wireframe/${nameFile}'),
+                                imageErrorBuilder:
+                                    (context, error, stackTrace) {
+                                  return Image.asset(
+                                    "lib/src/images/wireframelogo.png",
+                                    width: 300,
+                                  );
+                                }),
+                      ),
+                    );
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return Container(
+                      height: 400,
+                      child: Center(
+                          //height: 100,
+                          //width: 100,
+                          child: CircularProgressIndicator()),
+                    );
+                  } else {
+                    return Text("Error en el servidor");
+                  }
+                }),
+            SizedBox(
+              height: 30,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Utils.homeNavigator.currentState!
+                      .pushNamed('generate_interfaces1');
+                },
+                style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),
+                child: Text(
+                  "Generar interface",
+                  style: TextStyle(fontSize: 16),
+                ))
+          ]),
         ]),
       ),
     );

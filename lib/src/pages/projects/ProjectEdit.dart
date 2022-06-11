@@ -52,98 +52,101 @@ class _ProjectEditState extends State<ProjectEdit> {
       appBar: AppBar(title: Text('Editar ${argumentProject.title}')),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Form(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Form(
-              key: _formKey,
-              child: Column(children: [
-                StreamBuilder(
-                    stream: projectBloc.projectNameStream,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                          initialValue: argumentProject.title,
-                          onChanged: (value) {
-                            projectBloc.changeProjectName(value);
-                          },
-                          decoration: InputDecoration(
-                              labelText:
-                                  "Ingrese un nuevo nombre para su proyecto",
-                              errorText: snapshot.hasError
-                                  ? snapshot.error.toString()
-                                  : null),
-                          textInputAction: TextInputAction.next,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Rellene este campo para continuar"; //validacion en caso no se ingrese nada desde el principio
-                            }
-                          });
-                    }),
-                SizedBox(
-                  height: 15,
-                ),
-                StreamBuilder(
-                    stream: projectBloc.projectDescriptionStream,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                          initialValue: argumentProject.title,
-                          onChanged: (value) {
-                            projectBloc.changeProjectDescription(value);
-                          },
-                          decoration: InputDecoration(
-                              labelText:
-                                  "Ingrese una nueva description para su proyecto",
-                              errorText: snapshot.hasError
-                                  ? snapshot.error.toString()
-                                  : null),
-                          textInputAction: TextInputAction.next,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Rellene este campo para continuar"; //validacion en caso no se ingrese nada desde el principio
-                            }
-                          });
-                    }),
-                SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            saveEditProjectForm();
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.all(18)),
-                        child: Text(
-                          "Terminar de editar",
-                          style: TextStyle(fontSize: 16),
-                        )),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.grey[300]),
-                              padding: MaterialStateProperty.all(
-                                  EdgeInsets.all(18))),
+        child: ListView(children: [
+          Form(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Form(
+                key: _formKey,
+                child: Column(children: [
+                  StreamBuilder(
+                      stream: projectBloc.projectNameStream,
+                      builder: (context, snapshot) {
+                        return TextFormField(
+                            initialValue: argumentProject.title,
+                            onChanged: (value) {
+                              projectBloc.changeProjectName(value);
+                            },
+                            decoration: InputDecoration(
+                                labelText:
+                                    "Ingrese un nuevo nombre para su proyecto",
+                                errorText: snapshot.hasError
+                                    ? snapshot.error.toString()
+                                    : null),
+                            textInputAction: TextInputAction.next,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Rellene este campo para continuar"; //validacion en caso no se ingrese nada desde el principio
+                              }
+                            });
+                      }),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  StreamBuilder(
+                      stream: projectBloc.projectDescriptionStream,
+                      builder: (context, snapshot) {
+                        return TextFormField(
+                            initialValue: argumentProject.title,
+                            onChanged: (value) {
+                              projectBloc.changeProjectDescription(value);
+                            },
+                            decoration: InputDecoration(
+                                labelText:
+                                    "Ingrese una nueva description para su proyecto",
+                                errorText: snapshot.hasError
+                                    ? snapshot.error.toString()
+                                    : null),
+                            textInputAction: TextInputAction.next,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Rellene este campo para continuar"; //validacion en caso no se ingrese nada desde el principio
+                              }
+                            });
+                      }),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            if (_formKey.currentState!.validate()) {
+                              saveEditProjectForm();
+                            }
                           },
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.all(18)),
                           child: Text(
-                            "Cancelar",
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            "Terminar de editar",
+                            style: TextStyle(fontSize: 16),
                           )),
-                    )
-                  ],
-                )
-              ]),
-            ),
-          ]),
-        ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.grey[300]),
+                                padding: MaterialStateProperty.all(
+                                    EdgeInsets.all(18))),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "Cancelar",
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.black),
+                            )),
+                      )
+                    ],
+                  )
+                ]),
+              ),
+            ]),
+          ),
+        ]),
       ),
     );
   }

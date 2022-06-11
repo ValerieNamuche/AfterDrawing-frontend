@@ -99,22 +99,24 @@ class _CustomNavBarState extends State<CustomNavBar> {
           itemBuilder: (context) => [
             PopupMenuItem<int>(
                 value: 0,
-                child: Text('Cambiar contraseña', style: TextStyle(fontSize: 17),
-                )
-            ),
+                child: Text(
+                  userName,
+                  style: TextStyle(fontSize: 17),
+                )),
             PopupMenuItem<int>(
                 value: 1,
-                child: Text('Cerrar sesión', style: TextStyle(fontSize: 17),
-                )
-            )
+                child: Text(
+                  'Cerrar sesión',
+                  style: TextStyle(fontSize: 17),
+                ))
           ],
         ),
       )
     ];
   }
 
-  void onSelected(BuildContext context, int item){
-    switch (item){
+  void onSelected(BuildContext context, int item) {
+    switch (item) {
       case 0:
         break;
       case 1:
@@ -126,8 +128,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
               "Sesión cerrada exitosamente",
               "success");
 
-          Utils.homeNavigator.currentState!
-              .pushNamed("generate_interfaces1");
+          Utils.homeNavigator.currentState!.pushNamed("generate_interfaces1");
         });
         break;
     }

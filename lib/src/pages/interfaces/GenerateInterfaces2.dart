@@ -152,6 +152,9 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
                                 //width: 600,
                               );
                             }),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Leyenda(),
                       ],
                     ),
@@ -208,11 +211,11 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
         SizedBox(
           height: 8,
         ),
-        ElevatedButton(
+        /*ElevatedButton(
             onPressed: () {
               wireframeProvider.downloadCode();
             },
-            child: Text("Descargar código")),
+            child: Text("Descargar código")),*/
       ],
     );
   }

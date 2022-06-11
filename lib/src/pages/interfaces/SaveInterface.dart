@@ -72,118 +72,120 @@ class _SaveInterfaceState extends State<SaveInterface> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text("Crear proyecto")),
-      body: Container(
-        height: 2000,
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 30,
-              ),
-              Text(
-                "Guardar interface",
-                style: TextStyle(fontSize: 20),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text("Proyecto: "),
-                FutureBuilder(
-                    future: projectProvider.getAllProjectsByUser(),
-                    builder: (context, snapshot) {
-                      //_currentProject = projectBloc.projects[0].title;
-                      if (snapshot.hasData &&
-                          snapshot.connectionState == ConnectionState.done) {
-                        var projectsData = snapshot.data as List;
-                        return projectsData.isNotEmpty
-                            ? Container(
-                                width: 190,
-                                child: DropdownButtonFormField(
-                                  value: _currentProject,
-                                  hint: Text(_currentProject.toString()),
-                                  validator: (projectName) {
-                                    if (projectName == null &&
-                                        _currentProject!.isEmpty) {
-                                      return "Seleccione un proyecto";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      _currentProject = newValue;
-                                      print(_currentProject);
-                                    });
-                                  },
-                                  items: projectsData.map((item) {
-                                    return DropdownMenuItem(
-                                      child: Text(item.title),
-                                      value: item.id.toString(),
-                                    );
-                                  }).toList(),
-                                ),
-                              )
-                            : Text("No posee proyectos");
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        return Text("Error en el servidor");
-                      }
-                    })
-              ]),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      appBar: AppBar(title: Text("Crear interface")),
+      body: ListView(
+          //height: 2000,
+          children: [
+            Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 250,
-                    child: TextFormField(
-                      controller: interfaceNameController,
-                      onChanged: ((value) {
-                        interfaceBloc.changeInterfaceName(value);
-                        //print(interfaceBloc.interfaceName);
-                      }),
-                      decoration: InputDecoration(
-                          /*errorText: snapshot.hasError
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    "Guardar interface",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Text("Proyecto: "),
+                    FutureBuilder(
+                        future: projectProvider.getAllProjectsByUser(),
+                        builder: (context, snapshot) {
+                          //_currentProject = projectBloc.projects[0].title;
+                          if (snapshot.hasData &&
+                              snapshot.connectionState ==
+                                  ConnectionState.done) {
+                            var projectsData = snapshot.data as List;
+                            return projectsData.isNotEmpty
+                                ? Container(
+                                    width: 190,
+                                    child: DropdownButtonFormField(
+                                      value: _currentProject,
+                                      hint: Text(_currentProject.toString()),
+                                      validator: (projectName) {
+                                        if (projectName == null &&
+                                            _currentProject!.isEmpty) {
+                                          return "Seleccione un proyecto";
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          _currentProject = newValue;
+                                          print(_currentProject);
+                                        });
+                                      },
+                                      items: projectsData.map((item) {
+                                        return DropdownMenuItem(
+                                          child: Text(item.title),
+                                          value: item.id.toString(),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  )
+                                : Text("No posee proyectos");
+                          } else if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else {
+                            return Text("Error en el servidor");
+                          }
+                        })
+                  ]),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 250,
+                        child: TextFormField(
+                          controller: interfaceNameController,
+                          onChanged: ((value) {
+                            interfaceBloc.changeInterfaceName(value);
+                            //print(interfaceBloc.interfaceName);
+                          }),
+                          decoration: InputDecoration(
+                              /*errorText: snapshot.hasError
                                     ? snapshot.error.toString()
                                     : null,*/
-                          labelText: 'Nombre de interface'),
-                      textInputAction: TextInputAction.next,
-                      validator: (interfaceNameValid) {
-                        if (interfaceNameValid!.isEmpty) {
-                          return 'Este campo no puede estar vacio';
-                        } else {
-                          return null;
+                              labelText: 'Nombre de interface'),
+                          textInputAction: TextInputAction.next,
+                          validator: (interfaceNameValid) {
+                            if (interfaceNameValid!.isEmpty) {
+                              return 'Este campo no puede estar vacio';
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          print("Form complete");
+                          saveFormInterface();
                         }
                       },
-                    ),
-                  )
+                      child: Text("Guardar"))
                 ],
               ),
-              SizedBox(
-                height: 15,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      print("Form complete");
-                      saveFormInterface();
-                    }
-                  },
-                  child: Text("Guardar"))
-            ],
-          ),
-        ),
-      ),
+            ),
+          ]),
     );
   }
 }

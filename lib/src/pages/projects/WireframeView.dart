@@ -56,7 +56,7 @@ class _WireframeViewState extends State<WireframeView> {
           title: Text(
               nameProjectArgument + ' - ' + interfaceArgument.interfaceName),
         ),
-        body: Container(
+        body: SingleChildScrollView(
           child: Column(children: [
             SizedBox(
               height: 30,
