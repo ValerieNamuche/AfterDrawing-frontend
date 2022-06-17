@@ -73,6 +73,9 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           labelText: "Ingresa correo",
                           errorText: userValid ? null : 'Ingrese un usuario',
+                          errorStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 240, 120, 111)),
                         ),
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
@@ -83,6 +86,9 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: "Ingresa contraseña",
                           errorText:
                               passValid ? null : 'Ingrese una contraseña',
+                          errorStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 240, 120, 111)),
                           suffixIcon: IconButton(
                               onPressed: () {
                                 setState(() {
