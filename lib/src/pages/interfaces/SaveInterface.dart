@@ -129,7 +129,8 @@ class _SaveInterfaceState extends State<SaveInterface> {
                                       }).toList(),
                                     ),
                                   )
-                                : Text("No posee proyectos");
+                                : Text(
+                                    "Inicie sesión o cree un proyecto antes");
                           } else if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return Center(
@@ -175,6 +176,11 @@ class _SaveInterfaceState extends State<SaveInterface> {
                     height: 15,
                   ),
                   ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(255, 32, 68, 252),
+                          padding: EdgeInsets.all(18),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(80))),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           print("Form complete");

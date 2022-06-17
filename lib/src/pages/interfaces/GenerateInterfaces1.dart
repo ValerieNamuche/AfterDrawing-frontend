@@ -86,7 +86,7 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
                   child: Wrap(
                     alignment: WrapAlignment.spaceBetween,
                     children: <Widget>[
-                      RaisedButton(
+                      ElevatedButton(
                         onPressed: () {
                           uploadImageWithFilePicker();
                           //var resultImage = FilePicker.platform.pickFiles();
@@ -103,16 +103,16 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
                         ),
 
                         // color del boton
-                        color: const Color.fromARGB(255, 43, 134, 209),
-                        // circular shape
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                        style: ElevatedButton.styleFrom(
+                            primary: Color.fromARGB(255, 32, 68, 252),
+                            padding: EdgeInsets.all(18),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(80))),
                       ),
                       const SizedBox(
                         width: 100.0,
                       ),
-                      RaisedButton(
+                      ElevatedButton(
                         onPressed: () => {
                           Utils.homeNavigator.currentState!.pushNamed("guide")
                         },
@@ -121,18 +121,18 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
                           'Guía de elementos',
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.white,
+                            //color: Colors.white,
 
                             // cursiva
                           ),
                         ),
 
                         // color del boton
-                        color: const Color.fromARGB(255, 43, 134, 209),
-                        // circular shape
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                        style: ElevatedButton.styleFrom(
+                            primary: Color.fromARGB(255, 32, 68, 252),
+                            padding: EdgeInsets.all(18),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(80))),
                       ),
                     ],
                   ),

@@ -118,13 +118,19 @@ class _WireframeViewState extends State<WireframeView> {
                         height: 20,
                       ),
                       ElevatedButton(
-                          onPressed: () {
-                            updateWireframe();
-                          },
-                          child: Text("Actualizar interfaz"),
-                          style: ButtonStyle(
+                        onPressed: () {
+                          updateWireframe();
+                        },
+                        child: Text("Actualizar interfaz"),
+                        style: ElevatedButton.styleFrom(
+                            primary: Color.fromARGB(255, 32, 68, 252),
+                            padding: EdgeInsets.all(18),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(80))),
+                        /*style: ButtonStyle(
                               padding: MaterialStateProperty.all(
-                                  EdgeInsets.all(18)))),
+                                  EdgeInsets.all(18)))*/
+                      ),
                     ],
                   ),
                 ),
@@ -140,7 +146,7 @@ class _WireframeViewState extends State<WireframeView> {
                               return Column(
                                 children: [
                                   FadeInImage(
-                                      height: 500,
+                                      width: 500,
                                       placeholder: AssetImage(
                                           "lib/src/images/wireframelogo.png"),
                                       image: NetworkImage(
@@ -203,7 +209,10 @@ class _WireframeViewState extends State<WireframeView> {
       margin: EdgeInsets.only(left: 20, right: 20),
       width: 400,
       height: 550,
-      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black),
+        color: Colors.blueGrey[50],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Scrollbar(

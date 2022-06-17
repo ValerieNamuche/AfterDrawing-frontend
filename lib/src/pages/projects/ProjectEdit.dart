@@ -118,7 +118,10 @@ class _ProjectEditState extends State<ProjectEdit> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.all(18)),
+                              primary: Color.fromARGB(255, 32, 68, 252),
+                              padding: EdgeInsets.all(18),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(80))),
                           child: Text(
                             "Terminar de editar",
                             style: TextStyle(fontSize: 16),
