@@ -145,7 +145,7 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
                             placeholder:
                                 AssetImage("lib/src/images/wireframelogo.png"),
                             image: NetworkImage(
-                                'http://localhost:8081/api/get/wireframe/${nameFileArgument}'),
+                                'https://afterdrawingapp.herokuapp.com/api/get/wireframe/${nameFileArgument}'),
                             imageErrorBuilder: (context, error, stackTrace) {
                               return Image.asset(
                                 "lib/src/images/wireframelogo.png",

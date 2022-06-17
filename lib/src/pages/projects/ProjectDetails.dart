@@ -110,7 +110,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                                 placeholder: AssetImage(
                                                     "lib/src/images/wireframelogo.png"),
                                                 image: NetworkImage(
-                                                    'http://localhost:8081/api/get/wireframe/${interfacesData[index].wireframe.id}'),
+                                                    'https://afterdrawingapp.herokuapp.com/api/get/wireframe/${interfacesData[index].wireframe.id}'),
                                                 imageErrorBuilder: (context,
                                                     error, stackTrace) {
                                                   return Image.asset(
@@ -154,7 +154,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                 placeholder: AssetImage(
                                     "lib/src/images/wireframelogo.png"),
                                 image: NetworkImage(
-                                    'http://localhost:8081/api/get/wireframe/${nameFile}'),
+                                    'https://afterdrawingapp.herokuapp.com/api/get/wireframe/${nameFile}'),
                                 imageErrorBuilder:
                                     (context, error, stackTrace) {
                                   return Image.asset(

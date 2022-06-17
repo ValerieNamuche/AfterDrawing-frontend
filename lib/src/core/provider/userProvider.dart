@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider {
   Future<dynamic> login(String email, String password) async {
-    var url = 'http://localhost:8081/api/v1/authentication/sign-in';
+    var url = 'https://afterdrawingapp.herokuapp.com/api/v1/authentication/sign-in';
 
     Uri uri = Uri.parse(url);
 
@@ -46,7 +46,7 @@ class UserProvider {
   }
 
   Future<dynamic> register(RegisterDto registerDto) async {
-    var url = 'http://localhost:8081/api/v1/authentication/sign-up';
+    var url = 'https://afterdrawingapp.herokuapp.com/api/v1/authentication/sign-up';
 
     Uri uri = Uri.parse(url);
 
@@ -66,7 +66,7 @@ class UserProvider {
   }
 
   Future<dynamic> forgotPassword(String email, String newPassword) async {
-    var url = 'http://localhost:8081/api/v1/authentication/forgot-password';
+    var url = 'https://afterdrawingapp.herokuapp.com/api/v1/authentication/forgot-password';
 
     Uri uri = Uri.parse(url);
 

@@ -144,7 +144,7 @@ class _WireframeViewState extends State<WireframeView> {
                                       placeholder: AssetImage(
                                           "lib/src/images/wireframelogo.png"),
                                       image: NetworkImage(
-                                          'http://localhost:8081/api/get/wireframe/${interfaceData.wireframe.id}'),
+                                          'https://afterdrawingapp.herokuapp.com/api/get/wireframe/${interfaceData.wireframe.id}'),
                                       imageErrorBuilder:
                                           (context, error, stackTrace) {
                                         return Image.asset(
@@ -163,7 +163,7 @@ class _WireframeViewState extends State<WireframeView> {
                                   placeholder: AssetImage(
                                       "lib/src/images/wireframelogo.png"),
                                   image: NetworkImage(
-                                      'http://localhost:8081/api/get/wireframe/${interfaceArgument.id}'),
+                                      'https://afterdrawingapp.herokuapp.com/api/get/wireframe/${interfaceArgument.id}'),
                                   imageErrorBuilder:
                                       (context, error, stackTrace) {
                                     return Image.asset(

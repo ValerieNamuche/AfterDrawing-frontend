@@ -25,7 +25,7 @@ class WireframeProvider {
       print(done);
       //
       var request = http.MultipartRequest(
-          'POST', Uri.parse('http://localhost:8081/api/upload/image'));
+          'POST', Uri.parse('https://afterdrawingapp.herokuapp.com/api/upload/image'));
       request.files.add(
           http.MultipartFile.fromBytes('file', await file.bytes!.cast<int>(),
               //ByteStream.fromBytes(resultImage.files.first.bytes!).toList(),
@@ -53,8 +53,8 @@ class WireframeProvider {
 
   downloadCode() {
     var url =
-        "http://localhost:8081/api/get/wireframe/code/download"; /*Url.createObjectUrlFromBlob(
-        Blob(["http://localhost:8081/api/get/wireframe/code/download"]));*/
+        "https://afterdrawingapp.herokuapp.com/api/get/wireframe/code/download"; /*Url.createObjectUrlFromBlob(
+        Blob(["https://afterdrawingapp.herokuapp.com/api/get/wireframe/code/download"]));*/
     AnchorElement(href: url)
       ..setAttribute('download', '<Code1.txt>')
       ..click();
@@ -64,7 +64,7 @@ class WireframeProvider {
     /*if (nameFileArgument.contains(" ")) {
       nameFileArgument.replaceAll(" ", "%20");
     }*/
-    String url = 'http://localhost:8081/api/get/wireframe/${nameFileArgument}';
+    String url = 'https://afterdrawingapp.herokuapp.com/api/get/wireframe/${nameFileArgument}';
 
     Uri uri = Uri.parse(url);
     var response = await http.get(uri);
@@ -81,7 +81,7 @@ class WireframeProvider {
       nameFileArgument.replaceAll(" ", "%20");
     }*/
 
-    String url = 'http://localhost:8081/api/get/wireframe/info/${wireframeId}';
+    String url = 'https://afterdrawingapp.herokuapp.com/api/get/wireframe/info/${wireframeId}';
 
     Uri uri = Uri.parse(url);
     var response = await http.get(uri);
@@ -105,7 +105,7 @@ class WireframeProvider {
     }*/
 
     String url =
-        'http://localhost:8081/api/get/wireframe/info/${nameFileArgument}';
+        'https://afterdrawingapp.herokuapp.com/api/get/wireframe/info/${nameFileArgument}';
 
     Uri uri = Uri.parse(url);
     var response = await http.get(uri);

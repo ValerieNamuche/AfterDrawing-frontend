@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class InterfaceProvider {
   Future<List<InterfaceDto>> getAllInterfacesByProjectId(int projectId) async {
-    var url = 'http://localhost:8081/api/projects/${projectId}/interfaces';
+    var url = 'https://afterdrawingapp.herokuapp.com/api/projects/${projectId}/interfaces';
 
     Uri uri = Uri.parse(url);
 
@@ -29,7 +29,7 @@ class InterfaceProvider {
   }
 
   Future<InterfaceDto> getInterfaceById(int interfaceId) async {
-    var url = 'http://localhost:8081/api/interfaces/${interfaceId}';
+    var url = 'https://afterdrawingapp.herokuapp.com/api/interfaces/${interfaceId}';
 
     Uri uri = Uri.parse(url);
 
@@ -53,7 +53,7 @@ class InterfaceProvider {
 
     var userId = prefs.getInt("userId") ?? 0;
     var url =
-        'http://localhost:8081/api/users/${userId}/projects/${projectId}/wireframes/${wireframeId}/interfaces';
+        'https://afterdrawingapp.herokuapp.com/api/users/${userId}/projects/${projectId}/wireframes/${wireframeId}/interfaces';
 
     Uri uri = Uri.parse(url);
 
@@ -72,7 +72,7 @@ class InterfaceProvider {
 
 /////PENDIENTE POR ENDPOINT
   Future<dynamic> updateInterface(interfaceId) async {
-    var url = 'http://localhost:8081/api/interfaces/$interfaceId';
+    var url = 'https://afterdrawingapp.herokuapp.com/api/interfaces/$interfaceId';
 
     Uri uri = Uri.parse(url);
 
@@ -123,7 +123,7 @@ class InterfaceProvider {
     final prefs = await SharedPreferences.getInstance();
 
     var userId = prefs.getInt("userId") ?? 0;
-    var url = 'http://localhost:8081/api/interfaces/${wireframeId}';
+    var url = 'https://afterdrawingapp.herokuapp.com/api/interfaces/${wireframeId}';
 
     Uri uri = Uri.parse(url);
 

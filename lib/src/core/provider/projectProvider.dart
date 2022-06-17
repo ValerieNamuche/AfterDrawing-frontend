@@ -10,7 +10,7 @@ class ProjectProvider {
     final prefs = await SharedPreferences.getInstance();
 
     var userId = prefs.getInt("userId") ?? 0;
-    String url = 'http://localhost:8081/api/users/${userId}/projects';
+    String url = 'https://afterdrawingapp.herokuapp.com/api/users/${userId}/projects';
 
     Uri uri = Uri.parse(url);
     var response = await http.get(uri);
@@ -35,7 +35,7 @@ class ProjectProvider {
 
     var userId = prefs.getInt("userId") ?? 0;
 
-    var url = 'http://localhost:8081/api/users/${userId}/projects';
+    var url = 'https://afterdrawingapp.herokuapp.com/api/users/${userId}/projects';
 
     Uri uri = Uri.parse(url);
 
@@ -59,7 +59,7 @@ class ProjectProvider {
 
     var userId = prefs.getInt("userId") ?? 0;
 
-    var url = 'http://localhost:8081/api/users/${userId}/projects/$projectId';
+    var url = 'https://afterdrawingapp.herokuapp.com/api/users/${userId}/projects/$projectId';
 
     Uri uri = Uri.parse(url);
 
@@ -82,7 +82,7 @@ class ProjectProvider {
 
     var userId = prefs.getInt("userId") ?? 0;
 
-    var url = 'http://localhost:8081/api/users/${userId}/projects/$projectId';
+    var url = 'https://afterdrawingapp.herokuapp.com/api/users/${userId}/projects/$projectId';
 
     Uri uri = Uri.parse(url);
 
