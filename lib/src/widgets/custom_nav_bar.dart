@@ -72,6 +72,14 @@ class _CustomNavBarState extends State<CustomNavBar> {
     });
 
     return [
+      /*ElevatedButton(
+          onPressed: () {
+            Utils.homeNavigator.currentState!.pushNamed("home");
+          },
+          child: Text(
+            "Inicio",
+            style: TextStyle(fontSize: 17),
+          )),*/
       ElevatedButton(
           onPressed: () {
             Utils.homeNavigator.currentState!.pushNamed("generate_interfaces1");
@@ -136,6 +144,14 @@ class _CustomNavBarState extends State<CustomNavBar> {
 
   WidgetsWithoutUser() {
     return [
+      ElevatedButton(
+          onPressed: () {
+            Utils.homeNavigator.currentState!.pushNamed("home");
+          },
+          child: Text(
+            "Inicio",
+            style: TextStyle(fontSize: 17),
+          )),
       ElevatedButton(
           onPressed: () {
             Utils.homeNavigator.currentState!.pushNamed("generate_interfaces1");

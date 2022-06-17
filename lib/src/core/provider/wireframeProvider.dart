@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:html';
+import 'package:afterdrawing/src/constants/apisUrl.dart';
 import 'package:afterdrawing/src/model/WireframeDto.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:file_picker/file_picker.dart';
@@ -25,7 +26,7 @@ class WireframeProvider {
       print(done);
       //
       var request = http.MultipartRequest(
-          'POST', Uri.parse('http://localhost:8081/api/upload/image'));
+          'POST', Uri.parse('$urlBackendApi/upload/image'));
       request.files.add(
           http.MultipartFile.fromBytes('file', await file.bytes!.cast<int>(),
               //ByteStream.fromBytes(resultImage.files.first.bytes!).toList(),
@@ -53,7 +54,7 @@ class WireframeProvider {
 
   downloadCode() {
     var url =
-        "http://localhost:8081/api/get/wireframe/code/download"; /*Url.createObjectUrlFromBlob(
+        "$urlBackendApi/get/wireframe/code/download"; /*Url.createObjectUrlFromBlob(
         Blob(["http://localhost:8081/api/get/wireframe/code/download"]));*/
     AnchorElement(href: url)
       ..setAttribute('download', '<Code1.txt>')
@@ -64,7 +65,7 @@ class WireframeProvider {
     /*if (nameFileArgument.contains(" ")) {
       nameFileArgument.replaceAll(" ", "%20");
     }*/
-    String url = 'http://localhost:8081/api/get/wireframe/${nameFileArgument}';
+    String url = '$urlBackendApi/get/wireframe/${nameFileArgument}';
 
     Uri uri = Uri.parse(url);
     var response = await http.get(uri);
@@ -81,7 +82,7 @@ class WireframeProvider {
       nameFileArgument.replaceAll(" ", "%20");
     }*/
 
-    String url = 'http://localhost:8081/api/get/wireframe/info/${wireframeId}';
+    String url = '$urlBackendApi/get/wireframe/info/${wireframeId}';
 
     Uri uri = Uri.parse(url);
     var response = await http.get(uri);
@@ -104,8 +105,7 @@ class WireframeProvider {
       nameFileArgument.replaceAll(" ", "%20");
     }*/
 
-    String url =
-        'http://localhost:8081/api/get/wireframe/info/${nameFileArgument}';
+    String url = '$urlBackendApi/get/wireframe/info/${nameFileArgument}';
 
     Uri uri = Uri.parse(url);
     var response = await http.get(uri);

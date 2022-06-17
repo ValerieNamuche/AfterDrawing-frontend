@@ -87,7 +87,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                       stream: projectBloc.projectDescriptionStream,
                       builder: (context, snapshot) {
                         return TextFormField(
-                            initialValue: argumentProject.title,
+                            initialValue: argumentProject.description,
                             onChanged: (value) {
                               projectBloc.changeProjectDescription(value);
                             },

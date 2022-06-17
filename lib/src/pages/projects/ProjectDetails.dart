@@ -1,3 +1,4 @@
+import 'package:afterdrawing/src/constants/apisUrl.dart';
 import 'package:afterdrawing/src/core/bloc/interfaceBloc.dart';
 import 'package:afterdrawing/src/core/bloc/projectBloc.dart';
 import 'package:afterdrawing/src/model/ProjectDto.dart';
@@ -110,7 +111,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                                 placeholder: AssetImage(
                                                     "lib/src/images/wireframelogo.png"),
                                                 image: NetworkImage(
-                                                    'http://localhost:8081/api/get/wireframe/${interfacesData[index].wireframe.id}'),
+                                                    '$urlBackendApi/get/wireframe/${interfacesData[index].wireframe.id}'),
                                                 imageErrorBuilder: (context,
                                                     error, stackTrace) {
                                                   return Image.asset(
@@ -154,7 +155,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                 placeholder: AssetImage(
                                     "lib/src/images/wireframelogo.png"),
                                 image: NetworkImage(
-                                    'http://localhost:8081/api/get/wireframe/${nameFile}'),
+                                    '$urlBackendApi/get/wireframe/${nameFile}'),
                                 imageErrorBuilder:
                                     (context, error, stackTrace) {
                                   return Image.asset(

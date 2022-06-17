@@ -1,3 +1,4 @@
+import 'package:afterdrawing/src/constants/apisUrl.dart';
 import 'package:afterdrawing/src/constants/textoPrueba.dart';
 import 'package:afterdrawing/src/core/provider/wireframeProvider.dart';
 import 'package:afterdrawing/src/pages/interfaces/SaveInterface.dart';
@@ -145,7 +146,7 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
                             placeholder:
                                 AssetImage("lib/src/images/wireframelogo.png"),
                             image: NetworkImage(
-                                'http://localhost:8081/api/get/wireframe/${nameFileArgument}'),
+                                '$urlBackendApi/get/wireframe/${nameFileArgument}'),
                             imageErrorBuilder: (context, error, stackTrace) {
                               return Image.asset(
                                 "lib/src/images/wireframelogo.png",
