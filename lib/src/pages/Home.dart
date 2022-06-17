@@ -43,10 +43,11 @@ class Home extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Text(
+                  Text(
                     'Convierta sus Wireframe en Interfaces de sus Ususarios Móviles',
+                    //maxLines: 3,
                     style: TextStyle(
-                      fontSize: 40,
+                      fontSize: MediaQuery.of(context).size.height * 0.05,
                       fontFamily: 'Montserrat-Bold',
                       color: Colors.white,
                     ),
@@ -54,10 +55,10 @@ class Home extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     'Reduzca el tiempo de desarrollo y la complejidad de su proyecto',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: MediaQuery.of(context).size.height * 0.025,
                       fontFamily: 'Montserrat-Regular',
                       color: Colors.white,
                     ),
@@ -76,12 +77,14 @@ class Home extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      child: const Text(
-                        'Comienza Ahora',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat-Bold',
-                          color: Colors.white,
+                      child: FittedBox(
+                        child: Text(
+                          'Comienza Ahora',
+                          style: TextStyle(
+                            //fontSize: MediaQuery.of(context).size.height * 0.03,
+                            fontFamily: 'Montserrat-Bold',
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -89,15 +92,17 @@ class Home extends StatelessWidget {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20.0, left: 100.0),
-                child: Image.asset(
-                  'lib/src/images/wireframelogo.png',
-                  width: 100,
-                  height: 250,
-                  alignment: Alignment.bottomRight,
+            Flexible(
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0, left: 100.0),
+                  child: Image.asset(
+                    'lib/src/images/wireframelogo.png',
+                    width: 100,
+                    height: 250,
+                    alignment: Alignment.bottomRight,
+                  ),
                 ),
               ),
             ),

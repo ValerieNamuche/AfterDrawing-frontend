@@ -77,7 +77,11 @@ class _ProjectListState extends State<ProjectList> {
                         );
                       });
                 },
-                style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),
+                style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(255, 32, 68, 252),
+                    padding: EdgeInsets.all(18),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80))),
                 child: Text('Crear proyecto +'),
               ),
             ),
@@ -151,7 +155,11 @@ class _ProjectListState extends State<ProjectList> {
                           );
                         });
                   },
-                  style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),
+                  style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 32, 68, 252),
+                      padding: EdgeInsets.all(18),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(80))),
                   child: Text('Crear proyecto +'),
                 )),
           ],
@@ -196,6 +204,11 @@ class _ProjectListState extends State<ProjectList> {
                   Navigator.of(context, rootNavigator: true).pop();
                 },
                 child: Text("No"),
+                style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(255, 32, 68, 252),
+                    padding: EdgeInsets.all(18),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80))),
               )
             ],
           );

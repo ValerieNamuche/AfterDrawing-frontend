@@ -102,6 +102,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               labelText: "Correo",
                               /* errorText:
                                   emailValid ? null : 'Ingrese su correo',*/
+                              errorStyle: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 240, 120, 111)),
                             ),
                             keyboardType: TextInputType.emailAddress,
                             validator: (String? email) {
@@ -129,6 +132,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                       /* errorText: firstNameValid
                                           ? null
                                           : 'Ingrese su nombre',*/
+                                      errorStyle: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromARGB(
+                                              255, 240, 120, 111)),
                                     ),
                                     validator: (String? firstName) {
                                       if (firstName!.isEmpty) {
@@ -150,6 +157,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                       errorText: lastNameValid
                                           ? null
                                           : 'Ingrese su apellido',
+                                      errorStyle: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromARGB(
+                                              255, 240, 120, 111)),
                                     ),
                                     validator: (lastName) {
                                       if (lastName!.isEmpty) {
@@ -177,6 +188,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               labelText: "Usuario",
                               /* errorText:
                                   userValid ? null : 'Ingrese su usuario',*/
+                              errorStyle: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 240, 120, 111)),
                             ),
                             keyboardType: TextInputType.text,
                             validator: (userName) {
@@ -194,6 +208,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               labelText: "Contraseña",
                               /* errorText:
                                   passValid ? null : 'Ingrese su contraseña',*/
+                              errorStyle: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 240, 120, 111)),
                             ),
                             keyboardType: TextInputType.text,
                             obscureText: true,
@@ -213,6 +230,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               /*errorText: repeatPassValid
                                   ? null
                                   : 'Las contraseñas no coinciden',*/
+                              errorStyle: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 240, 120, 111)),
                             ),
                             keyboardType: TextInputType.text,
                             obscureText: true,

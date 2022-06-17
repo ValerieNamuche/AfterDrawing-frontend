@@ -73,6 +73,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
+                        errorStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 240, 120, 111)),
                       ),
                       style: const TextStyle(
                         color: Colors.white,
@@ -103,6 +106,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
+                        errorStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 240, 120, 111)),
                       ),
                       style: const TextStyle(
                         color: Colors.white,

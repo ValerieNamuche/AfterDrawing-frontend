@@ -87,7 +87,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                       stream: projectBloc.projectDescriptionStream,
                       builder: (context, snapshot) {
                         return TextFormField(
-                            initialValue: argumentProject.title,
+                            initialValue: argumentProject.description,
                             onChanged: (value) {
                               projectBloc.changeProjectDescription(value);
                             },
@@ -118,7 +118,10 @@ class _ProjectEditState extends State<ProjectEdit> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.all(18)),
+                              primary: Color.fromARGB(255, 32, 68, 252),
+                              padding: EdgeInsets.all(18),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(80))),
                           child: Text(
                             "Terminar de editar",
                             style: TextStyle(fontSize: 16),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:afterdrawing/src/constants/apisUrl.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:afterdrawing/src/model/InterfaceDto.dart';
 import 'package:file_picker/file_picker.dart';
@@ -7,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class InterfaceProvider {
   Future<List<InterfaceDto>> getAllInterfacesByProjectId(int projectId) async {
-    var url = 'https://afterdrawingapp.herokuapp.com/api/projects/${projectId}/interfaces';
+    var url = '$urlBackendApi/projects/${projectId}/interfaces';
 
     Uri uri = Uri.parse(url);
 
@@ -29,7 +30,7 @@ class InterfaceProvider {
   }
 
   Future<InterfaceDto> getInterfaceById(int interfaceId) async {
-    var url = 'https://afterdrawingapp.herokuapp.com/api/interfaces/${interfaceId}';
+    var url = '$urlBackendApi/interfaces/${interfaceId}';
 
     Uri uri = Uri.parse(url);
 
@@ -53,7 +54,7 @@ class InterfaceProvider {
 
     var userId = prefs.getInt("userId") ?? 0;
     var url =
-        'https://afterdrawingapp.herokuapp.com/api/users/${userId}/projects/${projectId}/wireframes/${wireframeId}/interfaces';
+        '$urlBackendApi/users/${userId}/projects/${projectId}/wireframes/${wireframeId}/interfaces';
 
     Uri uri = Uri.parse(url);
 
@@ -72,7 +73,7 @@ class InterfaceProvider {
 
 /////PENDIENTE POR ENDPOINT
   Future<dynamic> updateInterface(interfaceId) async {
-    var url = 'https://afterdrawingapp.herokuapp.com/api/interfaces/$interfaceId';
+    var url = '$urlBackendApi/interfaces/$interfaceId';
 
     Uri uri = Uri.parse(url);
 
@@ -123,7 +124,7 @@ class InterfaceProvider {
     final prefs = await SharedPreferences.getInstance();
 
     var userId = prefs.getInt("userId") ?? 0;
-    var url = 'https://afterdrawingapp.herokuapp.com/api/interfaces/${wireframeId}';
+    var url = '$urlBackendApi/interfaces/${wireframeId}';
 
     Uri uri = Uri.parse(url);
 

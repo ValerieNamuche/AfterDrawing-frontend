@@ -1,3 +1,4 @@
+import 'package:afterdrawing/src/constants/apisUrl.dart';
 import 'package:afterdrawing/src/constants/textoPrueba.dart';
 import 'package:afterdrawing/src/core/provider/wireframeProvider.dart';
 import 'package:afterdrawing/src/pages/interfaces/SaveInterface.dart';
@@ -141,11 +142,11 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         FadeInImage(
-                            height: 500,
+                            width: 600,
                             placeholder:
                                 AssetImage("lib/src/images/wireframelogo.png"),
                             image: NetworkImage(
-                                'https://afterdrawingapp.herokuapp.com/api/get/wireframe/${nameFileArgument}'),
+                                '$urlBackendApi/get/wireframe/${nameFileArgument}'),
                             imageErrorBuilder: (context, error, stackTrace) {
                               return Image.asset(
                                 "lib/src/images/wireframelogo.png",
@@ -153,7 +154,7 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
                               );
                             }),
                         SizedBox(
-                          height: 20,
+                          height: 30,
                         ),
                         Leyenda(),
                       ],
@@ -193,15 +194,25 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                primary: Color.fromARGB(255, 32, 68, 252),
+                padding: EdgeInsets.all(18),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(80))),
             onPressed: () {
               //wireframeProvider.downloadCode();
               uploadImageWithFilePickerAgain();
             },
             child: Text("Volver a procesar")),
         SizedBox(
-          height: 8,
+          height: 10,
         ),
         ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                primary: Color.fromARGB(255, 32, 68, 252),
+                padding: EdgeInsets.all(18),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(80))),
             onPressed: () {
               Utils.homeNavigator.currentState!
                   .pushNamed("save_interface", arguments: nameFileArgument);
@@ -223,7 +234,9 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
   Widget Leyenda() {
     return Container(
       width: 200,
-      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.circular(5)),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: FittedBox(
@@ -270,9 +283,13 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
   Widget CodeView(String contentCode) {
     return Container(
       margin: EdgeInsets.only(left: 20, right: 20),
+      //color: Colors.blueGrey[200],
       width: 400,
       height: 550,
-      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black),
+        color: Colors.blueGrey[50],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Scrollbar(

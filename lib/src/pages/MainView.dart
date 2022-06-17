@@ -1,4 +1,5 @@
 import 'package:afterdrawing/src/pages/ForgotPassword.dart';
+import 'package:afterdrawing/src/pages/Home.dart';
 //import 'package:afterdrawing/src/pages/GenerateInterfaces1.dart';
 //import 'package:afterdrawing/src/pages/GenerateInterfaces2.dart';
 import 'package:afterdrawing/src/pages/Login.dart';
@@ -49,6 +50,9 @@ class _MainViewState extends State<MainView> {
     switch (settings.name) {
       case "generate_interfaces1":
         view = GenerateInterfaces1();
+        break;
+      case 'home':
+        view = Home();
         break;
       case "login":
         view = LoginPage(

@@ -1,12 +1,13 @@
 import 'dart:convert';
 
+import 'package:afterdrawing/src/constants/apisUrl.dart';
 import 'package:afterdrawing/src/model/RegisterDto.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider {
   Future<dynamic> login(String email, String password) async {
-    var url = 'https://afterdrawingapp.herokuapp.com/api/v1/authentication/sign-in';
+    var url = '$urlBackendApi/v1/authentication/sign-in';
 
     Uri uri = Uri.parse(url);
 
@@ -46,7 +47,7 @@ class UserProvider {
   }
 
   Future<dynamic> register(RegisterDto registerDto) async {
-    var url = 'https://afterdrawingapp.herokuapp.com/api/v1/authentication/sign-up';
+    var url = '$urlBackendApi/v1/authentication/sign-up';
 
     Uri uri = Uri.parse(url);
 
@@ -66,7 +67,7 @@ class UserProvider {
   }
 
   Future<dynamic> forgotPassword(String email, String newPassword) async {
-    var url = 'https://afterdrawingapp.herokuapp.com/api/v1/authentication/forgot-password';
+    var url = '$urlBackendApi/v1/authentication/forgot-password';
 
     Uri uri = Uri.parse(url);
 

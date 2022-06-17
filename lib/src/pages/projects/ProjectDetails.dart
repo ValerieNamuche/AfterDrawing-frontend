@@ -1,3 +1,4 @@
+import 'package:afterdrawing/src/constants/apisUrl.dart';
 import 'package:afterdrawing/src/core/bloc/interfaceBloc.dart';
 import 'package:afterdrawing/src/core/bloc/projectBloc.dart';
 import 'package:afterdrawing/src/model/ProjectDto.dart';
@@ -61,13 +62,13 @@ class _ProjectDetailsState extends State<ProjectDetails> {
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
               argumentProject.description,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 18),
             ),
             SizedBox(
               height: 30,
             ),
             Text(
-              'Interfaces',
+              'Mis Interfaces',
               style: TextStyle(fontSize: 25),
             ),
             StreamBuilder(
@@ -110,7 +111,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                                 placeholder: AssetImage(
                                                     "lib/src/images/wireframelogo.png"),
                                                 image: NetworkImage(
-                                                    'https://afterdrawingapp.herokuapp.com/api/get/wireframe/${interfacesData[index].wireframe.id}'),
+                                                    '$urlBackendApi/get/wireframe/${interfacesData[index].wireframe.id}'),
                                                 imageErrorBuilder: (context,
                                                     error, stackTrace) {
                                                   return Image.asset(
@@ -148,20 +149,10 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                     ),
                                   );
                                 })
-                            : FadeInImage(
+                            : Image.asset(
+                                "lib/src/images/wireframelogo.png",
                                 width: 300,
-                                //height: 100,
-                                placeholder: AssetImage(
-                                    "lib/src/images/wireframelogo.png"),
-                                image: NetworkImage(
-                                    'https://afterdrawingapp.herokuapp.com/api/get/wireframe/${nameFile}'),
-                                imageErrorBuilder:
-                                    (context, error, stackTrace) {
-                                  return Image.asset(
-                                    "lib/src/images/wireframelogo.png",
-                                    width: 300,
-                                  );
-                                }),
+                              ),
                       ),
                     );
                   } else if (snapshot.connectionState ==
@@ -185,7 +176,11 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                   Utils.homeNavigator.currentState!
                       .pushNamed('generate_interfaces1');
                 },
-                style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)),
+                style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(255, 32, 68, 252),
+                    padding: EdgeInsets.all(18),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80))),
                 child: Text(
                   "Generar interface",
                   style: TextStyle(fontSize: 16),

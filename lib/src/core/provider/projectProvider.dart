@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:afterdrawing/src/constants/apisUrl.dart';
 import 'package:afterdrawing/src/model/CreateProjectDto.dart';
 import 'package:afterdrawing/src/model/ProjectDto.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +11,7 @@ class ProjectProvider {
     final prefs = await SharedPreferences.getInstance();
 
     var userId = prefs.getInt("userId") ?? 0;
-    String url = 'https://afterdrawingapp.herokuapp.com/api/users/${userId}/projects';
+    String url = '$urlBackendApi/users/${userId}/projects';
 
     Uri uri = Uri.parse(url);
     var response = await http.get(uri);
@@ -35,7 +36,7 @@ class ProjectProvider {
 
     var userId = prefs.getInt("userId") ?? 0;
 
-    var url = 'https://afterdrawingapp.herokuapp.com/api/users/${userId}/projects';
+    var url = '$urlBackendApi/users/${userId}/projects';
 
     Uri uri = Uri.parse(url);
 
@@ -59,7 +60,7 @@ class ProjectProvider {
 
     var userId = prefs.getInt("userId") ?? 0;
 
-    var url = 'https://afterdrawingapp.herokuapp.com/api/users/${userId}/projects/$projectId';
+    var url = '$urlBackendApi/users/${userId}/projects/$projectId';
 
     Uri uri = Uri.parse(url);
 
@@ -82,7 +83,7 @@ class ProjectProvider {
 
     var userId = prefs.getInt("userId") ?? 0;
 
-    var url = 'https://afterdrawingapp.herokuapp.com/api/users/${userId}/projects/$projectId';
+    var url = '$urlBackendApi/users/${userId}/projects/$projectId';
 
     Uri uri = Uri.parse(url);
 

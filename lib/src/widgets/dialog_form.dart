@@ -102,17 +102,22 @@ class DialogCreateProjectState extends State<DialogCreateProject> {
                 height: 30,
               ),
               ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      //si el form es valido
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    //si el form es valido
 
-                      print("Hola, form completo");
-                      saveFormProject();
-                      //Navigator.of(context).pop();
-                    }
-                  },
-                  child: Text('Crear'),
-                  style: ElevatedButton.styleFrom(padding: EdgeInsets.all(18)))
+                    print("Hola, form completo");
+                    saveFormProject();
+                    //Navigator.of(context).pop();
+                  }
+                },
+                child: Text('Crear'),
+                style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(255, 32, 68, 252),
+                    padding: EdgeInsets.all(18),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80))),
+              )
             ],
           ),
         ),
