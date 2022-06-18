@@ -301,8 +301,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     }*/
 
                     /////////////////////
-                    if (_formKey.currentState!.validate() &&
-                        conditionsAccepted == true) {
+                    if (_formKey.currentState!.validate()) {
                       //si el form es valido
                       saveFormRegister();
                       print("Hola, form completo");
