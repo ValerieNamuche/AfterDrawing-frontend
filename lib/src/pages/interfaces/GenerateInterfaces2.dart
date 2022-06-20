@@ -142,7 +142,8 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         FadeInImage(
-                            width: 600,
+                            width: 320,
+                            fit: BoxFit.contain,
                             placeholder:
                                 AssetImage("lib/src/images/wireframelogo.png"),
                             image: NetworkImage(

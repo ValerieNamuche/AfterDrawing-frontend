@@ -1,3 +1,4 @@
+import 'package:afterdrawing/src/constants/apisUrl.dart';
 import 'package:afterdrawing/src/constants/textoPrueba.dart';
 import 'package:afterdrawing/src/core/bloc/interfaceBloc.dart';
 import 'package:afterdrawing/src/model/InterfaceDto.dart';
@@ -146,11 +147,12 @@ class _WireframeViewState extends State<WireframeView> {
                               return Column(
                                 children: [
                                   FadeInImage(
-                                      width: 500,
+                                      width: 400,
+                                      fit: BoxFit.contain,
                                       placeholder: AssetImage(
                                           "lib/src/images/wireframelogo.png"),
                                       image: NetworkImage(
-                                          'https://afterdrawingapp.herokuapp.com/api/get/wireframe/${interfaceData.wireframe.id}'),
+                                          '$urlBackendApi/get/wireframe/${interfaceData.wireframe.id}'),
                                       imageErrorBuilder:
                                           (context, error, stackTrace) {
                                         return Image.asset(
