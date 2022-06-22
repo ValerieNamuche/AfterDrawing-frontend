@@ -58,7 +58,7 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
             padding: EdgeInsets.only(left: 20, top: 20),
             child: Text(
               'Crear Interfaces',
-              style: TextStyle(fontSize: 25),
+              style: TextStyle(fontSize: 30),
             ),
           ),
           Container(

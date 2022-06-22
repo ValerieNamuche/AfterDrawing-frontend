@@ -2,6 +2,8 @@
 
 import 'package:afterdrawing/src/pages/guide/elementsdialog/button_dialog.dart';
 import 'package:afterdrawing/src/pages/guide/elementsdialog/icon_dialog.dart';
+import 'package:afterdrawing/src/pages/guide/elementsdialog/inputText_dialog.dart';
+import 'package:afterdrawing/src/pages/guide/elementsdialog/text_Dialog.dart';
 import 'package:flutter/material.dart';
 
 //Create a GridView of 6 elements
@@ -22,28 +24,29 @@ class GuideElement extends StatelessWidget {
           padding: EdgeInsets.all(20.0),
           child: Text(
             'Guía de elementos Reconocidos',
-            style: TextStyle(fontSize: 25),
+            style: TextStyle(fontSize: 30),
           ),
         ),
         Flexible(
           child: GridView.count(
-            shrinkWrap: true,
+            //shrinkWrap: true,
             crossAxisCount: 2,
+            childAspectRatio: 3 / 1.8,
             children: <Widget>[
               // insert the elements here we have a widget for each element like buttons, text, images etc. like an interface
 
               //Checkbox and  RadioButton elements in Flutter
               CheckBoxAndRadioButtonResponsive(val, context),
               //Button in container
-              ButtonContainer(screenHeight, context),
+              ButtonContainer(screenWidth, context),
               // search bar using the search bar widget (ganador)
-              SearchBarContainer(),
+              SearchBarContainer(screenWidth, context),
 
-              IconContainer(context),
+              IconContainer(screenWidth, context),
               // Container with a image cuadro_de_texto.png
-              TextContainerWithImage(),
+              TextContainerWithImage(screenWidth, context),
               // Container with a image cuadro_de_texto.png
-              ImageContainer(),
+              ImageContainer(screenWidth),
             ],
           ),
         ),
@@ -51,7 +54,13 @@ class GuideElement extends StatelessWidget {
     ));
   }
 
-  Container ImageContainer() {
+  Container ImageContainer(double screenWidth) {
+    var iconSizeWidth = screenWidth * 0.16;
+    double textWidth = 25;
+    if (screenWidth < 860) {
+      textWidth = 17;
+    }
+
     return Container(
       width: 100,
       padding: const EdgeInsets.all(10.0),
@@ -60,38 +69,34 @@ class GuideElement extends StatelessWidget {
         color: Colors.blueGrey[100],
 
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
+            /*const SizedBox(
               width: 40,
-            ),
-            Expanded(
-              child: SizedBox(
-                //image with size
-                child: Image.asset(
-                  'lib/src/images/image_element_guide.jpg',
-                  width: 80,
-                  fit: BoxFit.fill,
+            ),*/
+            Icon(
+              Icons.image_outlined,
+              size: iconSizeWidth,
+              color: Colors.cyan,
+              //fit: BoxFit.fill,
 
-                  // color del boton y tamano del icono
-                ),
-              ),
+              // color del boton y tamano del icono
             ),
 
             // espacio
-            const SizedBox(
+            /*const SizedBox(
               width: 40,
-            ),
+            ),*/
             const Divider(),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Text('Image'),
+                Text('Image', style: TextStyle(fontSize: textWidth)),
                 const SizedBox(
-                  height: 10,
-                ),
+                  width: 125, // solo para alinear con los elementos de arriba
+                ), /*
                 RaisedButton(
                   onPressed: () => {},
                   // diseño del boton
@@ -103,19 +108,23 @@ class GuideElement extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                ),
+                ),*/
               ],
             ),
-            const SizedBox(
+            /*const SizedBox(
               width: 20,
-            ),
+            ),*/
           ],
         ),
       ),
     );
   }
 
-  Container TextContainerWithImage() {
+  Container TextContainerWithImage(double screenWidth, context) {
+    double textWidth = 25;
+    if (screenWidth < 860) {
+      textWidth = 17;
+    }
     return Container(
       width: 100,
       padding: const EdgeInsets.all(10.0),
@@ -130,13 +139,13 @@ class GuideElement extends StatelessWidget {
             const SizedBox(
               width: 40,
             ),
-            Expanded(
+            Flexible(
               child: SizedBox(
                 //image with size
                 child: Image.asset(
                   'lib/src/images/cuadro_de_texto.png',
-                  //width: 100,
-                  fit: BoxFit.fill,
+                  //height: 80,
+                  fit: BoxFit.contain,
 
                   // color del boton y tamano del icono
                 ),
@@ -152,20 +161,29 @@ class GuideElement extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Text('Text'),
+                Text('Text', style: TextStyle(fontSize: textWidth)),
                 const SizedBox(
                   height: 10,
                 ),
-                RaisedButton(
-                  onPressed: () => {},
+                ElevatedButton(
+                  onPressed: () => {
+                    showDialog(
+                        context: context,
+                        builder: (builder) {
+                          return TextDialog();
+                        })
+                  },
                   // diseño del boton
-                  child: const Text('Ver Ejemplos'),
+                  child: Text('Ver Ejemplos',
+                      style: TextStyle(fontSize: textWidth - 4)),
 
                   // color del boton
-                  color: const Color.fromARGB(255, 43, 134, 209),
-                  // circular shape
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color.fromARGB(255, 32, 68, 252),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 18, vertical: 18),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)),
                   ),
                 ),
               ],
@@ -179,7 +197,12 @@ class GuideElement extends StatelessWidget {
     );
   }
 
-  Container IconContainer(context) {
+  Container IconContainer(double screenWidth, context) {
+    var iconSizeWidth = screenWidth * 0.12;
+    double textWidth = 25;
+    if (screenWidth < 860) {
+      textWidth = 17;
+    }
     return Container(
       width: 100,
       padding: const EdgeInsets.all(10.0),
@@ -188,7 +211,7 @@ class GuideElement extends StatelessWidget {
         color: Colors.blueGrey[100],
 
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconButton(
@@ -196,23 +219,23 @@ class GuideElement extends StatelessWidget {
               onPressed: () => {},
               // color del boton y tamano del icono
               color: const Color.fromARGB(255, 43, 134, 209),
-              iconSize: 40,
+              iconSize: iconSizeWidth /*40*/,
             ),
 
             // espacio
-            const SizedBox(
+            /*const SizedBox(
               width: 40,
-            ),
+            ),*/
             const Divider(),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Text('Icon'),
+                Text('Icon', style: TextStyle(fontSize: textWidth)),
                 const SizedBox(
                   height: 10,
                 ),
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () => {
                     showDialog(
                         context: context,
@@ -221,13 +244,16 @@ class GuideElement extends StatelessWidget {
                         })
                   },
                   // diseño del boton
-                  child: const Text('Ver Ejemplos'),
+                  child: Text('Ver Ejemplos',
+                      style: TextStyle(fontSize: textWidth - 4)),
 
                   // color del boton
-                  color: const Color.fromARGB(255, 43, 134, 209),
-                  // circular shape
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color.fromARGB(255, 32, 68, 252),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 18, vertical: 18),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)),
                   ),
                 ),
               ],
@@ -238,7 +264,12 @@ class GuideElement extends StatelessWidget {
     );
   }
 
-  Container SearchBarContainer() {
+  Container SearchBarContainer(double screenWidth, context) {
+    double textFieldWidth = screenWidth * 0.2;
+    double textWidth = 25;
+    if (screenWidth < 860) {
+      textWidth = 17;
+    }
     return Container(
       width: 100,
       padding: const EdgeInsets.all(10.0),
@@ -247,11 +278,11 @@ class GuideElement extends StatelessWidget {
         color: Colors.blueGrey[100],
 
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              width: 100,
+              width: textFieldWidth,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -283,28 +314,42 @@ class GuideElement extends StatelessWidget {
             ),
 
             // espacio
-            const SizedBox(
+            /*const SizedBox(
               width: 40,
-            ),
+            ),*/
             //const Divider(),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Text('Input Text'),
+                Text(
+                  'Input Text',
+                  style: TextStyle(fontSize: textWidth),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
-                RaisedButton(
-                  onPressed: () => {},
+                ElevatedButton(
+                  onPressed: () => {
+                    showDialog(
+                        context: context,
+                        builder: (builder) {
+                          return InputTextDialog();
+                        })
+                  },
                   // diseño del boton
-                  child: const Text('Ver Ejemplos'),
+                  child: Text(
+                    'Ver Ejemplos',
+                    style: TextStyle(fontSize: textWidth - 4),
+                  ),
 
                   // color del boton
-                  color: const Color.fromARGB(255, 43, 134, 209),
-                  // circular shape
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color.fromARGB(255, 32, 68, 252),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 18, vertical: 18),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80)),
                   ),
                 ),
               ],
@@ -316,16 +361,19 @@ class GuideElement extends StatelessWidget {
   }
 
   Widget ButtonContainer(double screenWeight, context) {
-    var containerWidth = screenWeight * 0.1;
-    if (screenWeight < 680) {
-      containerWidth = 68;
-    } else if (screenWeight > 1800) {
-      containerWidth = 250;
+    double containerWidth;
+    var buttonWidth = screenWeight * 0.025;
+    var buttonVerticalSymetric = screenWeight * 0.03;
+    var buttonHorizontalSymetric = screenWeight * 0.055;
+    if (screenWeight < 860) {
+      containerWidth = 17;
+      /*} else if (screenWeight > 900) {
+      containerWidth = 50;*/
     } else {
-      containerWidth = screenWeight * 0.1;
+      containerWidth = 25;
     }
     return Container(
-      //width: 10,
+      width: 100,
       padding: const EdgeInsets.all(10.0),
       //elements in the center of the container
       // the container ajusts the size of the elements
@@ -333,33 +381,40 @@ class GuideElement extends StatelessWidget {
       child: Card(
         color: Colors.blueGrey[100],
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () => {},
-                child: const Text("Button"),
+                child: Text(
+                  "Button",
+                  style: TextStyle(fontSize: buttonWidth),
+                ),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(
+                      vertical: /*buttonVerticalSymetric*/ 18,
+                      horizontal: buttonHorizontalSymetric /*30*/),
+                ),
               ),
             ),
             // espacio entre los elementos
-            const SizedBox(
+            /*const SizedBox(
               width: 40,
-            ),
+            ),*/
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  width: containerWidth,
-                  child: FittedBox(
-                      child: Text(
-                          'Button Text' /*, style: TextStyle(fontSize: 15)*/)),
-                ),
+                Text('Text Button',
+                    /*style: TextStyle(
+                      fontSize:
+                          containerWidth),*/
+                    style: TextStyle(fontSize: containerWidth)),
                 const SizedBox(
                   height: 10,
                 ),
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () => {
                     showDialog(
                         context: context,
@@ -368,14 +423,19 @@ class GuideElement extends StatelessWidget {
                         })
                   },
                   // diseño del boton
-                  child: const Text('Ver Ejemplos'),
+                  child: Text(
+                    'Ver Ejemplos',
+                    style: TextStyle(fontSize: containerWidth - 4),
+                  ),
 
                   // color del boton
-                  color: const Color.fromARGB(255, 43, 134, 209),
-                  // circular shape
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+
+                  style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(255, 32, 68, 252),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 18, vertical: 18),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(80))),
                 ),
               ],
             ),
@@ -386,16 +446,19 @@ class GuideElement extends StatelessWidget {
   }
 
   LayoutBuilder CheckBoxAndRadioButtonResponsive(int val, context) {
+    var screenWidth = MediaQuery.of(context).size.width;
     return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth > 600) {
-        return CheckBoxAndRadioButtonHorizontal(val);
+      if (constraints.maxWidth > 420) {
+        return CheckBoxAndRadioButtonHorizontal(val, screenWidth);
       } else {
         return CheckBoxAndRadioButtonVertical(val);
       }
     });
   }
 
-  Container CheckBoxAndRadioButtonHorizontal(int val) {
+  Container CheckBoxAndRadioButtonHorizontal(int val, double screenWidth) {
+    var checkboxTextWidth = screenWidth * 0.017;
+    var spaceBetweenOptions = screenWidth * 0.01;
     return Container(
       width: 100,
       padding: const EdgeInsets.all(10.0),
@@ -405,111 +468,122 @@ class GuideElement extends StatelessWidget {
       child: Card(
         color: Colors.blueGrey[100],
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            Row(
               children: [
-                Row(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      child: Checkbox(
-                        value: true,
-                        onChanged: (value) {},
-                      ),
-                    ),
-                    const Text(
-                      'Option',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Radio(
-                      value: 1,
-                      onChanged: (value) {},
-                      groupValue: val,
-                    ),
-                    const Text(
-                      'Option',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Checkbox(
-                      value: false,
-                      onChanged: (value) {},
-                    ),
-                    Container(
-                      child: const Text(
-                        'Option',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Checkbox(
+                            value: true,
+                            onChanged: (value) {},
+                          ),
                         ),
-                      ),
+                        Text(
+                          'Option',
+                          style: TextStyle(
+                            fontSize: checkboxTextWidth, //15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: spaceBetweenOptions,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Radio(
+                          value: -1,
+                          onChanged: (value) {},
+                          groupValue: val,
+                        ),
+                        Text(
+                          'Option',
+                          style: TextStyle(
+                            fontSize: checkboxTextWidth, //15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                Row(
+                const SizedBox(
+                  width: 20,
+                ),
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Radio(
-                      //RadioButton is marked with true
-                      value: val,
-                      onChanged: (value) {},
-                      groupValue: 2,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Checkbox(
+                          value: false,
+                          onChanged: (value) {},
+                        ),
+                        Container(
+                          child: Text(
+                            'Option',
+                            style: TextStyle(
+                              fontSize: checkboxTextWidth, //15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    const Text(
-                      'Option',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    SizedBox(
+                      height: spaceBetweenOptions,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Radio(
+                          //RadioButton is marked with true
+                          value: val,
+                          onChanged: (value) {},
+                          groupValue: 1,
+                        ),
+                        Text(
+                          'Option',
+                          style: TextStyle(
+                            fontSize: checkboxTextWidth, //15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
+                /*const SizedBox(
+                  width: 20,
+                ),*/
               ],
-            ),
-            const SizedBox(
-              width: 20,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Text('Checked View'),
+                const Text('Checked View', style: TextStyle(fontSize: 25)),
                 const SizedBox(
                   height: 10,
                 ),
-                RaisedButton(
+                /*RaisedButton(
                   onPressed: () => {},
                   // diseño del boton
                   child: const Text('Ver Ejemplos'),
@@ -518,9 +592,9 @@ class GuideElement extends StatelessWidget {
                   color: const Color.fromARGB(255, 43, 134, 209),
                   // circular shape
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(18),
                   ),
-                ),
+                ),*/
               ],
             ),
           ],
@@ -549,10 +623,13 @@ class GuideElement extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Text('Checked View'),
-                const SizedBox(
-                  height: 10,
+                const Text(
+                  'Checked View',
+                  style: TextStyle(fontSize: 17),
                 ),
+                const SizedBox(
+                  height: 20,
+                ), /*
                 RaisedButton(
                   onPressed: () => {},
                   // diseño del boton
@@ -562,9 +639,9 @@ class GuideElement extends StatelessWidget {
                   color: const Color.fromARGB(255, 43, 134, 209),
                   // circular shape
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(18),
                   ),
-                ),
+                ),*/
               ],
             ),
             Row(
@@ -579,7 +656,8 @@ class GuideElement extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
+                        Transform.scale(
+                          scale: 1,
                           child: Checkbox(
                             value: true,
                             onChanged: (value) {},

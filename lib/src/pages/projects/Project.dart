@@ -62,7 +62,7 @@ class _ProjectListState extends State<ProjectList> {
               padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
               child: Text(
                 'Mis Proyectos',
-                style: TextStyle(fontSize: 25),
+                style: TextStyle(fontSize: 30),
               ),
             ),
             Padding(

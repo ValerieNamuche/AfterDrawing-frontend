@@ -98,7 +98,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
           onPressed: () {
             Utils.homeNavigator.currentState!.pushNamed("project");
           },
-          child: Text("Projectos", style: TextStyle(fontSize: 17))),
+          child: Text("Proyectos", style: TextStyle(fontSize: 17))),
       Padding(
         //log out
         padding: EdgeInsets.only(right: 30),

@@ -19,7 +19,7 @@ class _IconDialogState extends State<IconDialog> {
           width: 350,
           height: 300,
           child: GridView.builder(
-            shrinkWrap: true,
+            //shrinkWrap: true,
             itemCount: listIcons.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 6,

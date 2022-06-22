@@ -328,7 +328,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   onPressed: () {
                     Navigator.pushNamed(context, 'login');
                   },
-                  child: Text("¿Ya tienes una cuenta? !Inicia sesión!"),
+                  child: Text("¿Ya tienes una cuenta? ¡Inicia sesión!"),
                 ),
               )
             ],
