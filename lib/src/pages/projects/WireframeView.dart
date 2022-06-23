@@ -22,6 +22,7 @@ class _WireframeViewState extends State<WireframeView> {
   ScrollController _scrollController =
       ScrollController(/*initialScrollOffset: 50.0*/);
   var isCopied = false;
+  var isLoading = false;
   String nameProjectArgument = "";
   var interfaceArgument = InterfaceDto(
       id: 0,
@@ -122,7 +123,14 @@ class _WireframeViewState extends State<WireframeView> {
                         onPressed: () {
                           updateWireframe();
                         },
-                        child: Text("Actualizar interfaz"),
+                        child: isLoading
+                            ? Container(
+                                height: 17,
+                                width: 115,
+                                child: Center(
+                                    child:
+                                        CircularProgressIndicator.adaptive()))
+                            : Text("Actualizar interfaz"),
                         style: ElevatedButton.styleFrom(
                             primary: Color.fromARGB(255, 32, 68, 252),
                             padding: EdgeInsets.all(18),
@@ -150,13 +158,13 @@ class _WireframeViewState extends State<WireframeView> {
                                       width: 400,
                                       fit: BoxFit.contain,
                                       placeholder: AssetImage(
-                                          "lib/src/images/wireframelogo.png"),
+                                          "lib/src/images/carga.gif"),
                                       image: NetworkImage(
                                           '$urlBackendApi/get/wireframe/${interfaceData.wireframe.id}'),
                                       imageErrorBuilder:
                                           (context, error, stackTrace) {
                                         return Image.asset(
-                                          "lib/src/images/wireframelogo.png",
+                                          "lib/src/images/imagen_error.jpeg",
                                           //width: 600,
                                         );
                                       }),
@@ -168,14 +176,14 @@ class _WireframeViewState extends State<WireframeView> {
                             } else {
                               return FadeInImage(
                                   height: 500,
-                                  placeholder: AssetImage(
-                                      "lib/src/images/wireframelogo.png"),
+                                  placeholder:
+                                      AssetImage("lib/src/images/carga.gif"),
                                   image: NetworkImage(
                                       'https://afterdrawingapp.herokuapp.com/api/get/wireframe/${interfaceArgument.id}'),
                                   imageErrorBuilder:
                                       (context, error, stackTrace) {
                                     return Image.asset(
-                                      "lib/src/images/wireframelogo.png",
+                                      "lib/src/images/imagen_error.jpeg",
                                       //width: 600,
                                     );
                                   });
@@ -192,7 +200,13 @@ class _WireframeViewState extends State<WireframeView> {
   }
 
   updateWireframe() {
+    setState(() {
+      isLoading = true;
+    });
     interfaceBloc.updateInterface(interfaceArgument.id).then((value) {
+      setState(() {
+        isLoading = false;
+      });
       if (value is String) {
         SnackBarNotification()
             .showSnackbar(Utils.homeNavigator.currentContext!, value, "error");

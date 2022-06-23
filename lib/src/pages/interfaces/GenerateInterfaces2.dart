@@ -33,6 +33,7 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
   }
 
   var isCopied = false;
+  var isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +130,7 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
                         SizedBox(
                           height: 20,
                         ),
-                        ActionsElements(nameFileArgument),
+                        ActionsElements(nameFileArgument, isLoading),
                         SizedBox(
                           height: 30,
                         ),
@@ -144,13 +145,12 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
                         FadeInImage(
                             width: 320,
                             fit: BoxFit.contain,
-                            placeholder:
-                                AssetImage("lib/src/images/wireframelogo.png"),
+                            placeholder: AssetImage("lib/src/images/carga.gif"),
                             image: NetworkImage(
                                 '$urlBackendApi/get/wireframe/${nameFileArgument}'),
                             imageErrorBuilder: (context, error, stackTrace) {
                               return Image.asset(
-                                "lib/src/images/wireframelogo.png",
+                                "lib/src/images/imagen_error.jpeg",
                                 //width: 600,
                               );
                             }),
@@ -172,7 +172,13 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
   }
 
   void uploadImageWithFilePickerAgain() {
+    setState(() {
+      isLoading = true;
+    });
     wireframeProvider.uploadImagetoBack().then((value) async {
+      setState(() {
+        isLoading = false;
+      });
       if (value == false) {
         // Cuando cancela la seleccion de imagen(ignorar)
 
@@ -190,7 +196,7 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
     });
   }
 
-  Widget ActionsElements(nameFileArgument) {
+  Widget ActionsElements(nameFileArgument, bool isLoading) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -204,7 +210,12 @@ class _GenerateInterfaces2State extends State<GenerateInterfaces2> {
               //wireframeProvider.downloadCode();
               uploadImageWithFilePickerAgain();
             },
-            child: Text("Volver a procesar")),
+            child: isLoading
+                ? Container(
+                    height: 15,
+                    width: 105,
+                    child: Center(child: CircularProgressIndicator.adaptive()))
+                : Text("Volver a procesar")),
         SizedBox(
           height: 10,
         ),

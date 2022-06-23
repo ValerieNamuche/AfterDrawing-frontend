@@ -17,6 +17,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   var newPasswordController = TextEditingController();
 
   var _formKey = GlobalKey<FormState>();
+  var isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -141,10 +142,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            isLoading = true;
+                          });
                           userProvider
                               .forgotPassword(emailExistingController.text,
                                   newPasswordController.text)
                               .then((value) {
+                            setState(() {
+                              isLoading = false;
+                            });
                             if (value == true) {
                               SnackBarNotification().showSnackbar(
                                   Utils.homeNavigator.currentContext!,
@@ -160,13 +167,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           });
                         }
                       },
-                      child: const Text(
-                        'Enviar',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      ),
+                      child: isLoading
+                          ? CircularProgressIndicator(color: Colors.deepPurple)
+                          : const Text(
+                              'Enviar',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                            ),
                     ),
                   ],
                 ),

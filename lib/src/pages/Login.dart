@@ -24,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   bool userValid = true;
   bool passValid = true;
   var isPasswordHidden = true;
+  var isLoading = false;
 
   var userProvider = UserProvider();
 
@@ -123,6 +124,12 @@ class _LoginPageState extends State<LoginPage> {
                       passText.text.isNotEmpty
                           ? passValid = true
                           : passValid = false;
+                      //isLoading = true;
+
+                      if (userText.text.isNotEmpty &&
+                          passText.text.isNotEmpty) {
+                        isLoading = true;
+                      }
                     });
                     if (userValid && passValid) {
                       print(userText.text);
@@ -143,6 +150,9 @@ class _LoginPageState extends State<LoginPage> {
                               .currentState! // posible cambio posterior
                               .pushNamed("generate_interfaces1");
                         } else {
+                          setState(() {
+                            isLoading = false;
+                          });
                           print(value);
                           await Future.delayed(Duration(milliseconds: 300));
                           SnackBarNotification().showSnackbar(
@@ -162,7 +172,9 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(10.0),
                     )),
                   ),
-                  child: const Text('Iniciar sesión'),
+                  child: isLoading
+                      ? CircularProgressIndicator(color: Colors.deepPurple)
+                      : const Text('Iniciar sesión'),
                 ),
               ),
               const Divider(),

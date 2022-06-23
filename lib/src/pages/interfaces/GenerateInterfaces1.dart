@@ -21,6 +21,7 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
   late double topPadding;
   late double bottomPadding;
   late double sidePadding;
+  bool isLoading = false;
 
   WireframeProvider wireframeProvider = WireframeProvider();
   int nameImage = 0;
@@ -88,19 +89,28 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
                     children: <Widget>[
                       ElevatedButton(
                         onPressed: () {
+                          setState(() {
+                            isLoading = true;
+                          });
                           uploadImageWithFilePicker();
                           //var resultImage = FilePicker.platform.pickFiles();
                         },
                         // diseño del boton
-                        child: const Text(
-                          'Subir Wireframe',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
+                        child: isLoading
+                            ? Container(
+                                width: 135,
+                                height: 20,
+                                child:
+                                    Center(child: CircularProgressIndicator()))
+                            : const Text(
+                                'Subir Wireframe',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
 
-                            // cursiva
-                          ),
-                        ),
+                                  // cursiva
+                                ),
+                              ),
 
                         // color del boton
                         style: ElevatedButton.styleFrom(
@@ -180,6 +190,9 @@ class _GenerateInterfacesState1 extends State<GenerateInterfaces1>
 
 ////////////////////////////
     wireframeProvider.uploadImagetoBack().then((value) async {
+      setState(() {
+        isLoading = false;
+      });
       if (value == false) {
         // Cuando cancela la seleccion de imagen(ignorar)
 

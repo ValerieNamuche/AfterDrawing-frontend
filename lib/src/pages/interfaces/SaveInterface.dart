@@ -30,6 +30,7 @@ class _SaveInterfaceState extends State<SaveInterface> {
 
   final _formKey = GlobalKey<FormState>();
   String idWireframeArgument = "";
+  var isLoading = false;
 
   @override
   void initState() {
@@ -44,11 +45,17 @@ class _SaveInterfaceState extends State<SaveInterface> {
 
   saveFormInterface() {
     var interfaceProvider = InterfaceProvider();
-
+    _currentProject ??= '0';
+    setState(() {
+      isLoading = true;
+    });
     interfaceProvider
         .createInterface(
             _currentProject!, idWireframeArgument, interfaceNameController.text)
         .then((value) {
+      setState(() {
+        isLoading = false;
+      });
       if (value == true) {
         SnackBarNotification().showSnackbar(Utils.homeNavigator.currentContext!,
             'Interface guardada, revise en Projectos', "success");
@@ -187,7 +194,13 @@ class _SaveInterfaceState extends State<SaveInterface> {
                           saveFormInterface();
                         }
                       },
-                      child: Text("Guardar"))
+                      child: isLoading
+                          ? Container(
+                              //height: 10,
+                              width: 40,
+                              child: Center(
+                                  child: CircularProgressIndicator.adaptive()))
+                          : Text("Guardar"))
                 ],
               ),
             ),

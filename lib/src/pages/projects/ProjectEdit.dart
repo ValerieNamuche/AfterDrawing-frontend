@@ -21,15 +21,22 @@ class _ProjectEditState extends State<ProjectEdit> {
   var interfaceBloc = InterfaceBloc();
   var projectBloc = ProjectBloc();
   var _formKey = GlobalKey<FormState>();
+  var isLoading = false;
 
   saveEditProjectForm() {
     var createProjectDto = CreateProjectDto();
     createProjectDto.title = projectBloc.projectName;
     createProjectDto.description = projectBloc.projectDescription;
 
+    setState(() {
+      isLoading = true;
+    });
     projectBloc
         .updateProject(createProjectDto, argumentProject.id)
         .then((value) {
+      setState(() {
+        isLoading = false;
+      });
       if (value) {
         SnackBarNotification().showSnackbar(Utils.homeNavigator.currentContext!,
             "Se modificó el proyecto", "success");
@@ -63,7 +70,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                       stream: projectBloc.projectNameStream,
                       builder: (context, snapshot) {
                         return TextFormField(
-                            initialValue: argumentProject.title,
+                            //initialValue: argumentProject.title,
                             onChanged: (value) {
                               projectBloc.changeProjectName(value);
                             },
@@ -87,7 +94,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                       stream: projectBloc.projectDescriptionStream,
                       builder: (context, snapshot) {
                         return TextFormField(
-                            initialValue: argumentProject.description,
+                            //initialValue: argumentProject.description,
                             onChanged: (value) {
                               projectBloc.changeProjectDescription(value);
                             },
@@ -122,10 +129,17 @@ class _ProjectEditState extends State<ProjectEdit> {
                               padding: EdgeInsets.all(18),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(80))),
-                          child: Text(
-                            "Terminar de editar",
-                            style: TextStyle(fontSize: 16),
-                          )),
+                          child: isLoading
+                              ? Container(
+                                  width: 135,
+                                  height: 20,
+                                  child: Center(
+                                      child:
+                                          CircularProgressIndicator.adaptive()))
+                              : const Text(
+                                  "Terminar de editar",
+                                  style: TextStyle(fontSize: 16),
+                                )),
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: ElevatedButton(

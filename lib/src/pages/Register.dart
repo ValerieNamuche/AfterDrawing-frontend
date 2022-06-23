@@ -35,8 +35,12 @@ class _RegisterPageState extends State<RegisterPage> {
   //bool phoneValid = true;
   bool repeatPassValid = true;
   bool conditionsAccepted = false;
+  var isLoading = false;
 
   saveFormRegister() {
+    setState(() {
+      isLoading = true;
+    });
     var registerProvider = UserProvider();
     var registerDto = RegisterDto();
     registerDto.email = emailText.text;
@@ -46,6 +50,9 @@ class _RegisterPageState extends State<RegisterPage> {
     registerDto.password = passText.text;
 
     registerProvider.register(registerDto).then((value) async {
+      setState(() {
+        isLoading = false;
+      });
       if (value == true) {
         await Future.delayed(Duration(
             milliseconds:
@@ -316,7 +323,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       borderRadius: new BorderRadius.circular(10.0),
                     )),
                   ),
-                  child: const Text('Registrar'),
+                  child: isLoading
+                      ? CircularProgressIndicator(color: Colors.deepPurple)
+                      : const Text('Registrar'),
                 ),
               ),
               Divider(),

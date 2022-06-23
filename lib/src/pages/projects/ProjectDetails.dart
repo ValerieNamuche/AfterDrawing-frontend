@@ -109,13 +109,13 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                                 width: 300,
                                                 //height: 100,
                                                 placeholder: AssetImage(
-                                                    "lib/src/images/wireframelogo.png"),
+                                                    "lib/src/images/carga.gif"),
                                                 image: NetworkImage(
                                                     '$urlBackendApi/get/wireframe/${interfacesData[index].wireframe.id}'),
                                                 imageErrorBuilder: (context,
                                                     error, stackTrace) {
                                                   return Image.asset(
-                                                    "lib/src/images/wireframelogo.png",
+                                                    "lib/src/images/imagen_error.jpeg",
                                                     width: 300,
                                                   );
                                                 }),
