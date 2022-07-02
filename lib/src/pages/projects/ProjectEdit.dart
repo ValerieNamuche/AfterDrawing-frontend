@@ -84,6 +84,8 @@ class _ProjectEditState extends State<ProjectEdit> {
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Rellene este campo para continuar"; //validacion en caso no se ingrese nada desde el principio
+                              } else if (value.length > 50) {
+                                return "Escoja un nombre más pequeño";
                               }
                             });
                       }),
@@ -108,6 +110,8 @@ class _ProjectEditState extends State<ProjectEdit> {
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Rellene este campo para continuar"; //validacion en caso no se ingrese nada desde el principio
+                              } else if (value.length > 75) {
+                                return "Escoja un descripción más pequeña";
                               }
                             });
                       }),
@@ -120,7 +124,8 @@ class _ProjectEditState extends State<ProjectEdit> {
                     children: [
                       ElevatedButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
+                            if (_formKey.currentState!.validate() &&
+                                isLoading == false) {
                               saveEditProjectForm();
                             }
                           },

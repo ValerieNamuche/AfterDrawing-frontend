@@ -171,8 +171,8 @@ class _SaveInterfaceState extends State<SaveInterface> {
                           validator: (interfaceNameValid) {
                             if (interfaceNameValid!.isEmpty) {
                               return 'Este campo no puede estar vacio';
-                            } else {
-                              return null;
+                            } else if (interfaceNameValid.length > 50) {
+                              return "Escoja un nombre para su interface más pequeño";
                             }
                           },
                         ),
@@ -189,7 +189,8 @@ class _SaveInterfaceState extends State<SaveInterface> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(80))),
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {
+                        if (_formKey.currentState!.validate() &&
+                            isLoading == false) {
                           print("Form complete");
                           saveFormInterface();
                         }

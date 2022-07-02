@@ -17,14 +17,15 @@ class ProjectBloc with Validators {
   ///Nombre proyecto
   final _projectNameController = BehaviorSubject<String>();
   Stream<String> get projectNameStream =>
-      _projectNameController.stream.transform(validateName);
+      _projectNameController.stream.transform(validateNameProject);
   Function(String) get changeProjectName => _projectNameController.sink.add;
   String get projectName => _projectNameController.value;
 
   ///////Description proyecto
   final _projectDescriptionController = BehaviorSubject<String>();
   Stream<String> get projectDescriptionStream =>
-      _projectDescriptionController.stream.transform(validateName);
+      _projectDescriptionController.stream
+          .transform(validateDescriptionProject);
   Function(String) get changeProjectDescription =>
       _projectDescriptionController.sink.add;
   String get projectDescription => _projectDescriptionController.value;

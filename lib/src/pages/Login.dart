@@ -125,15 +125,13 @@ class _LoginPageState extends State<LoginPage> {
                           ? passValid = true
                           : passValid = false;
                       //isLoading = true;
-
-                      if (userText.text.isNotEmpty &&
-                          passText.text.isNotEmpty) {
-                        isLoading = true;
-                      }
                     });
-                    if (userValid && passValid) {
+                    if (userValid && passValid && isLoading == false) {
                       print(userText.text);
                       print(passText.text);
+                      setState(() {
+                        isLoading = true;
+                      });
                       userProvider
                           .login(userText.text, passText.text)
                           .then((value) async {

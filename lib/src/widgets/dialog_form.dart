@@ -70,6 +70,8 @@ class DialogCreateProjectState extends State<DialogCreateProject> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Rellene este campo para continuar"; //validacion en caso no se ingrese nada desde el principio
+                        } else if (value.length > 25) {
+                          return "Escoja un nombre más pequeño";
                         }
                       },
                     );
@@ -95,6 +97,8 @@ class DialogCreateProjectState extends State<DialogCreateProject> {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Rellene este campo para continuar"; //validacion en caso no se ingrese nada desde el principio
+                          } else if (value.length > 75) {
+                            return "Escoja un nombre más pequeño";
                           }
                         });
                   }),

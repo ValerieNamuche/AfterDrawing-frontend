@@ -122,8 +122,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 return "Ingrese su correo";
                               } else if (validEmail == false) {
                                 return "Correo inválido";
-                              } else {
-                                return null;
+                              } else if (email.length > 50) {
+                                return "Ingrese un correo menos extenso";
                               }
                             },
                             textInputAction: TextInputAction.next,
@@ -147,8 +147,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                     validator: (String? firstName) {
                                       if (firstName!.isEmpty) {
                                         return "Ingrese su Nombre";
-                                      } else {
-                                        return null;
+                                      } else if (firstName.length > 25) {
+                                        return "Valor muy extenso para el campo";
                                       }
                                     },
                                     keyboardType: TextInputType.emailAddress,
@@ -172,8 +172,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                     validator: (lastName) {
                                       if (lastName!.isEmpty) {
                                         return 'Ingrese su apellido';
-                                      } else {
-                                        return null;
+                                      } else if (lastName.length > 25) {
+                                        return "Valor muy extenso para el campo";
                                       }
                                     },
                                     keyboardType: TextInputType.emailAddress,
@@ -203,8 +203,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             validator: (userName) {
                               if (userName!.isEmpty) {
                                 return 'Ingrese su usuario';
-                              } else {
-                                return null;
+                              } else if (userName.length > 25) {
+                                return "Valor muy extenso para el campo";
                               }
                             },
                             textInputAction: TextInputAction.next,
@@ -308,7 +308,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     }*/
 
                     /////////////////////
-                    if (_formKey.currentState!.validate()) {
+                    if (_formKey.currentState!.validate() &&
+                        isLoading == false) {
                       //si el form es valido
                       saveFormRegister();
                       print("Hola, form completo");

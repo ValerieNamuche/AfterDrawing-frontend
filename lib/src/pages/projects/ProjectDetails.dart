@@ -150,7 +150,7 @@ class _ProjectDetailsState extends State<ProjectDetails> {
                                   );
                                 })
                             : Image.asset(
-                                "lib/src/images/wireframelogo.png",
+                                "lib/src/images/logo_interface.jpeg",
                                 width: 300,
                               ),
                       ),

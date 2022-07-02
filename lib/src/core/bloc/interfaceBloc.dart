@@ -21,7 +21,7 @@ class InterfaceBloc with Validators {
   ///// Campos para formulario
   final _interfaceNameController = BehaviorSubject<String>();
   Stream<String> get interfaceNameStream =>
-      _interfaceNameController.stream.transform(validateName);
+      _interfaceNameController.stream.transform(validateNameInterface);
   Function(String) get changeInterfaceName => _interfaceNameController.sink.add;
   String get interfaceName => _interfaceNameController.value;
 

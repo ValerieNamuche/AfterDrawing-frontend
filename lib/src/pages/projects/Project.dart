@@ -108,7 +108,7 @@ class _ProjectListState extends State<ProjectList> {
                                     contentPadding: EdgeInsets.all(10),
                                     leading: CircleAvatar(
                                         backgroundImage: AssetImage(
-                                            'lib/src/images/wireframelogo.png')),
+                                            'lib/src/images/logo_proyecto.jpeg')),
                                     title: Text(projectsData[index].title),
                                     trailing: IconButton(
                                       color: Colors.red,
